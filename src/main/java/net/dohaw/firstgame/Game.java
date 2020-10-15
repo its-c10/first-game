@@ -1,11 +1,10 @@
 package net.dohaw.firstgame;
 
-import net.dohaw.firstgame.gameobject.background.ImmovableGameObject;
-import net.dohaw.firstgame.handlers.ObjectHandler;
-import net.dohaw.firstgame.utils.Location;
-import net.dohaw.firstgame.utils.Vector;
+import net.dohaw.firstgame.handlers.GameObjectHandler;
+import net.dohaw.firstgame.listeners.MouseInput;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.awt.image.BufferStrategy;
 
 public class Game extends Canvas implements Runnable {
@@ -17,14 +16,12 @@ public class Game extends Canvas implements Runnable {
      */
     private Thread thread;
     private boolean running = false;
-    private ObjectHandler objectHandler;
+    private static GameObjectHandler objectHandler;
 
     public Game(){
 
-        objectHandler = new ObjectHandler();
+        objectHandler = new GameObjectHandler();
         new Window(this, WIDTH, HEIGHT, "My First Game Ever");
-
-
 
     }
 
@@ -118,7 +115,7 @@ public class Game extends Canvas implements Runnable {
 
     }
 
-    public ObjectHandler getObjectHandler(){
+    public GameObjectHandler getObjectHandler(){
         return objectHandler;
     }
 

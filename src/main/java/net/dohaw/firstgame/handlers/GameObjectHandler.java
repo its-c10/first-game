@@ -1,12 +1,15 @@
 package net.dohaw.firstgame.handlers;
 
 import net.dohaw.firstgame.GameObject;
-import net.dohaw.firstgame.gameobject.background.MoveableGameObject;
-import net.dohaw.firstgame.utils.ObjectHolder;
+import net.dohaw.firstgame.gameobject.MoveableGameObject;
+import net.dohaw.firstgame.utils.GameObjectHolder;
 
 import java.awt.*;
 
-public class ObjectHandler extends ObjectHolder {
+/*
+    Class with the visible game objects on the screen
+ */
+public class GameObjectHandler extends GameObjectHolder {
 
     /*
         I don't know if immovable objects will need to be able to tick in the future
@@ -27,6 +30,13 @@ public class ObjectHandler extends ObjectHolder {
         for(GameObject obj : objects){
             obj.render(g);
         }
+    }
+
+    /*
+        Adds multiple objects from a object from an instance of game holder
+     */
+    public void addObjects(GameObjectHolder gameObjectHolder){
+        gameObjectHolder.getObjects().forEach(obj -> objects.add(obj));
     }
 
 }

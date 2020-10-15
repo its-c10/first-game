@@ -1,5 +1,8 @@
 package net.dohaw.firstgame;
 
+import net.dohaw.firstgame.listeners.KeyInput;
+import net.dohaw.firstgame.listeners.MouseInput;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -20,6 +23,10 @@ public class Window extends Canvas {
         frame.setLocationRelativeTo(null);
         frame.add(game);
         frame.setVisible(true);
+
+        game.addMouseListener(new MouseInput());
+        game.addKeyListener(new KeyInput());
+
         game.start();
 
     }

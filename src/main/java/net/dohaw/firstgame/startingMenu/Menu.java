@@ -1,16 +1,17 @@
 package net.dohaw.firstgame.startingMenu;
 
 import net.dohaw.firstgame.Game;
-import net.dohaw.firstgame.handlers.ObjectHandler;
-import net.dohaw.firstgame.utils.ObjectHolder;
+import net.dohaw.firstgame.handlers.GameObjectHandler;
+import net.dohaw.firstgame.utils.GameObjectHolder;
 
 
-public abstract class Menu extends ObjectHolder {
+public abstract class Menu extends GameObjectHolder {
 
-    private ObjectHandler objectHandler;
+    protected GameObjectHandler handler;
 
     public Menu(Game game){
-        this.objectHandler = game.getObjectHandler();
+        this.handler = game.getObjectHandler();
+        init();
     }
 
     public abstract void init();

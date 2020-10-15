@@ -1,14 +1,15 @@
 package net.dohaw.firstgame.startingMenu;
 
-import net.dohaw.firstgame.handlers.ObjectHandler;
+import net.dohaw.firstgame.Game;
 
-public class StartingMenu {
+public class StartingMenu extends Menu{
 
-    private ObjectHandler handler;
-
-    public StartingMenu(ObjectHandler handler){
-        this.handler = handler;
+    public StartingMenu(Game game){
+        super(game);
     }
 
+    @Override
+    public void init() {
 
+    }
 }

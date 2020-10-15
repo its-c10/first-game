@@ -5,11 +5,11 @@ import net.dohaw.firstgame.GameObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ObjectHolder {
+public class GameObjectHolder {
 
     protected List<GameObject> objects = new ArrayList<>();
 
-    public ObjectHolder(){
+    public GameObjectHolder(){
 
     }
 
@@ -19,6 +19,10 @@ public class ObjectHolder {
 
     public void removeObject(GameObject obj){
         this.objects.remove(obj);
+    }
+
+    public List<GameObject> getObjects(){
+        return objects;
     }
 
 }

@@ -1,4 +1,4 @@
-package net.dohaw.firstgame.gameobject.background;
+package net.dohaw.firstgame.gameobject;
 
 import net.dohaw.firstgame.GameObject;
 import net.dohaw.firstgame.utils.Location;
