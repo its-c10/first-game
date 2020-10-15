@@ -1,7 +1,10 @@
 package net.dohaw.firstgame;
 
+import net.dohaw.firstgame.gameobject.background.ImmovableGameObject;
+import net.dohaw.firstgame.gameobject.background.Sun;
 import net.dohaw.firstgame.handlers.ObjectHandler;
 import net.dohaw.firstgame.startingMenu.StartingMenu;
+import net.dohaw.firstgame.utils.Location;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -23,6 +26,8 @@ public class Game extends Canvas implements Runnable {
         objectHandler = new ObjectHandler();
         new Window(this, WIDTH, HEIGHT, "My First Game Ever");
 
+        objectHandler.addObject(new ImmovableGameObject(new Location(0, 0), ObjectID.BACKGROUND, WIDTH, HEIGHT));
+        objectHandler.addObject(new Sun(new Location(10, 10), ObjectID.BACKGROUND, 10, 10));
 
     }
 

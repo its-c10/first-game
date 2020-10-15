@@ -17,11 +17,6 @@ public abstract class GameObject {
         this.location = location;
     }
 
-    public void vectorTick() {
-        int velX = vector.getX();
-        int velY = vector.getY();
-    }
-
     public abstract void tick();
     public abstract void render(Graphics g);
 

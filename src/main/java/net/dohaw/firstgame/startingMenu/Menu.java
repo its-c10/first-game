@@ -13,8 +13,6 @@ public abstract class Menu extends ObjectHolder {
         this.objectHandler = game.getObjectHandler();
     }
 
-    public void init(){
-    }
-
+    public abstract void init();
 
 }
