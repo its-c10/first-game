@@ -8,8 +8,8 @@ import java.awt.*;
 
 public class MoveMe extends MoveableGameObject{
 
-    public MoveMe(ObjectID objectId, Vector vec, Location location) {
-        super(objectId, vec, location);
+    public MoveMe(ObjectID objectId, Vector vec, Location location, int height, int width) {
+        super(objectId, vec, location, height, width);
     }
 
     @Override
@@ -19,6 +19,9 @@ public class MoveMe extends MoveableGameObject{
 
     @Override
     public void render(Graphics g) {
-
+        g.setColor(Color.YELLOW);
+        g.fillRect(location.getX(), location.getY(), width, height);
+        System.out.println("bruh");
     }
+
 }

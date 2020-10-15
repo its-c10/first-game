@@ -7,13 +7,12 @@ import net.dohaw.firstgame.utils.Vector;
 
 public abstract class MoveableGameObject extends GameObject {
 
-    public MoveableGameObject(ObjectID objectId, Vector vec, Location location) {
-        super(objectId, vec, location);
+    public MoveableGameObject(ObjectID objectId, Vector vec, Location location, int height, int width) {
+        super(objectId, vec, location, height, width);
     }
 
     public void vectorTick() {
-        int velX = vector.getX();
-        int velY = vector.getY();
+        location.applyVector(vector);
     }
 
 }

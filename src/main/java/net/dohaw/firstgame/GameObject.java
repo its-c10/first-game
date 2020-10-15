@@ -10,8 +10,10 @@ public abstract class GameObject {
     protected ObjectID objectId;
     protected Vector vector;
     protected Location location;
+    protected int width;
+    protected int height;
 
-    public GameObject(ObjectID objectId, Vector vec, Location location){
+    public GameObject(ObjectID objectId, Vector vec, Location location, int width, int height){
         this.objectId = objectId;
         this.vector = vec;
         this.location = location;

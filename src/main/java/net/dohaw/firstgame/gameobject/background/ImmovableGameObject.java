@@ -9,13 +9,8 @@ import java.awt.*;
 
 public class ImmovableGameObject extends GameObject {
 
-    protected int width;
-    protected int height;
-
     public ImmovableGameObject(Location location, ObjectID objectId, int width, int height) {
-        super(objectId, null, location);
-        this.width = width;
-        this.height = height;
+        super(objectId, null, location, width, height);
     }
 
     @Override
