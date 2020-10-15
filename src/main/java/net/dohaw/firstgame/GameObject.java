@@ -17,9 +17,16 @@ public abstract class GameObject {
         this.objectId = objectId;
         this.vector = vec;
         this.location = location;
+        this.width = width;
+        this.height = height;
     }
 
     public abstract void tick();
     public abstract void render(Graphics g);
+
+    @Override
+    public String toString(){
+        return "GAME OBJECT | ID: " + objectId.toString();
+    }
 
 }

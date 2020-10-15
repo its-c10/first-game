@@ -5,8 +5,6 @@ import net.dohaw.firstgame.gameobject.background.MoveableGameObject;
 import net.dohaw.firstgame.utils.ObjectHolder;
 
 import java.awt.*;
-import java.util.LinkedList;
-import java.util.List;
 
 public class ObjectHandler extends ObjectHolder {
 
