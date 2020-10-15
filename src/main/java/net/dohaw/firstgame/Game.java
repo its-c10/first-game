@@ -1,5 +1,8 @@
 package net.dohaw.firstgame;
 
+import net.dohaw.firstgame.handlers.ObjectHandler;
+import net.dohaw.firstgame.startingMenu.StartingMenu;
+
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
@@ -12,14 +15,14 @@ public class Game extends Canvas implements Runnable {
      */
     private Thread thread;
     private boolean running = false;
-    private Handler handler;
+    private ObjectHandler objectHandler;
+    private StartingMenu startingMenu;
 
     public Game(){
 
-        handler = new Handler();
+        objectHandler = new ObjectHandler();
         new Window(this, WIDTH, HEIGHT, "My First Game Ever");
 
-        handler.addObject(new Player(0, 100, ID.BACKGROUND));
 
     }
 
@@ -86,10 +89,11 @@ public class Game extends Canvas implements Runnable {
 
         }
         stop();
+
     }
 
     private void tick(){
-        handler.tick();
+        objectHandler.tick();
     }
 
     private void render(){
@@ -105,11 +109,15 @@ public class Game extends Canvas implements Runnable {
         g.setColor(Color.black);
         g.fillRect(0, 0, WIDTH, HEIGHT);
 
-        handler.render(g);
+        objectHandler.render(g);
 
         g.dispose();
         bs.show();
 
+    }
+
+    public ObjectHandler getObjectHandler(){
+        return objectHandler;
     }
 
 }

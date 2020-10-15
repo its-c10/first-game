@@ -1,6 +1,6 @@
 package net.dohaw.firstgame;
 
-public enum ID {
+public enum ObjectID {
     PLAYER,
     ENEMY,
     BACKGROUND
