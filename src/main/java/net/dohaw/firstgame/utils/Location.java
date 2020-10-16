@@ -22,4 +22,12 @@ public class Location {
         this.y += vector.getY();
     }
 
+    public boolean equals(Object other){
+        if(other instanceof Location){
+            Location loc = (Location) other;
+            return loc.getX() == this.getX() && loc.getY() == this.getY();
+        }
+        return false;
+    }
+
 }

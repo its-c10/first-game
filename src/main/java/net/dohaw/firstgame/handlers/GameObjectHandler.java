@@ -40,7 +40,11 @@ public class GameObjectHandler extends GameObjectHolder {
     }
 
     public void removeObjects(GameObjectHolder gameObjectHolder){
-        gameObjectHolder.getObjects().forEach(obj -> objects.remove(obj));
+        for(GameObject obj : objects){
+            if(gameObjectHolder.getObjects().contains(obj)){
+                System.out.println(obj.getObjectId());
+            }
+        }
     }
 
 }
