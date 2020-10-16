@@ -39,4 +39,8 @@ public class GameObjectHandler extends GameObjectHolder {
         gameObjectHolder.getObjects().forEach(obj -> objects.add(obj));
     }
 
+    public void removeObjects(GameObjectHolder gameObjectHolder){
+        gameObjectHolder.getObjects().forEach(obj -> objects.remove(obj));
+    }
+
 }

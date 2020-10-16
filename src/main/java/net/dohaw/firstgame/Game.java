@@ -1,5 +1,7 @@
 package net.dohaw.firstgame;
 
+import lombok.Getter;
+import net.dohaw.firstgame.gameobject.FPSCounter;
 import net.dohaw.firstgame.handlers.GameObjectHandler;
 import net.dohaw.firstgame.menus.PreStartingMenu;
 
@@ -9,14 +11,16 @@ import java.awt.image.BufferStrategy;
 public class Game extends Canvas implements Runnable {
 
     public static final int WIDTH = 640, HEIGHT = WIDTH / 12 * 9;
-    public int frames;
+
+    @Getter public int frames;
+    @Getter public Graphics2D g;
 
     /*
         The entire game will be ran on one thread. Usually not recommended.
      */
     private Thread thread;
     private boolean running = false;
-    private static GameObjectHandler objectHandler;
+    @Getter private GameObjectHandler objectHandler;
 
     public Game(){
 
@@ -24,6 +28,7 @@ public class Game extends Canvas implements Runnable {
         new Window(this, WIDTH, HEIGHT, "My First Game Ever");
 
         new PreStartingMenu(this).init();
+        new FPSCounter(this).drawAccordingToAlignment(g);
 
     }
 
@@ -84,7 +89,7 @@ public class Game extends Canvas implements Runnable {
 
             if(System.currentTimeMillis() - timer > 1000){
                 timer += 1000;
-                System.out.println("FPS: " + frames);
+                //System.out.println("FPS: " + frames);
                 frames = 0;
             }
 
@@ -106,19 +111,13 @@ public class Game extends Canvas implements Runnable {
             return;
         }
 
-        Graphics g = bs.getDrawGraphics();
-        //g.setColor(Color.black);
-        //g.fillRect(0, 0, WIDTH, HEIGHT);
+        this.g = (Graphics2D) bs.getDrawGraphics();
 
         objectHandler.render(g);
 
         g.dispose();
         bs.show();
 
-    }
-
-    public GameObjectHandler getObjectHandler(){
-        return objectHandler;
     }
 
 }

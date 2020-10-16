@@ -9,7 +9,7 @@ import net.dohaw.firstgame.utils.Location;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public class PreStartingMenu extends Menu{
+public class PreStartingMenu extends Scene{
 
     public PreStartingMenu(Game game){
         super(game);
@@ -31,7 +31,7 @@ public class PreStartingMenu extends Menu{
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        goToNextScene(new StartingMenu(game));
     }
 
     /**

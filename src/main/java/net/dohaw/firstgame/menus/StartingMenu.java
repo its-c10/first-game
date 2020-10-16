@@ -4,7 +4,7 @@ import net.dohaw.firstgame.Game;
 
 import java.awt.event.MouseEvent;
 
-public class StartingMenu extends Menu{
+public class StartingMenu extends Scene{
 
     public StartingMenu(Game game) {
         super(game);
@@ -12,6 +12,8 @@ public class StartingMenu extends Menu{
 
     @Override
     public void init() {
+
+
 
     }
 
