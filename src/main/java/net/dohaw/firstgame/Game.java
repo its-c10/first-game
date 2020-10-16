@@ -12,7 +12,7 @@ public class Game extends Canvas implements Runnable {
 
     public static final int WIDTH = 640, HEIGHT = WIDTH / 12 * 9;
 
-    @Getter public int frames;
+    @Getter private int frames;
     @Getter public Graphics2D g;
 
     /*
@@ -28,7 +28,6 @@ public class Game extends Canvas implements Runnable {
         new Window(this, WIDTH, HEIGHT, "My First Game Ever");
 
         new PreStartingMenu(this).init();
-        new FPSCounter(this).drawAccordingToAlignment(g);
 
     }
 
@@ -85,6 +84,7 @@ public class Game extends Canvas implements Runnable {
             if(running){
                 render();
             }
+            System.out.println("FRAMES: " + frames);
             frames++;
 
             if(System.currentTimeMillis() - timer > 1000){

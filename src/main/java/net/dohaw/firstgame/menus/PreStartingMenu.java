@@ -2,6 +2,7 @@ package net.dohaw.firstgame.menus;
 
 import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.gameobject.BlankBackground;
+import net.dohaw.firstgame.gameobject.FPSCounter;
 import net.dohaw.firstgame.gameobject.TextObject;
 import net.dohaw.firstgame.utils.Alignment;
 import net.dohaw.firstgame.utils.Location;
@@ -20,6 +21,7 @@ public class PreStartingMenu extends Scene{
         objects.add(new BlankBackground(Color.YELLOW, Game.WIDTH, Game.HEIGHT));
         objects.add(new TextObject(new Location(0, 100), new Font("Roboto", Font.PLAIN, 40), "Game", Alignment.CENTER, Color.BLACK));
         objects.add(new TextObject(new Location(0, (int) (Game.HEIGHT * .75)), new Font("Roboto", Font.BOLD, 20), "Press anywhere to continue...", Alignment.CENTER, Color.BLACK));
+        objects.add(new FPSCounter(game));
         handler.addObjects(this);
     }
 

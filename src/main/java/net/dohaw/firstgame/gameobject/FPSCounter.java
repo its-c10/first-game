@@ -2,7 +2,6 @@ package net.dohaw.firstgame.gameobject;
 
 import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.ObjectID;
-import net.dohaw.firstgame.runnable.BaseRunnable;
 import net.dohaw.firstgame.utils.Location;
 import net.dohaw.firstgame.utils.Vector;
 
@@ -11,32 +10,33 @@ import java.awt.*;
 public class FPSCounter extends TextObject{
 
     private Game game;
+    private final long NEXT_SHOWING = 1000;
+    private long nextShowing;
+    private boolean showing;
 
     public FPSCounter(Game game) {
-        super(ObjectID.BACKGROUND, new Vector(0, 0), new Location((int) (Game.WIDTH * .9), Game.HEIGHT),  new Font("Roboto", Font.BOLD, 20), "FPS: " + game.frames, Color.GRAY);
+        super(ObjectID.BACKGROUND, new Vector(0, 0), new Location((int) (Game.WIDTH * .9), 40),  new Font("Roboto", Font.BOLD, 10), "FPS: " + game.getFrames(), Color.GRAY);
         this.game = game;
-        init();
-    }
-
-    public void init(){
-
-        BaseRunnable runnable = new BaseRunnable() {
-            @Override
-            public void run() {
-                text = "FPS: " + game.frames;
-                drawAccordingToAlignment(game.g);
-                System.out.println("Testing");
-            }
-        };
-
-        runnable.scheduleRepeatedTask(0, 1);
-
+        this.showing = true;
+        this.nextShowing = System.currentTimeMillis() + NEXT_SHOWING;
     }
 
     /*
-        Don't want this to run since it updates way too many times a second
+        Runs with an interval
      */
     @Override
-    public void render(Graphics g) { }
+    public void render(Graphics g) {
+        long now = System.currentTimeMillis();
+        if(now >= nextShowing){
+            int fps = game.getFrames();
+            text = "FPS: " + fps;
+            setNextShowing();
+        }
+        drawAccordingToAlignment(g);
+    }
+
+    public void setNextShowing(){
+        this.nextShowing = System.currentTimeMillis() + NEXT_SHOWING;
+    }
 
 }
