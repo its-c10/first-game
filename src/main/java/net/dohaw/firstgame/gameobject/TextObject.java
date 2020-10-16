@@ -71,16 +71,15 @@ public class TextObject extends GameObject {
 
     public void drawAccordingToAlignment(Graphics g){
 
-        Graphics2D g2d = (Graphics2D) g.create();
-        FontMetrics fm = g2d.getFontMetrics();
-        g2d.setColor(color);
-        g2d.setFont(font);
+        FontMetrics fm = g.getFontMetrics();
+        g.setColor(color);
+        g.setFont(font);
 
         if(alignment == Alignment.CENTER){
             int xLocation = (Game.WIDTH - fm.stringWidth(text)) / 2 - (font.getSize() / 2);
-            g2d.drawString(text, xLocation, location.getY());
+            g.drawString(text, xLocation, location.getY());
         }else{
-            g2d.drawString(text, location.getX(), location.getY());
+            g.drawString(text, location.getX(), location.getY());
         }
 
     }

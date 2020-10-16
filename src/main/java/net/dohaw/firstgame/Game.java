@@ -12,6 +12,7 @@ public class Game extends Canvas implements Runnable {
 
     public static final int WIDTH = 640, HEIGHT = WIDTH / 12 * 9;
 
+    @Getter private FPSCounter fpsCounter;
     @Getter private int frames;
     @Getter public Graphics2D g;
 
@@ -28,6 +29,9 @@ public class Game extends Canvas implements Runnable {
         new Window(this, WIDTH, HEIGHT, "My First Game Ever");
 
         new PreStartingMenu(this).init();
+
+        this.fpsCounter = new FPSCounter(this);
+        objectHandler.addObject(fpsCounter);
 
     }
 
@@ -89,7 +93,7 @@ public class Game extends Canvas implements Runnable {
 
             if(System.currentTimeMillis() - timer > 1000){
                 timer += 1000;
-                //System.out.println("FPS: " + frames);
+                fpsCounter.setText("FPS: " + frames);
                 frames = 0;
             }
 
