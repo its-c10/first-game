@@ -1,17 +1,26 @@
-package net.dohaw.firstgame.listeners;
+package net.dohaw.firstgame.menus;
 
 import net.dohaw.firstgame.Game;
-import net.dohaw.firstgame.handlers.GameObjectHandler;
+import net.dohaw.firstgame.gameobject.BlankBackground;
+import net.dohaw.firstgame.gameobject.TextObject;
+import net.dohaw.firstgame.utils.Alignment;
+import net.dohaw.firstgame.utils.Location;
 
+import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
-public class MouseInput implements MouseListener {
+public class PreStartingMenu extends Menu{
 
-    private GameObjectHandler gameObjectHandler;
+    public PreStartingMenu(Game game){
+        super(game);
+    }
 
-    public MouseInput(Game game){
-        this.gameObjectHandler = game.getObjectHandler();
+    @Override
+    public void init() {
+        objects.add(new BlankBackground(Color.YELLOW, Game.WIDTH, Game.HEIGHT));
+        objects.add(new TextObject(new Location(0, 100), new Font("Roboto", Font.PLAIN, 40), "Game", Alignment.CENTER, Color.BLACK));
+        objects.add(new TextObject(new Location(0, (int) (Game.HEIGHT * .75)), new Font("Roboto", Font.BOLD, 20), "Press anywhere to continue...", Alignment.CENTER, Color.BLACK));
+        handler.addObjects(this);
     }
 
     /**
@@ -22,7 +31,7 @@ public class MouseInput implements MouseListener {
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-        System.out.println(e.getButton());
+
     }
 
     /**
@@ -31,9 +40,7 @@ public class MouseInput implements MouseListener {
      * @param e
      */
     @Override
-    public void mousePressed(MouseEvent e) {
-        System.out.println("bruh");
-    }
+    public void mousePressed(MouseEvent e) { }
 
     /**
      * Invoked when a mouse button has been released on a component.

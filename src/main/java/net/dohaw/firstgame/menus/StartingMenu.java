@@ -1,17 +1,18 @@
-package net.dohaw.firstgame.listeners;
+package net.dohaw.firstgame.menus;
 
 import net.dohaw.firstgame.Game;
-import net.dohaw.firstgame.handlers.GameObjectHandler;
 
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
-public class MouseInput implements MouseListener {
+public class StartingMenu extends Menu{
 
-    private GameObjectHandler gameObjectHandler;
+    public StartingMenu(Game game) {
+        super(game);
+    }
 
-    public MouseInput(Game game){
-        this.gameObjectHandler = game.getObjectHandler();
+    @Override
+    public void init() {
+
     }
 
     /**
@@ -22,7 +23,7 @@ public class MouseInput implements MouseListener {
      */
     @Override
     public void mouseClicked(MouseEvent e) {
-        System.out.println(e.getButton());
+
     }
 
     /**
@@ -32,7 +33,7 @@ public class MouseInput implements MouseListener {
      */
     @Override
     public void mousePressed(MouseEvent e) {
-        System.out.println("bruh");
+
     }
 
     /**
@@ -64,5 +65,4 @@ public class MouseInput implements MouseListener {
     public void mouseExited(MouseEvent e) {
 
     }
-
 }

@@ -10,8 +10,8 @@ public class BlankBackground extends ImmovableGameObject implements Colorable {
 
     private Color color;
 
-    public BlankBackground(Color color, Location location, ObjectID objectId, int width, int height) {
-        super(location, objectId, width, height);
+    public BlankBackground(Color color, int width, int height) {
+        super(new Location(0, 0), ObjectID.BACKGROUND, width, height);
         this.color = color;
     }
 
@@ -19,4 +19,5 @@ public class BlankBackground extends ImmovableGameObject implements Colorable {
     public Color getColor() {
         return color;
     }
+
 }

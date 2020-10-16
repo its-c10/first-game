@@ -1,15 +1,15 @@
 package net.dohaw.firstgame;
 
 import net.dohaw.firstgame.handlers.GameObjectHandler;
-import net.dohaw.firstgame.listeners.MouseInput;
+import net.dohaw.firstgame.menus.PreStartingMenu;
 
 import java.awt.*;
-import java.awt.event.MouseAdapter;
 import java.awt.image.BufferStrategy;
 
 public class Game extends Canvas implements Runnable {
 
     public static final int WIDTH = 640, HEIGHT = WIDTH / 12 * 9;
+    public int frames;
 
     /*
         The entire game will be ran on one thread. Usually not recommended.
@@ -22,6 +22,8 @@ public class Game extends Canvas implements Runnable {
 
         objectHandler = new GameObjectHandler();
         new Window(this, WIDTH, HEIGHT, "My First Game Ever");
+
+        new PreStartingMenu(this).init();
 
     }
 
@@ -63,7 +65,7 @@ public class Game extends Canvas implements Runnable {
         double ns = 1000000000 / amountOfticks;
         double delta = 0;
         long timer = System.currentTimeMillis();
-        int frames = 0;
+        frames = 0;
 
         while(running){
 
@@ -105,8 +107,8 @@ public class Game extends Canvas implements Runnable {
         }
 
         Graphics g = bs.getDrawGraphics();
-        g.setColor(Color.black);
-        g.fillRect(0, 0, WIDTH, HEIGHT);
+        //g.setColor(Color.black);
+        //g.fillRect(0, 0, WIDTH, HEIGHT);
 
         objectHandler.render(g);
 

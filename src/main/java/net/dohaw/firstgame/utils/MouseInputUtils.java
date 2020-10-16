@@ -1,11 +1,10 @@
 package net.dohaw.firstgame.utils;
 
-import net.dohaw.firstgame.gameobject.ClickableMenuObject;
-import net.dohaw.firstgame.gameobject.MenuObject;
+import net.dohaw.firstgame.gameobject.MenuButton;
 
 public class MouseInputUtils {
 
-    public static boolean isItemClicked(int xClicked, int yClicked, ClickableMenuObject menuObject){
+    public static boolean isItemClicked(int xClicked, int yClicked, MenuButton menuObject){
 
         Location menuLocation = menuObject.getLocation();
         int minXObject = menuLocation.getX();

@@ -1,4 +1,4 @@
-package net.dohaw.firstgame.startingMenu;
+package net.dohaw.firstgame.menus;
 
 import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.handlers.GameObjectHandler;

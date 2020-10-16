@@ -8,9 +8,9 @@ import net.dohaw.firstgame.utils.Location;
     I know I will use the Clickable interface in other things other than menu's, so in order to keep the design fluent, I use it here.
     The reason that MenuObject doesn't just implement clickable is because not all menu objects will be clickable
  */
-public class ClickableMenuObject extends MenuObject implements Clickable {
+public class MenuButton extends MenuObject implements Clickable {
 
-    public ClickableMenuObject(Location location, ObjectID objectId, int width, int height) {
+    public MenuButton(Location location, ObjectID objectId, int width, int height) {
         super(location, objectId, width, height);
     }
 
