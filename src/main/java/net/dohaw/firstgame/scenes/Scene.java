@@ -1,11 +1,10 @@
-package net.dohaw.firstgame.menus;
+package net.dohaw.firstgame.scenes;
 
 import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.handlers.GameObjectHandler;
 import net.dohaw.firstgame.gameobject.GameObjectHolder;
 
 import java.awt.event.MouseListener;
-
 
 public abstract class Scene extends GameObjectHolder implements MouseListener {
 
@@ -16,7 +15,6 @@ public abstract class Scene extends GameObjectHolder implements MouseListener {
         this.game = game;
         this.handler = game.getObjectHandler();
         game.addMouseListener(this);
-        init();
     }
 
     public abstract void init();
@@ -25,9 +23,8 @@ public abstract class Scene extends GameObjectHolder implements MouseListener {
         Makes it to where it switches to the next scene in the game
      */
     public void goToNextScene(Scene newScene){
-        handler.removeObjects(this);
+        handler.removeObjectsFromScene();
         newScene.init();
-        handler.addObjects(newScene);
     }
 
 }

@@ -1,7 +1,9 @@
-package net.dohaw.firstgame.menus;
+package net.dohaw.firstgame.scenes;
 
 import net.dohaw.firstgame.Game;
+import net.dohaw.firstgame.gameobject.BlankBackground;
 
+import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public class StartingMenu extends Scene{
@@ -13,7 +15,8 @@ public class StartingMenu extends Scene{
     @Override
     public void init() {
 
-
+        objects.add(new BlankBackground(Color.BLACK, Game.WIDTH, Game.HEIGHT));
+        handler.addObjects(this);
 
     }
 

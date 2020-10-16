@@ -3,7 +3,7 @@ package net.dohaw.firstgame;
 import lombok.Getter;
 import net.dohaw.firstgame.gameobject.FPSCounter;
 import net.dohaw.firstgame.handlers.GameObjectHandler;
-import net.dohaw.firstgame.menus.PreStartingMenu;
+import net.dohaw.firstgame.scenes.PreStartingMenu;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -25,7 +25,7 @@ public class Game extends Canvas implements Runnable {
 
     public Game(){
 
-        objectHandler = new GameObjectHandler();
+        objectHandler = new GameObjectHandler(this);
         new Window(this, WIDTH, HEIGHT, "My First Game Ever");
 
         new PreStartingMenu(this).init();

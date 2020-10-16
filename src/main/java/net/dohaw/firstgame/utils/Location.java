@@ -1,5 +1,7 @@
 package net.dohaw.firstgame.utils;
 
+import net.dohaw.firstgame.GameObject;
+
 public class Location {
 
     private int x, y;
@@ -28,6 +30,27 @@ public class Location {
             return loc.getX() == this.getX() && loc.getY() == this.getY();
         }
         return false;
+    }
+
+    public static Location align(Alignment alignment, GameObject obj){
+
+        Location objLocation = obj.getLocation();
+        int x = objLocation.getX();
+        int y = objLocation.getY();
+
+        int centerX = obj.getCenterX();
+        int centerY = obj.getCenterY();
+
+        if(alignment == Alignment.HORIZONTAL_CENTER){
+            objLocation = new Location(centerX, y);
+        }else if(alignment == Alignment.CENTER){
+            objLocation = new Location(centerX, centerY);
+        }else if(alignment == Alignment.VERTICAL_CENTER) {
+            objLocation = new Location(x, centerY);
+        }
+
+        return objLocation;
+
     }
 
 }

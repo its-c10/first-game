@@ -1,9 +1,9 @@
 package net.dohaw.firstgame.gameobject;
 
 import net.dohaw.firstgame.GameObject;
+import net.dohaw.firstgame.ObjectID;
 import net.dohaw.firstgame.utils.Colorable;
 import net.dohaw.firstgame.utils.Location;
-import net.dohaw.firstgame.ObjectID;
 
 import java.awt.*;
 
@@ -29,4 +29,5 @@ public abstract class ImmovableGameObject extends GameObject {
         g.setColor(color);
         g.fillRect(location.getX(), location.getY(), width, height);
     }
+
 }

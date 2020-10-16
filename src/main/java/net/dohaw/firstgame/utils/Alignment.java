@@ -1,9 +1,9 @@
 package net.dohaw.firstgame.utils;
 
-import net.dohaw.firstgame.GameObject;
-
 public enum Alignment {
 
-    CENTER
+    CENTER,
+    HORIZONTAL_CENTER,
+    VERTICAL_CENTER;
 
 }

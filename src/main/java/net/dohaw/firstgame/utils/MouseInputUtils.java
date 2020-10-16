@@ -1,6 +1,6 @@
 package net.dohaw.firstgame.utils;
 
-import net.dohaw.firstgame.gameobject.MenuButton;
+import net.dohaw.firstgame.gameobject.menubuttons.MenuButton;
 
 public class MouseInputUtils {
 
