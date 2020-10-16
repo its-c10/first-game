@@ -1,4 +1,4 @@
-package net.dohaw.firstgame.utils;
+package net.dohaw.firstgame.gameobject;
 
 import net.dohaw.firstgame.GameObject;
 

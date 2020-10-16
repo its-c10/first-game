@@ -1,9 +1,19 @@
 package net.dohaw.firstgame.listeners;
 
+import net.dohaw.firstgame.Game;
+import net.dohaw.firstgame.GameObject;
+import net.dohaw.firstgame.handlers.GameObjectHandler;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class MouseInput implements MouseListener {
+
+    private GameObjectHandler gameObjectHandler;
+
+    public MouseInput(Game game){
+        this.gameObjectHandler = game.getObjectHandler();
+    }
 
     /**
      * Invoked when the mouse button has been clicked (pressed
@@ -55,4 +65,5 @@ public class MouseInput implements MouseListener {
     public void mouseExited(MouseEvent e) {
 
     }
+
 }

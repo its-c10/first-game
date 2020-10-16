@@ -2,7 +2,7 @@ package net.dohaw.firstgame.handlers;
 
 import net.dohaw.firstgame.GameObject;
 import net.dohaw.firstgame.gameobject.MoveableGameObject;
-import net.dohaw.firstgame.utils.GameObjectHolder;
+import net.dohaw.firstgame.gameobject.GameObjectHolder;
 
 import java.awt.*;
 

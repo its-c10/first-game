@@ -1,5 +1,7 @@
 package net.dohaw.firstgame;
 
+import lombok.Getter;
+import lombok.Setter;
 import net.dohaw.firstgame.utils.Location;
 import net.dohaw.firstgame.utils.Vector;
 
@@ -7,11 +9,11 @@ import java.awt.*;
 
 public abstract class GameObject {
 
-    protected ObjectID objectId;
-    protected Vector vector;
-    protected Location location;
-    protected int width;
-    protected int height;
+    @Getter @Setter protected ObjectID objectId;
+    @Getter @Setter protected Vector vector;
+    @Getter @Setter protected Location location;
+    @Getter @Setter protected int width;
+    @Getter @Setter protected int height;
 
     public GameObject(ObjectID objectId, Vector vec, Location location, int width, int height){
         this.objectId = objectId;
