@@ -11,14 +11,14 @@ import java.awt.geom.Rectangle2D;
 public abstract class Collidable extends GameObject {
 
     protected PhysicsHandler physicsHandler;
-    @Getter final protected int COLLISION_COORD_ADDITIVE = 10;
+    @Getter @Setter protected int collision_coord_additive;
 
     @Getter @Setter protected boolean inSkeletonMode;
     @Getter protected Rectangle2D collisionRect;
 
     public Collidable(ObjectID objectId, Vector vec, Location location, int width, int height) {
         super(objectId, vec, location, width, height);
-        this.collisionRect = new Rectangle2D.Double(location.getX() - COLLISION_COORD_ADDITIVE, location.getY() - COLLISION_COORD_ADDITIVE, width + (COLLISION_COORD_ADDITIVE * 2), height + (COLLISION_COORD_ADDITIVE * 2));
+        this.collisionRect = new Rectangle2D.Double(location.getX() - collision_coord_additive, location.getY() - collision_coord_additive, width + (collision_coord_additive * 2), height + (collision_coord_additive * 2));
     }
 
 }

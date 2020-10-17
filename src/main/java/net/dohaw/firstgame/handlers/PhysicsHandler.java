@@ -20,10 +20,14 @@ public class PhysicsHandler {
     }
 
     public boolean isInCollision(MoveableGameObject moveableGameObject){
+
         List<Collidable> collidableItemsInScene = handler.getCollidables();
+        collidableItemsInScene.removeIf(obj -> obj.getOBJ_UUID() == moveableGameObject.getOBJ_UUID());
+
         for(Collidable obj : collidableItemsInScene){
             Rectangle2D collisionRect = obj.getCollisionRect();
-            if(collisionRect.intersects(moveableGameObject.getCollisionRect())){
+            Rectangle2D moveableObjectCollisionRect = moveableGameObject.getCollisionRect();
+            if(collisionRect.contains(moveableObjectCollisionRect) && obj.isVisible()){
                 return true;
             }
         }

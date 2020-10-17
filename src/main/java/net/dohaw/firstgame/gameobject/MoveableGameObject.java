@@ -26,6 +26,8 @@ public class MoveableGameObject extends Collidable {
         int newY = Math.max(1, vecCurrentY);
         vec.setY(newY);
 
+        this.collision_coord_additive = 5;
+
     }
 
     public void initPhysics(Scene scene){
@@ -38,10 +40,10 @@ public class MoveableGameObject extends Collidable {
         this.previousLocation = location;
 
         location.applyVector(vector);
-        this.collisionRect = new Rectangle2D.Double(location.getX() - COLLISION_COORD_ADDITIVE, location.getY() - COLLISION_COORD_ADDITIVE, width + (COLLISION_COORD_ADDITIVE * 2), height + (COLLISION_COORD_ADDITIVE * 2));
+        this.collisionRect = new Rectangle2D.Double(location.getX() - collision_coord_additive, location.getY() - collision_coord_additive, width + (collision_coord_additive * 2), height + (collision_coord_additive * 2));
 
         if(physicsHandler.isInCollision(this)){
-            System.out.println("UR IN MF COLLISION BITCH!");
+            this.location = previousLocation;
         }else{
             System.out.println("NO COLLISION WHAT-SO-EVER");
         }
@@ -56,7 +58,7 @@ public class MoveableGameObject extends Collidable {
 
         if(inSkeletonMode){
             g.setColor(Color.WHITE);
-            g.drawRect(location.getX() - COLLISION_COORD_ADDITIVE, location.getY() - COLLISION_COORD_ADDITIVE, width + (COLLISION_COORD_ADDITIVE * 2), height + (COLLISION_COORD_ADDITIVE * 2));
+            g.drawRect(location.getX() - collision_coord_additive, location.getY() - collision_coord_additive, width + (collision_coord_additive * 2), height + (collision_coord_additive * 2));
         }
 
     }
