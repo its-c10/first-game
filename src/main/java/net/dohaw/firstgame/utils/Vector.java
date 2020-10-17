@@ -6,6 +6,7 @@ import lombok.Setter;
 public class Vector {
 
     @Getter @Setter private int x, y;
+    final public static Vector IMMOVABLE = new Vector(0, 0);
 
     public Vector(int x, int y){
         this.x = x;

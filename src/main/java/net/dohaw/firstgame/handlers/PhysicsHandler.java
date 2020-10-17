@@ -11,21 +11,23 @@ import java.util.List;
 
 public class PhysicsHandler {
 
-    private Scene scene;
     private GameObjectHandler handler;
     private Game game;
 
     public PhysicsHandler(Scene scene){
-        this.scene = scene;
         this.handler = scene.getHandler();
         this.game = scene.getGame();
     }
 
     public boolean isInCollision(MoveableGameObject moveableGameObject){
-        List<Collidable> collidableItemsInScene = new ArrayList<>();
+        List<Collidable> collidableItemsInScene = handler.getCollidables();
         for(Collidable obj : collidableItemsInScene){
-            Rectangle2D collisionRect = obj.
+            Rectangle2D collisionRect = obj.getCollisionRect();
+            if(collisionRect.intersects(moveableGameObject.getCollisionRect())){
+                return true;
+            }
         }
+        return false;
     }
 
 

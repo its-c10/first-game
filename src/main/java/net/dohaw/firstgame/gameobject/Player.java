@@ -12,13 +12,4 @@ public class Player extends MoveableGameObject{
         super(ObjectID.PLAYER, vec, location, height, width);
     }
 
-    @Override
-    public void tick() {
-
-    }
-
-    @Override
-    public void render(Graphics g) {
-
-    }
 }

@@ -73,4 +73,9 @@ public class SquareMenuButton extends MenuButton {
         return Color.GRAY;
     }
 
+    @Override
+    public void setColor(Color color) {
+
+    }
+
 }

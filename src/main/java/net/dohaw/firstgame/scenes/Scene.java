@@ -34,7 +34,7 @@ public abstract class Scene extends GameObjectHolder implements MouseListener {
     private void skeletonMode(boolean enabled){
         if(enabled){
             for(Collidable collidable : handler.getCollidables()){
-
+                collidable.setInSkeletonMode(true);
             }
         }
     }

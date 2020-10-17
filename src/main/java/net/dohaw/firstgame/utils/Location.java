@@ -7,6 +7,8 @@ import net.dohaw.firstgame.GameObject;
 public class Location {
 
     @Getter @Setter private int x, y;
+    
+    public final static Location NONE = new Location(0, 0);
 
     public Location(int x, int y){
         this.x = x;

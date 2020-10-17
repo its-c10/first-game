@@ -1,6 +1,7 @@
 package net.dohaw.firstgame.scenes;
 
 import net.dohaw.firstgame.Game;
+import net.dohaw.firstgame.ObjectID;
 import net.dohaw.firstgame.gameobject.BlankBackground;
 
 import java.awt.*;
@@ -15,7 +16,10 @@ public class StartingMenu extends Scene{
     @Override
     public void init() {
 
-        objects.add(new BlankBackground(Color.BLACK, Game.WIDTH, Game.HEIGHT));
+        BlankBackground background = new BlankBackground();
+        background.setColor(Color.BLACK);
+        objects.add(background);
+
         handler.addObjects(this);
 
     }
