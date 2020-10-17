@@ -77,17 +77,10 @@ public class Sprite extends GameObject {
         }
 
         public Sprite create(){
-            if(alignment != null){
-                if(isAnimated){
-                    return new AnimatedSprite(game, path, id, vector, location, alignment, width, height);
-                }
-                return new Sprite(game, path, id, vector, location, alignment, width, height);
-            }else{
-                if(isAnimated){
-                    return new AnimatedSprite(game, path, id, vector, location, width, height);
-                }
-                return new Sprite(game, path, id, vector, location, width, height);
+            if(isAnimated){
+                return new AnimatedSprite(game, path, id, vector, location, width, height);
             }
+            return new Sprite(game, path, id, vector, location, width, height);
         }
 
     }
@@ -98,13 +91,6 @@ public class Sprite extends GameObject {
 
     public Sprite(Game game, String filePath, ObjectID objectId, Vector vec, Location location, int width, int height){
         super(objectId, vec, location, width, height);
-        this.filePath = filePath;
-        this.game = game;
-        load();
-    }
-
-    public Sprite(Game game, String filePath, ObjectID objectId, Vector vec, Location location, Alignment alignment, int width, int height){
-        super(objectId, vec, location, alignment, width, height);
         this.filePath = filePath;
         this.game = game;
         load();

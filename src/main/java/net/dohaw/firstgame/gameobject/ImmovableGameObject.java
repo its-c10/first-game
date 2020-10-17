@@ -2,12 +2,13 @@ package net.dohaw.firstgame.gameobject;
 
 import net.dohaw.firstgame.GameObject;
 import net.dohaw.firstgame.ObjectID;
+import net.dohaw.firstgame.utils.Collidable;
 import net.dohaw.firstgame.utils.Colorable;
 import net.dohaw.firstgame.utils.Location;
 
 import java.awt.*;
 
-public abstract class ImmovableGameObject extends GameObject {
+public abstract class ImmovableGameObject extends Collidable {
 
     public ImmovableGameObject(Location location, ObjectID objectId, int width, int height) {
         super(objectId, null, location, width, height);
@@ -21,13 +22,20 @@ public abstract class ImmovableGameObject extends GameObject {
     @Override
     public void render(Graphics g) {
 
-        Color color = Color.BLACK;
-        if(this instanceof Colorable){
-            color = ((Colorable)this).getColor();
+        if(inSkeletonMode){
+            g.setColor(Color.WHITE);
+            g.drawRect(location.getX(), location.getY(), width, height);
+        }else{
+
+            Color color = Color.BLACK;
+            if(this instanceof Colorable){
+                color = ((Colorable)this).getColor();
+            }
+
+            g.setColor(color);
+            g.fillRect(location.getX(), location.getY(), width, height);
         }
 
-        g.setColor(color);
-        g.fillRect(location.getX(), location.getY(), width, height);
     }
 
 }

@@ -1,20 +1,15 @@
 package net.dohaw.firstgame.utils;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class Vector {
 
-    private int x, y;
+    @Getter @Setter private int x, y;
 
     public Vector(int x, int y){
         this.x = x;
         this.y = y;
-    }
-
-    public int getX(){
-        return x;
-    }
-
-    public int getY(){
-        return y;
     }
 
     public void add(int additiveX, int additiveY){

@@ -2,7 +2,6 @@ package net.dohaw.firstgame;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.dohaw.firstgame.gameobject.sprites.Sprite;
 import net.dohaw.firstgame.utils.Alignment;
 import net.dohaw.firstgame.utils.Location;
 import net.dohaw.firstgame.utils.Vector;
@@ -20,6 +19,7 @@ public abstract class GameObject {
     @Getter final protected UUID OBJ_UUID;
     @Getter @Setter protected Alignment alignment;
     @Getter @Setter protected GameObject relative;
+    @Getter @Setter protected boolean isVisible = true;
 
     public GameObject(ObjectID objectId, Vector vec, Location location, int width, int height){
         this.objectId = objectId;
@@ -28,27 +28,6 @@ public abstract class GameObject {
         this.width = width;
         this.height = height;
         this.OBJ_UUID = UUID.randomUUID();
-    }
-
-    public GameObject(ObjectID objectId, Vector vec, Location location, Alignment alignment, int width, int height){
-        this.objectId = objectId;
-        this.vector = vec;
-        this.location = location;
-        this.width = width;
-        this.height = height;
-        this.OBJ_UUID = UUID.randomUUID();
-        this.alignment = alignment;
-    }
-
-    public GameObject(ObjectID objectId, Vector vec, Location location, Alignment alignment, GameObject relative, int width, int height){
-        this.objectId = objectId;
-        this.vector = vec;
-        this.location = location;
-        this.width = width;
-        this.height = height;
-        this.OBJ_UUID = UUID.randomUUID();
-        this.alignment = alignment;
-        this.relative = relative;
     }
 
     public abstract void tick();
@@ -69,10 +48,7 @@ public abstract class GameObject {
     /*
         For non-relative alignment
      */
-    public void align(Graphics g, Alignment alignment){
-
-        //int x = location.getX();
-        //int y = location.getY();
+    public void align(Alignment alignment){
 
         int centerX = getCenterX();
         int centerY = getCenterY();

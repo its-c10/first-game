@@ -4,8 +4,11 @@ import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.GameObject;
 import net.dohaw.firstgame.gameobject.MoveableGameObject;
 import net.dohaw.firstgame.gameobject.GameObjectHolder;
+import net.dohaw.firstgame.utils.Collidable;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
     Class with the visible game objects on the screen
@@ -18,37 +21,28 @@ public class GameObjectHandler extends GameObjectHolder {
         this.game = game;
     }
 
-    /*
-        I don't know if immovable objects will need to be able to tick in the future
-
-        Added a vector tick method for objects that move
-
-     */
     public void tick(){
         for(GameObject obj : objects){
             obj.tick();
-            if(obj instanceof MoveableGameObject){
-                ((MoveableGameObject) obj).vectorTick();
-            }
         }
     }
 
     public void render(Graphics g){
         for(int x = 0; x < objects.size(); x++){
-            objects.get(x).render(g);
+            GameObject obj = objects.get(x);
+            if(obj.isVisible()){
+                objects.get(x).render(g);
+            }
         }
     }
 
     /*
         Adds multiple objects from a object from an instance of game holder
      */
+
     public void addObjects(GameObjectHolder gameObjectHolder){
         gameObjectHolder.getObjects().forEach(obj -> objects.add(obj));
     }
-
-    /*
-        Using standard loop to avoid annoying Concurrent error that I don't know how to deal with lol
-     */
 
     /*
         The run() method constantly loops through objects. If we remove them, then they'll go away and we can add new ones to the scene
@@ -59,6 +53,16 @@ public class GameObjectHandler extends GameObjectHolder {
      */
     public void removeObjectsFromScene(){
         objects.clear();
+    }
+
+    public List<Collidable> getCollidables(){
+        List<Collidable> collidables = new ArrayList<>();
+        for(GameObject obj : getObjects()){
+            if(obj instanceof Collidable){
+                collidables.add((Collidable) obj);
+            }
+        }
+        return collidables;
     }
 
 }

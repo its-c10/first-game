@@ -15,10 +15,8 @@ public class TextObject extends GameObject {
 
     @Getter @Setter Font font;
     @Getter @Setter String text;
-    @Getter @Setter Alignment alignment;
     @Getter @Setter Color color;
     // No real reason to change this, which is why it's constant
-    private final GameObject RELATIVE;
 
     /*
         Most customizable constructor
@@ -27,31 +25,16 @@ public class TextObject extends GameObject {
         super(objectId, vec, location, 0, 0);
         this.font = font;
         this.text = text;
-        this.RELATIVE = null;
         this.color = color;
     }
 
     /*
         Non-movable. No relative
      */
-    public TextObject(Location location, Font font, String text, Alignment alignment, Color color){
+    public TextObject(Location location, Font font, String text, Color color){
         super(ObjectID.BACKGROUND, null, location, 0, 0);
         this.font = font;
         this.text = text;
-        this.alignment = alignment;
-        this.RELATIVE = null;
-        this.color = color;
-    }
-
-    /*
-        Non-movable. Relative here
-     */
-    public TextObject(Location location, Font font, String text, Alignment alignment, GameObject relative, Color color){
-        super(ObjectID.BACKGROUND, null, location, 0, 0);
-        this.font = font;
-        this.text = text;
-        this.alignment = alignment;
-        this.RELATIVE = relative;
         this.color = color;
     }
 
@@ -66,16 +49,11 @@ public class TextObject extends GameObject {
         g.setColor(color);
         g.setFont(font);
         
-        if(alignment != null){
-            align(g, alignment);
-        }
-
         g.drawString(text, location.getX(), location.getY());
 
     }
 
-    @Override
-    public void align(Graphics g, Alignment alignment){
+    public void alignText(Graphics g, Alignment alignment){
 
        if(alignment == Alignment.HORIZONTAL_CENTER){
            int strWidth = g.getFontMetrics(font).stringWidth(text);

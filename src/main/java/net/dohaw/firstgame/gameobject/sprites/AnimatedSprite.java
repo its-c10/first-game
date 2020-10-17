@@ -24,11 +24,6 @@ public class AnimatedSprite extends Sprite{
         sprite = images.get(index);
     }
 
-    public AnimatedSprite(Game game, String pathToFolder, ObjectID objectId, Vector vec, Location location, Alignment alignment, int width, int height){
-        super(game, pathToFolder, objectId, vec, location, alignment, width, height);
-        sprite = images.get(index);
-    }
-
     @Override
     protected void load(){
 
