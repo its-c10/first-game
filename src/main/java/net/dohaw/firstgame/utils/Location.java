@@ -26,6 +26,10 @@ public class Location {
         this.y += vector.getY();
     }
 
+    public Location clone(){
+        return new Location(this.x, this.y);
+    }
+
     @Override
     public boolean equals(Object other){
         if(other instanceof Location){

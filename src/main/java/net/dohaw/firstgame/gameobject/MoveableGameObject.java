@@ -37,16 +37,15 @@ public class MoveableGameObject extends Collidable {
     @Override
     public void tick() {
 
-        this.previousLocation = location;
+        this.previousLocation = location.clone();
         location.applyVector(vector);
+
         this.collisionRect = new Rectangle2D.Double(location.getX() - collision_coord_additive, location.getY() - collision_coord_additive, width + (collision_coord_additive * 2), height + (collision_coord_additive * 2));
 
         if(physicsHandler.isInCollision(this)){
-            System.out.println("PREVIOUS LOCATION: " + previousLocation.toString());
-            System.out.print("LOCATION: " + location.toString());
-            setLocation(previousLocation);
+            location = previousLocation;
         }else{
-            System.out.println("NO COLLISION WHAT-SO-EVER");
+            //System.out.println("NO COLLISION WHAT-SO-EVER");
         }
 
     }
@@ -55,6 +54,7 @@ public class MoveableGameObject extends Collidable {
     public void render(Graphics g) {
 
         g.setColor(Color.GREEN);
+        //System.out.print("LOCATION RENDERING: " + location.toString());
         g.fillRect(location.getX(), location.getY(), width, height);
 
         if(inSkeletonMode){
