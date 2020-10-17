@@ -1,12 +1,11 @@
 package net.dohaw.firstgame.utils;
 
-import net.dohaw.firstgame.gameobject.menubuttons.MenuButton;
-
 public class MouseInputUtils {
 
+    /*
     public static boolean isItemClicked(int xClicked, int yClicked, MenuButton menuObject){
 
-        Location menuLocation = menuObject.getLocation();
+        Location menuLocation = menuObject;
         int minXObject = menuLocation.getX();
         int minYObject = menuLocation.getY();
         int maxXObject = minXObject + menuObject.getWidth();
@@ -14,6 +13,6 @@ public class MouseInputUtils {
         int maxYObject = minYObject - menuObject.getHeight();
 
         return (xClicked > minXObject && xClicked < maxXObject) && (yClicked > minYObject && yClicked < maxYObject);
-    }
+    }*/
 
 }

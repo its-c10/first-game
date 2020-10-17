@@ -41,7 +41,7 @@ public class Sprite extends GameObject {
     @Override
     public void render(Graphics g) {
         if(alignment != null){
-            location = Location.align(alignment, this);
+            align(g, alignment);
         }
         g.drawImage(sprite, location.getX(), location.getY(), width, height, game);
     }

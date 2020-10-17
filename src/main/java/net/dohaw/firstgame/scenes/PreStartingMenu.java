@@ -7,7 +7,6 @@ import net.dohaw.firstgame.gameobject.BlankBackground;
 import net.dohaw.firstgame.gameobject.FPSCounter;
 import net.dohaw.firstgame.gameobject.TextObject;
 import net.dohaw.firstgame.gameobject.sprites.AnimatedSprite;
-import net.dohaw.firstgame.gameobject.sprites.Sprite;
 import net.dohaw.firstgame.utils.Alignment;
 import net.dohaw.firstgame.utils.Location;
 import net.dohaw.firstgame.utils.Vector;
@@ -24,10 +23,10 @@ public class PreStartingMenu extends Scene{
     @Override
     public void init() {
         objects.add(new BlankBackground(Color.YELLOW, Game.WIDTH, Game.HEIGHT));
-        objects.add(new TextObject(new Location(0, 100), new Font("Roboto", Font.PLAIN, 40), "Game", Alignment.CENTER, Color.BLACK));
-        objects.add(new TextObject(new Location(0, (int) (Game.HEIGHT * .75)), new Font("Roboto", Font.BOLD, 20), "Press anywhere to continue...", Alignment.CENTER, Color.BLACK));
-        objects.add(new FPSCounter(game));
+        objects.add(new TextObject(new Location(0, 100), new Font("Roboto", Font.PLAIN, 40), "Game", Alignment.HORIZONTAL_CENTER, Color.BLACK));
+        objects.add(new TextObject(new Location(0, (int) (Game.HEIGHT * .75)), new Font("Roboto", Font.BOLD, 20), "Press anywhere to continue...", Alignment.HORIZONTAL_CENTER, Color.BLACK));
         objects.add(new AnimatedSprite(game, "src/main/resources/arrow", ObjectID.BACKGROUND, new Vector(0, 0), new Location(0, 0), null, 100, 100));
+        objects.add(new FPSCounter(game));
         handler.addObjects(this);
     }
 

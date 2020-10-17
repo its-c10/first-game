@@ -20,12 +20,4 @@ public class FPSCounter extends TextObject{
         this.showing = true;
     }
 
-    /*
-        Runs with an interval
-     */
-    @Override
-    public void render(Graphics g) {
-        drawAccordingToAlignment(g);
-    }
-
 }

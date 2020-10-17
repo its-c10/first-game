@@ -65,22 +65,22 @@ public class TextObject extends GameObject {
 
         g.setColor(color);
         g.setFont(font);
-        drawAccordingToAlignment(g);
+        
+        if(alignment != null){
+            align(g, alignment);
+        }
+
+        g.drawString(text, location.getX(), location.getY());
 
     }
 
-    public void drawAccordingToAlignment(Graphics g){
+    @Override
+    public void align(Graphics g, Alignment alignment){
 
-        FontMetrics fm = g.getFontMetrics();
-        g.setColor(color);
-        g.setFont(font);
-
-        if(alignment == Alignment.CENTER){
-            int xLocation = (Game.WIDTH - fm.stringWidth(text)) / 2 - (font.getSize() / 2);
-            g.drawString(text, xLocation, location.getY());
-        }else{
-            g.drawString(text, location.getX(), location.getY());
-        }
+       if(alignment == Alignment.HORIZONTAL_CENTER){
+           int strWidth = g.getFontMetrics(font).stringWidth(text);
+           location.setX((Game.WIDTH / 2) - (strWidth / 2));
+       }
 
     }
 

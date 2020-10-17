@@ -39,6 +39,36 @@ public class Game extends Canvas implements Runnable {
         new Game();
     }
 
+    /*
+    private void doStuff(){
+
+        String[] arr = {"hello", "hell", "heaven", "goodbye"};
+        String currentPrefix;
+        String output = "";
+        int index = 1;
+        for(String word : arr){
+            String[] wordSplit = word.split("");
+            output += word.split("")[0];
+            for(String wordChecking : arr){
+                currentPrefix = getPrefix(wordSplit, index);
+                if(wordChecking.contains(currentPrefix)){
+
+                }
+            }
+        }
+
+    }
+
+    private String getPrefix(String[] arr, int currentIndex){
+        String prefix = "";
+        for(int x = 0; x < currentIndex; x++){
+            prefix += arr[x];
+        }
+        return prefix;
+    }
+
+    private boolean */
+
     public synchronized void start(){
         thread = new Thread(this);
         thread.start();

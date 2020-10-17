@@ -54,6 +54,51 @@ public abstract class GameObject {
     }
 
     /*
+        For non-relative alignment
+     */
+    public void align(Graphics g, Alignment alignment){
+
+        //int x = location.getX();
+        //int y = location.getY();
+
+        int centerX = getCenterX();
+        int centerY = getCenterY();
+
+        if(alignment == Alignment.HORIZONTAL_CENTER){
+            location.setX(centerX);
+        }else if(alignment == Alignment.CENTER){
+            location.setX(centerX);
+            location.setY(centerY);
+        }else if(alignment == Alignment.VERTICAL_CENTER) {
+            location.setY(centerY);
+        }
+
+    }
+
+    /*
+        For alignment that is relative to an object
+     */
+    public void alignRelative(GameObject gameObject, Alignment alignment, int xAdditive, int yAdditive){
+
+        Location relativeLocation = gameObject.getLocation();
+        int relativeX = relativeLocation.getX();
+        int relativeY = relativeLocation.getY();
+
+        if(alignment == Alignment.RIGHT){
+            location.setX(Game.WIDTH - width);
+        }else if(alignment == Alignment.RELATIVE_RIGHT){
+            location.setX(relativeX + xAdditive);
+        }else if(alignment == Alignment.RELATIVE_LEFT){
+            location.setX( (relativeX - width) - xAdditive);
+        }else if(alignment == Alignment.RELATIVE_TOP){
+            location.setY(relativeY + yAdditive);
+        }else if(alignment == Alignment.RELATIVE_BOTTOM){
+            location.setY( (relativeY - height) - yAdditive);
+        }
+
+    }
+
+    /*
         Where the Y would be if the object were centered vertically
      */
     public int getCenterY(){
@@ -64,7 +109,6 @@ public abstract class GameObject {
         Where the X would be if the object were centered horizontally
      */
     public int getCenterX(){
-        System.out.println("" + ((Game.WIDTH / 2) - (width / 2)) );
         return (Game.WIDTH / 2) - (width / 2);
     }
 

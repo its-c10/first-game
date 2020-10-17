@@ -10,7 +10,6 @@ import java.awt.event.MouseEvent;
 public class SquareMenuButton extends MenuButton {
 
     public SquareMenuButton(Game game, Location location, ObjectID objectId, int width, int height) {
-        super(game, location, objectId, width, height);
     }
 
     /**
