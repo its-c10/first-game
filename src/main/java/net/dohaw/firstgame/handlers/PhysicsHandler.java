@@ -4,6 +4,7 @@ import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.gameobject.MoveableGameObject;
 import net.dohaw.firstgame.scenes.Scene;
 import net.dohaw.firstgame.utils.Collidable;
+import net.dohaw.firstgame.utils.Vector;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;

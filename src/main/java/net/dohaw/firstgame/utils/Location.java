@@ -26,12 +26,18 @@ public class Location {
         this.y += vector.getY();
     }
 
+    @Override
     public boolean equals(Object other){
         if(other instanceof Location){
             Location loc = (Location) other;
             return loc.getX() == this.getX() && loc.getY() == this.getY();
         }
         return false;
+    }
+
+    @Override
+    public String toString(){
+        return "Location[X: " + x + " Y: " + y + "]";
     }
 
 }

@@ -38,12 +38,13 @@ public class MoveableGameObject extends Collidable {
     public void tick() {
 
         this.previousLocation = location;
-
         location.applyVector(vector);
         this.collisionRect = new Rectangle2D.Double(location.getX() - collision_coord_additive, location.getY() - collision_coord_additive, width + (collision_coord_additive * 2), height + (collision_coord_additive * 2));
 
         if(physicsHandler.isInCollision(this)){
-            this.location = previousLocation;
+            System.out.println("PREVIOUS LOCATION: " + previousLocation.toString());
+            System.out.print("LOCATION: " + location.toString());
+            setLocation(previousLocation);
         }else{
             System.out.println("NO COLLISION WHAT-SO-EVER");
         }
