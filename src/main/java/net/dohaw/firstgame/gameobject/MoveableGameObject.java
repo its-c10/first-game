@@ -39,7 +39,6 @@ public class MoveableGameObject extends Collidable {
 
         this.previousLocation = location.clone();
         location.applyVector(vector);
-
         this.collisionRect = new Rectangle2D.Double(location.getX() - collision_coord_additive, location.getY() - collision_coord_additive, width + (collision_coord_additive * 2), height + (collision_coord_additive * 2));
 
         if(physicsHandler.isInCollision(this)){

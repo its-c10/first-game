@@ -28,7 +28,7 @@ public class PhysicsHandler {
         for(Collidable obj : collidableItemsInScene){
             Rectangle2D collisionRect = obj.getCollisionRect();
             Rectangle2D moveableObjectCollisionRect = moveableGameObject.getCollisionRect();
-            if(collisionRect.contains(moveableObjectCollisionRect) && obj.isVisible()){
+            if(collisionRect.intersects(moveableObjectCollisionRect) && obj.isVisible()){
                 return true;
             }
         }
