@@ -2,6 +2,7 @@ package net.dohaw.firstgame;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.dohaw.firstgame.gameobject.sprites.Sprite;
 import net.dohaw.firstgame.utils.Alignment;
 import net.dohaw.firstgame.utils.Location;
 import net.dohaw.firstgame.utils.Vector;
@@ -78,22 +79,26 @@ public abstract class GameObject {
     /*
         For alignment that is relative to an object
      */
-    public void alignRelative(GameObject gameObject, Alignment alignment, int xAdditive, int yAdditive){
+    public void alignRelative(GameObject relativeObject, Alignment alignment, int xAdditive, int yAdditive){
 
-        Location relativeLocation = gameObject.getLocation();
+        Location relativeLocation = relativeObject.getLocation();
         int relativeX = relativeLocation.getX();
         int relativeY = relativeLocation.getY();
+        int relativeWidth = relativeObject.getWidth();
+        int relativeHeight = relativeObject.getHeight();
 
-        if(alignment == Alignment.RIGHT){
+        if(alignment == Alignment.RIGHT) {
             location.setX(Game.WIDTH - width);
+        }else if(alignment == Alignment.BOTTOM){
+            location.setY(Game.HEIGHT - height);
         }else if(alignment == Alignment.RELATIVE_RIGHT){
-            location.setX(relativeX + xAdditive);
+            location.setX( (relativeX + relativeWidth) + xAdditive);
         }else if(alignment == Alignment.RELATIVE_LEFT){
-            location.setX( (relativeX - width) - xAdditive);
+            location.setX( (relativeX - relativeWidth) - xAdditive);
         }else if(alignment == Alignment.RELATIVE_TOP){
             location.setY(relativeY + yAdditive);
         }else if(alignment == Alignment.RELATIVE_BOTTOM){
-            location.setY( (relativeY - height) - yAdditive);
+            location.setY( (relativeY - relativeHeight) - yAdditive);
         }
 
     }

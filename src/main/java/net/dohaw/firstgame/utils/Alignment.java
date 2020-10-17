@@ -9,6 +9,7 @@ public enum Alignment {
     RELATIVE_LEFT,
     RELATIVE_TOP,
     RELATIVE_BOTTOM,
+    BOTTOM,
     VERTICAL_CENTER;
 
 }

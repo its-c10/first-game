@@ -54,6 +54,8 @@ public class GameObjectHandler extends GameObjectHolder {
         The run() method constantly loops through objects. If we remove them, then they'll go away and we can add new ones to the scene
         Currently there's a bug to where you if you clear the objects, they stay there rendered for whatever reason. Doesn't necessarily stop what I want to do in the future.
         Will fix this in this future. I don't think it's a huge problem at the moment though. I can just add new objects on top of the old ones :)
+
+        ** Now that I think about it, I don't think dispose is supposed to clear the new objects **
      */
     public void removeObjectsFromScene(){
         objects.clear();

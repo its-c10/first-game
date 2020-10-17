@@ -123,7 +123,12 @@ public class Game extends Canvas implements Runnable {
 
             if(System.currentTimeMillis() - timer > 1000){
                 timer += 1000;
-                fpsCounter.setText("FPS: " + frames);
+                /*
+                    Sometimes fpsCounter wouldn't be initialized yet (rarely). I assume this is because sometimes this code gets ran before the initialization of it.
+                 */
+                if(fpsCounter != null){
+                    fpsCounter.setText("FPS: " + frames);
+                }
                 frames = 0;
             }
 
