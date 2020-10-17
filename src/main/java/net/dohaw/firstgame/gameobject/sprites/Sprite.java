@@ -29,6 +29,7 @@ public class Sprite extends GameObject {
         private String path;
         private Game game;
         private ObjectID id;
+        private GameObject relative;
 
         public SpriteBuilder(Game game, String path){
             this.game = game;
@@ -55,6 +56,11 @@ public class Sprite extends GameObject {
             return this;
         }
 
+        public SpriteBuilder setRelative(GameObject relative){
+            this.relative = relative;
+            return this;
+        }
+
         public SpriteBuilder setHeight(int height){
             this.height = height;
             return this;
@@ -72,8 +78,14 @@ public class Sprite extends GameObject {
 
         public Sprite create(){
             if(alignment != null){
+                if(isAnimated){
+                    return new AnimatedSprite(game, path, id, vector, location, alignment, width, height);
+                }
                 return new Sprite(game, path, id, vector, location, alignment, width, height);
             }else{
+                if(isAnimated){
+                    return new AnimatedSprite(game, path, id, vector, location, width, height);
+                }
                 return new Sprite(game, path, id, vector, location, width, height);
             }
         }
@@ -105,10 +117,6 @@ public class Sprite extends GameObject {
 
     @Override
     public void render(Graphics g) {
-        if(alignment != null){
-
-            align(g, alignment);
-        }
         g.drawImage(sprite, location.getX(), location.getY(), width, height, game);
     }
 

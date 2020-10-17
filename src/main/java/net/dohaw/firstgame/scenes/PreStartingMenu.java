@@ -23,11 +23,11 @@ public class PreStartingMenu extends Scene{
 
     @Override
     public void init() {
+
         objects.add(new BlankBackground(Color.GRAY, Game.WIDTH, Game.HEIGHT));
 
         Sprite backgroundSprite = new Sprite.SpriteBuilder(game, "src/main/resources/premenu background.png")
-            .setAlignment(Alignment.BOTTOM)
-            .setHeight(180)
+            .setHeight(Game.HEIGHT - 25)
             .setWidth(Game.WIDTH)
             .setIsAnimated(false)
             .setLocation(new Location(0, 0))
@@ -36,9 +36,9 @@ public class PreStartingMenu extends Scene{
             .create();
 
         objects.add(backgroundSprite);
+
         objects.add(new TextObject(new Location(0, 100), new Font("Roboto", Font.PLAIN, 40), "Game", Alignment.HORIZONTAL_CENTER, Color.BLACK));
         objects.add(new TextObject(new Location(0, (int) (Game.HEIGHT * .75)), new Font("Roboto", Font.BOLD, 20), "Press anywhere to continue...", Alignment.HORIZONTAL_CENTER, Color.BLACK));
-        objects.add(new AnimatedSprite(game, "src/main/resources/arrow", ObjectID.BACKGROUND, new Vector(0, 0), new Location(0, 0), null, 100, 100));
         objects.add(new FPSCounter(game));
         handler.addObjects(this);
     }

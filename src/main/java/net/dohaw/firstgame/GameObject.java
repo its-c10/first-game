@@ -19,6 +19,7 @@ public abstract class GameObject {
     @Getter @Setter protected int height;
     @Getter final protected UUID OBJ_UUID;
     @Getter @Setter protected Alignment alignment;
+    @Getter @Setter protected GameObject relative;
 
     public GameObject(ObjectID objectId, Vector vec, Location location, int width, int height){
         this.objectId = objectId;
@@ -37,6 +38,17 @@ public abstract class GameObject {
         this.height = height;
         this.OBJ_UUID = UUID.randomUUID();
         this.alignment = alignment;
+    }
+
+    public GameObject(ObjectID objectId, Vector vec, Location location, Alignment alignment, GameObject relative, int width, int height){
+        this.objectId = objectId;
+        this.vector = vec;
+        this.location = location;
+        this.width = width;
+        this.height = height;
+        this.OBJ_UUID = UUID.randomUUID();
+        this.alignment = alignment;
+        this.relative = relative;
     }
 
     public abstract void tick();
@@ -77,28 +89,36 @@ public abstract class GameObject {
     }
 
     /*
-        For alignment that is relative to an object
+        For alignment that is relative to an object or when you want the object to be relative to the scene, but add on to the x or y
      */
-    public void alignRelative(GameObject relativeObject, Alignment alignment, int xAdditive, int yAdditive){
+    public void alignRelative(Alignment alignment, int xAdditive, int yAdditive){
 
-        Location relativeLocation = relativeObject.getLocation();
-        int relativeX = relativeLocation.getX();
-        int relativeY = relativeLocation.getY();
-        int relativeWidth = relativeObject.getWidth();
-        int relativeHeight = relativeObject.getHeight();
+        if(alignment == Alignment.RIGHT || alignment == Alignment.BOTTOM){
 
-        if(alignment == Alignment.RIGHT) {
-            location.setX(Game.WIDTH - width);
-        }else if(alignment == Alignment.BOTTOM){
-            location.setY(Game.HEIGHT - height);
-        }else if(alignment == Alignment.RELATIVE_RIGHT){
-            location.setX( (relativeX + relativeWidth) + xAdditive);
-        }else if(alignment == Alignment.RELATIVE_LEFT){
-            location.setX( (relativeX - relativeWidth) - xAdditive);
-        }else if(alignment == Alignment.RELATIVE_TOP){
-            location.setY(relativeY + yAdditive);
-        }else if(alignment == Alignment.RELATIVE_BOTTOM){
-            location.setY( (relativeY - relativeHeight) - yAdditive);
+            if(alignment == Alignment.RIGHT) {
+                location.setX((Game.WIDTH - width));
+            }else{
+                location.setY(Game.HEIGHT - height);
+            }
+
+        }else{
+
+            Location relativeLocation = relative.getLocation();
+            int relativeX = relativeLocation.getX();
+            int relativeY = relativeLocation.getY();
+            int relativeWidth = relative.getWidth();
+            int relativeHeight = relative.getHeight();
+
+            if(alignment == Alignment.RELATIVE_RIGHT){
+                location.setX( (relativeX + relativeWidth) + xAdditive);
+            }else if(alignment == Alignment.RELATIVE_LEFT){
+                location.setX( (relativeX - relativeWidth) - xAdditive);
+            }else if(alignment == Alignment.RELATIVE_TOP){
+                location.setY(relativeY + yAdditive);
+            }else if(alignment == Alignment.RELATIVE_BOTTOM){
+                location.setY( (relativeY - relativeHeight) - yAdditive);
+            }
+
         }
 
     }
