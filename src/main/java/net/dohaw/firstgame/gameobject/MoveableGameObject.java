@@ -34,9 +34,10 @@ public class MoveableGameObject extends Collidable {
     /*
         Temp
      */
-    public MoveableGameObject(){
-        super(ObjectID.BACKGROUND, Vector.IMMOVABLE, Location.NONE, 20 , 20);
+    public MoveableGameObject(Location location){
+        super(ObjectID.BACKGROUND, Vector.IMMOVABLE, location, 20 , 20);
         this.previousLocation = Location.NONE;
+        this.collision_coord_additive = 10;
     }
 
     public void initPhysics(Scene scene){
@@ -46,28 +47,40 @@ public class MoveableGameObject extends Collidable {
     @Override
     public void tick() {
 
+
         /*
             Had to make the clone function in order to fix the cancellation of velocity
          */
         this.previousLocation = location.clone();
 
-        location.applyVector(vector);
         this.collisionRect = new Rectangle2D.Double(location.getX() - collision_coord_additive, location.getY() - collision_coord_additive, width + (collision_coord_additive * 2), height + (collision_coord_additive * 2));
 
         /*
             If the object comes in contact with another object, the applied velocity is essentially canceled by setting the location of the object to it's previous location
          */
+        /*
         if(physicsHandler.isInCollision(this)){
             location = previousLocation.clone();
-            location.setY(location.getY() - 2);
-        }
+            location.setX(location.getX() + 1);
+        }else{
+            MoveableGameObject temp = new MoveableGameObject();
+            Location tempLocation = location.clone();
+            tempLocation.applyVector(vector);
+            if(physicsHandler.isInCollision(temp)){
+                System.out.println("YEEE");
+               this.location = previousLocation;
+            }else{
+                //location.applyVector(vector);
+            }
+        }*/
 
         /*
             Teleports you back to the center if you fall off
          */
+        /*
         if(location.getY() > Game.HEIGHT){
             align(Alignment.CENTER);
-        }
+        }*/
 
     }
 

@@ -14,7 +14,7 @@ public abstract class Collidable extends GameObject {
     @Getter @Setter protected int collision_coord_additive;
 
     @Getter @Setter protected boolean inSkeletonMode;
-    @Getter protected Rectangle2D collisionRect;
+    @Getter @Setter protected Rectangle2D collisionRect;
 
     public Collidable(ObjectID objectId, Vector vec, Location location, int width, int height) {
         super(objectId, vec, location, width, height);

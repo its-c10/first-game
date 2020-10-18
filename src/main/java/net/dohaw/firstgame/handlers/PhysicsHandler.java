@@ -31,6 +31,9 @@ public class PhysicsHandler {
 
             boolean isCurrentlyColliding = collisionRect.intersects(moveableObjectCollisionRect) && obj.isVisible();
 
+            System.out.println(Math.random());
+            System.out.println("RECT: " + collisionRect.toString());
+
             if(moveableGameObject instanceof Player && isCurrentlyColliding){
                 ((Player)moveableGameObject).setColliding(true);
             }

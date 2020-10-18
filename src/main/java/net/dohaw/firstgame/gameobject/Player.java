@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.geom.Rectangle2D;
 
 public class Player extends MoveableGameObject implements MouseListener, KeyListener {
 
@@ -58,8 +59,9 @@ public class Player extends MoveableGameObject implements MouseListener, KeyList
                 break;
         }
 
-        MoveableGameObject temp = new MoveableGameObject();
-        temp.setLocation(toBeLocation);
+        MoveableGameObject temp = new MoveableGameObject(toBeLocation);
+        temp.setCollisionRect(new Rectangle2D.Double(toBeLocation.getX() - collision_coord_additive, toBeLocation.getY() - collision_coord_additive, width + (collision_coord_additive * 2), height + (collision_coord_additive * 2)));
+
         if(!physicsHandler.isInCollision(temp)) {
             this.location = toBeLocation;
         }

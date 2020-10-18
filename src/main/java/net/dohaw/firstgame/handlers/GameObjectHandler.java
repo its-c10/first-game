@@ -2,6 +2,7 @@ package net.dohaw.firstgame.handlers;
 
 import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.GameObject;
+import net.dohaw.firstgame.ObjectID;
 import net.dohaw.firstgame.gameobject.MoveableGameObject;
 import net.dohaw.firstgame.gameobject.GameObjectHolder;
 import net.dohaw.firstgame.gameobject.Player;
@@ -57,9 +58,9 @@ public class GameObjectHandler extends GameObjectHolder {
 
     }
 
-    private Player getPlayerFromScene(){
+    public Player getPlayerFromScene(){
         for(GameObject obj : objects){
-            if(obj instanceof Player){
+            if(obj.getObjectId() == ObjectID.PLAYER){
                 return (Player) obj;
             }
         }
@@ -88,7 +89,7 @@ public class GameObjectHandler extends GameObjectHolder {
     public List<Collidable> getCollidables(){
         List<Collidable> collidables = new ArrayList<>();
         for(GameObject obj : getObjects()){
-            if(obj instanceof Collidable){
+            if(obj instanceof Collidable && !(obj instanceof Player)){
                 collidables.add((Collidable) obj);
             }
         }

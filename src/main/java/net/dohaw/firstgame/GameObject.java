@@ -35,7 +35,7 @@ public abstract class GameObject {
 
     @Override
     public String toString(){
-        return "GAME OBJECT | ID: " + objectId.toString();
+        return "[GAME OBJECT ID: " + objectId.toString() + "]";
     }
 
     public boolean equals(Object other){
