@@ -12,7 +12,7 @@ public class ImmovableGameObject extends Collidable {
 
     public ImmovableGameObject(Location location, ObjectID objectId, int width, int height) {
         super(objectId, null, location, width, height);
-        this.collision_coord_additive = 2;
+        this.collision_coord_additive = 10;
     }
 
     /*

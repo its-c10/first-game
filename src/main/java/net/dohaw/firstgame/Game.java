@@ -69,13 +69,13 @@ public class Game extends Canvas implements Runnable {
 
     private boolean */
 
-    public synchronized void start(){
+    public synchronized void start() {
         thread = new Thread(this);
         thread.start();
         running = true;
     }
 
-    public synchronized void stop(){
+    public synchronized void stop() {
         try{
             thread.join();
             running = false;

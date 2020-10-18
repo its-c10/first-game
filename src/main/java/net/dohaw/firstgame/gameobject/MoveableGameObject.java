@@ -6,6 +6,7 @@ import net.dohaw.firstgame.GameObject;
 import net.dohaw.firstgame.ObjectID;
 import net.dohaw.firstgame.handlers.PhysicsHandler;
 import net.dohaw.firstgame.scenes.Scene;
+import net.dohaw.firstgame.utils.Alignment;
 import net.dohaw.firstgame.utils.Collidable;
 import net.dohaw.firstgame.utils.Location;
 import net.dohaw.firstgame.utils.Vector;
@@ -24,9 +25,9 @@ public class MoveableGameObject extends Collidable {
 
         int vecCurrentY = vec.getY();
         int newY = Math.max(1, vecCurrentY);
-        vec.setY(newY);
+        //vec.setY(newY);
 
-        this.collision_coord_additive = 5;
+        this.collision_coord_additive = 10;
 
     }
 
@@ -37,14 +38,27 @@ public class MoveableGameObject extends Collidable {
     @Override
     public void tick() {
 
+        /*
+            Had to make the clone function in order to fix the cancellation of velocity
+         */
         this.previousLocation = location.clone();
+
         location.applyVector(vector);
         this.collisionRect = new Rectangle2D.Double(location.getX() - collision_coord_additive, location.getY() - collision_coord_additive, width + (collision_coord_additive * 2), height + (collision_coord_additive * 2));
 
+        /*
+            If the object comes in contact with another object, the applied velocity is essentially canceled by setting the location of the object to it's previous location
+         */
         if(physicsHandler.isInCollision(this)){
             location = previousLocation;
-        }else{
-            //System.out.println("NO COLLISION WHAT-SO-EVER");
+            //System.out.println("IN COLLISION");
+        }
+
+        /*
+            Teleports you back to the center if you fall off
+         */
+        if(location.getY() > Game.HEIGHT){
+            align(Alignment.CENTER);
         }
 
     }
@@ -53,7 +67,6 @@ public class MoveableGameObject extends Collidable {
     public void render(Graphics g) {
 
         g.setColor(Color.GREEN);
-        //System.out.print("LOCATION RENDERING: " + location.toString());
         g.fillRect(location.getX(), location.getY(), width, height);
 
         if(inSkeletonMode){

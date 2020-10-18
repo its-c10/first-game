@@ -4,12 +4,13 @@ import lombok.Getter;
 import lombok.Setter;
 import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.ObjectID;
+import net.dohaw.firstgame.gameobject.text.TextObject;
 import net.dohaw.firstgame.utils.Location;
 import net.dohaw.firstgame.utils.Vector;
 
 import java.awt.*;
 
-public class FPSCounter extends TextObject{
+public class FPSCounter extends TextObject {
 
     private Game game;
     @Setter @Getter private boolean showing = false;

@@ -2,11 +2,8 @@ package net.dohaw.firstgame.scenes;
 
 import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.ObjectID;
-import net.dohaw.firstgame.gameobject.BlankBackground;
-import net.dohaw.firstgame.gameobject.FPSCounter;
-import net.dohaw.firstgame.gameobject.ImmovableGameObject;
-import net.dohaw.firstgame.gameobject.Player;
-import net.dohaw.firstgame.handlers.PhysicsHandler;
+import net.dohaw.firstgame.gameobject.*;
+import net.dohaw.firstgame.gameobject.text.TextObject;
 import net.dohaw.firstgame.utils.Alignment;
 import net.dohaw.firstgame.utils.Location;
 import net.dohaw.firstgame.utils.Vector;
@@ -33,13 +30,22 @@ public class TestingGrounds extends Scene{
         ground.align(Alignment.HORIZONTAL_CENTER);
         objects.add(ground);
 
+        ImmovableGameObject wall = new ImmovableGameObject(new Location(170, 300), ObjectID.BACKGROUND, 50, 50);
+        wall.setInSkeletonMode(true);
+        //wall.setRelative(background);
+        //wall.alignRelative(Alignment.RELATIVE_RIGHT, 0, 0);
+        objects.add(wall);
+
         Player player = new Player(new Vector(0, 0), new Location(0, 0), 30, 30);
         player.initPhysics(this);
         player.align(Alignment.CENTER);
         player.setInSkeletonMode(true);
+
+        game.addKeyListener(player);
+        game.addMouseListener(player);
         objects.add(player);
 
-        objects.add(new FPSCounter(game));
+        objects.add(game.getFpsCounter());
 
         handler.addObjects(this);
 

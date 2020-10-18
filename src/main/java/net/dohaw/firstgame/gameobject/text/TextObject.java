@@ -1,4 +1,4 @@
-package net.dohaw.firstgame.gameobject;
+package net.dohaw.firstgame.gameobject.text;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -48,7 +48,7 @@ public class TextObject extends GameObject {
 
         g.setColor(color);
         g.setFont(font);
-        
+
         g.drawString(text, location.getX(), location.getY());
 
     }

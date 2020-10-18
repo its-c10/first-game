@@ -1,12 +1,9 @@
 package net.dohaw.firstgame.scenes;
 
 import net.dohaw.firstgame.Game;
-import net.dohaw.firstgame.GameObject;
 import net.dohaw.firstgame.ObjectID;
-import net.dohaw.firstgame.gameobject.BlankBackground;
 import net.dohaw.firstgame.gameobject.FPSCounter;
-import net.dohaw.firstgame.gameobject.TextObject;
-import net.dohaw.firstgame.gameobject.sprites.AnimatedSprite;
+import net.dohaw.firstgame.gameobject.text.TextObject;
 import net.dohaw.firstgame.gameobject.sprites.Sprite;
 import net.dohaw.firstgame.utils.Alignment;
 import net.dohaw.firstgame.utils.Location;

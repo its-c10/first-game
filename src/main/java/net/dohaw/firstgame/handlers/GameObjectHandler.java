@@ -4,7 +4,10 @@ import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.GameObject;
 import net.dohaw.firstgame.gameobject.MoveableGameObject;
 import net.dohaw.firstgame.gameobject.GameObjectHolder;
+import net.dohaw.firstgame.gameobject.Player;
+import net.dohaw.firstgame.gameobject.text.TextObject;
 import net.dohaw.firstgame.utils.Collidable;
+import net.dohaw.firstgame.utils.Location;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -28,12 +31,35 @@ public class GameObjectHandler extends GameObjectHolder {
     }
 
     public void render(Graphics g){
+
         for(int x = 0; x < objects.size(); x++){
             GameObject obj = objects.get(x);
             if(obj.isVisible()){
                 objects.get(x).render(g);
             }
         }
+
+        Player playerFromScene = getPlayerFromScene();
+        if(playerFromScene != null){
+
+            Location playerLocation = playerFromScene.getLocation();
+
+            g.setColor(Color.GRAY);
+            g.setFont(new Font("Roboto", Font.PLAIN, 15));
+            g.drawString(playerLocation.toString(), 30, 30);
+            g.drawString("Colliding: " + playerFromScene.isColliding(), 30, 45);
+
+        }
+
+    }
+
+    private Player getPlayerFromScene(){
+        for(GameObject obj : objects){
+            if(obj instanceof Player){
+                return (Player) obj;
+            }
+        }
+        return null;
     }
 
     /*

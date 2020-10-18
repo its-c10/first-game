@@ -86,7 +86,7 @@ public abstract class GameObject {
             int relativeHeight = relative.getHeight();
 
             if(alignment == Alignment.RELATIVE_RIGHT){
-                location.setX( (relativeX + relativeWidth) + xAdditive);
+                this.location.setX( (relativeX + relativeWidth) + xAdditive);
             }else if(alignment == Alignment.RELATIVE_LEFT){
                 location.setX( (relativeX - relativeWidth) - xAdditive);
             }else if(alignment == Alignment.RELATIVE_TOP){
