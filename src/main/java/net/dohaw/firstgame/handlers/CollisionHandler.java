@@ -43,14 +43,8 @@ public class CollisionHandler {
 
             boolean isCurrentlyColliding = collisionRect.intersects(moveableObjectCollisionRect) && obj.isVisible();
 
-            if(moveableGameObject instanceof Collidable && isCurrentlyColliding){
-                moveableGameObject.setColliding(true);
-                moveableGameObject.setOnGround(isOnGround(collisionRect, moveableObjectCollisionRect));
-                System.out.println("ON GROUND: " + moveableGameObject.isOnGround());
-                System.out.println(moveableGameObject.toString());
-            }
-
             if(isCurrentlyColliding){
+                moveableGameObject.setColliding(true);
                 moveableGameObject.setOnGround(isOnGround(collisionRect, moveableObjectCollisionRect));
                 return true;
             }
@@ -58,7 +52,7 @@ public class CollisionHandler {
         }
 
         if(moveableGameObject instanceof Player){
-            ((Player)moveableGameObject).setColliding(false);
+            moveableGameObject.setColliding(false);
         }
 
         return false;
