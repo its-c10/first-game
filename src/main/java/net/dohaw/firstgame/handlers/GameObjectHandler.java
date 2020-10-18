@@ -39,6 +39,9 @@ public class GameObjectHandler extends GameObjectHolder {
             }
         }
 
+        /*
+            Debug messages
+         */
         Player playerFromScene = getPlayerFromScene();
         if(playerFromScene != null){
 
@@ -46,8 +49,9 @@ public class GameObjectHandler extends GameObjectHolder {
 
             g.setColor(Color.GRAY);
             g.setFont(new Font("Roboto", Font.PLAIN, 15));
-            g.drawString(playerLocation.toString(), 30, 30);
-            g.drawString("Colliding: " + playerFromScene.isColliding(), 30, 45);
+            g.drawString("LOCATION: " + playerLocation.toString(), 30, 30);
+            g.drawString("PREVIOUS LOCATION: " + playerFromScene.getPreviousLocation().toString(), 30, 45);
+            g.drawString("Colliding: " + playerFromScene.isColliding(), 30, 60);
 
         }
 

@@ -41,25 +41,27 @@ public class Player extends MoveableGameObject implements MouseListener, KeyList
     @Override
     public void keyPressed(KeyEvent e) {
 
-        Location previousLocation = location.clone();
+        Location toBeLocation = location.clone();
         int keyCode = e.getKeyCode();
         switch(keyCode){
             case 65:
-                location.setX(location.getX() - 3);
+                toBeLocation.setX(location.getX() - 3);
                 break;
             case 68:
-                location.setX(location.getX() + 3);
+                toBeLocation.setX(location.getX() + 3);
                 break;
             case 32:
-                location.setY(location.getY() - 3);
+                toBeLocation.setY(location.getY() - 3);
                 break;
             case 83:
-                location.setY(location.getY() + 3);
+                toBeLocation.setY(location.getY() + 3);
                 break;
         }
 
-        if(physicsHandler.isInCollision(this)) {
-            location = previousLocation;
+        MoveableGameObject temp = new MoveableGameObject();
+        temp.setLocation(toBeLocation);
+        if(!physicsHandler.isInCollision(temp)) {
+            this.location = toBeLocation;
         }
 
     }

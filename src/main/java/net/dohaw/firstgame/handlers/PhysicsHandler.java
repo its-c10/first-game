@@ -29,13 +29,13 @@ public class PhysicsHandler {
             Rectangle2D collisionRect = obj.getCollisionRect();
             Rectangle2D moveableObjectCollisionRect = moveableGameObject.getCollisionRect();
 
-            boolean isColliding = collisionRect.intersects(moveableObjectCollisionRect) && obj.isVisible();
+            boolean isCurrentlyColliding = collisionRect.intersects(moveableObjectCollisionRect) && obj.isVisible();
 
-            if(moveableGameObject instanceof Player && isColliding){
+            if(moveableGameObject instanceof Player && isCurrentlyColliding){
                 ((Player)moveableGameObject).setColliding(true);
             }
 
-            if(isColliding){
+            if(isCurrentlyColliding){
                 return true;
             }
 
@@ -46,6 +46,10 @@ public class PhysicsHandler {
         }
 
         return false;
+    }
+
+    public void adjustAccordingToCollision(){
+
     }
 
     /*

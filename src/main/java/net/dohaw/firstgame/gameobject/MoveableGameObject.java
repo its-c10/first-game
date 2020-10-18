@@ -16,19 +16,27 @@ import java.awt.geom.Rectangle2D;
 
 public class MoveableGameObject extends Collidable {
 
-    @Getter private Location previousLocation;
+    @Getter protected Location previousLocation;
 
     public MoveableGameObject(ObjectID objectId, Vector vec, Location location, int height, int width) {
 
         super(objectId, vec, location, height, width);
-        this.previousLocation = location;
+        this.previousLocation = Location.NONE;
 
         int vecCurrentY = vec.getY();
         int newY = Math.max(1, vecCurrentY);
-        //vec.setY(newY);
+        vec.setY(newY);
 
         this.collision_coord_additive = 10;
 
+    }
+
+    /*
+        Temp
+     */
+    public MoveableGameObject(){
+        super(ObjectID.BACKGROUND, Vector.IMMOVABLE, Location.NONE, 20 , 20);
+        this.previousLocation = Location.NONE;
     }
 
     public void initPhysics(Scene scene){
@@ -50,8 +58,8 @@ public class MoveableGameObject extends Collidable {
             If the object comes in contact with another object, the applied velocity is essentially canceled by setting the location of the object to it's previous location
          */
         if(physicsHandler.isInCollision(this)){
-            location = previousLocation;
-            //System.out.println("IN COLLISION");
+            location = previousLocation.clone();
+            location.setY(location.getY() - 2);
         }
 
         /*
