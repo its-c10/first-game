@@ -14,7 +14,7 @@ import java.awt.geom.Rectangle2D;
 
 public class Player extends MoveableGameObject implements MouseListener, KeyListener {
 
-    @Getter @Setter boolean isColliding;
+    @Getter @Setter boolean canJump = true;
 
     public Player(Vector vec, Location location, int height, int width) {
         super(ObjectID.PLAYER, vec, location, height, width);
@@ -45,15 +45,26 @@ public class Player extends MoveableGameObject implements MouseListener, KeyList
         Location toBeLocation = location.clone();
         int keyCode = e.getKeyCode();
         switch(keyCode){
+            //A
             case 65:
                 toBeLocation.setX(location.getX() - 3);
                 break;
+            //D
             case 68:
                 toBeLocation.setX(location.getX() + 3);
                 break;
+            //Space
             case 32:
-                toBeLocation.setY(location.getY() - 3);
+
+                /*
+                    When they jump
+                 */
+                if(isOnGround){
+                    toBeLocation.setY(location.getY() - 10);
+                }
+
                 break;
+            //S
             case 83:
                 toBeLocation.setY(location.getY() + 3);
                 break;
@@ -62,7 +73,7 @@ public class Player extends MoveableGameObject implements MouseListener, KeyList
         MoveableGameObject temp = new MoveableGameObject(toBeLocation);
         temp.setCollisionRect(new Rectangle2D.Double(toBeLocation.getX() - collision_coord_additive, toBeLocation.getY() - collision_coord_additive, width + (collision_coord_additive * 2), height + (collision_coord_additive * 2)));
 
-        if(!physicsHandler.isInCollision(temp)) {
+        if(!collisionHandler.isInCollision(temp)) {
             this.location = toBeLocation;
         }
 
@@ -130,4 +141,5 @@ public class Player extends MoveableGameObject implements MouseListener, KeyList
     public void mouseExited(MouseEvent e) {
 
     }
+
 }

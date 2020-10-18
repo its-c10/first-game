@@ -4,13 +4,16 @@ import lombok.Getter;
 import lombok.Setter;
 import net.dohaw.firstgame.GameObject;
 import net.dohaw.firstgame.ObjectID;
-import net.dohaw.firstgame.handlers.PhysicsHandler;
+import net.dohaw.firstgame.handlers.CollisionHandler;
 
 import java.awt.geom.Rectangle2D;
 
 public abstract class Collidable extends GameObject {
 
-    protected PhysicsHandler physicsHandler;
+    protected CollisionHandler collisionHandler;
+
+    @Getter @Setter boolean isColliding;
+    @Getter @Setter protected boolean isOnGround;
     @Getter @Setter protected int collision_coord_additive;
 
     @Getter @Setter protected boolean inSkeletonMode;

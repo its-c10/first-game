@@ -1,20 +1,31 @@
 package net.dohaw.firstgame.handlers;
 
+import javafx.geometry.Side;
 import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.gameobject.MoveableGameObject;
 import net.dohaw.firstgame.gameobject.Player;
 import net.dohaw.firstgame.scenes.Scene;
 import net.dohaw.firstgame.utils.Collidable;
+import net.dohaw.firstgame.utils.GameRectangle2D;
+import net.dohaw.firstgame.utils.Vector;
 
+import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.List;
 
-public class PhysicsHandler {
+public class CollisionHandler {
 
     private GameObjectHandler handler;
     private Game game;
 
-    public PhysicsHandler(Scene scene){
+    public enum CollisionFrom{
+        FROM_LEFT,
+        FROM_RIGHT,
+        FROM_TOP,
+        FROM_BOTTOM,
+    }
+
+    public CollisionHandler(Scene scene){
         this.handler = scene.getHandler();
         this.game = scene.getGame();
     }
@@ -22,6 +33,7 @@ public class PhysicsHandler {
     public boolean isInCollision(MoveableGameObject moveableGameObject){
 
         List<Collidable> collidableItemsInScene = handler.getCollidables();
+        // Removes the object so that it doesn't compare itself
         collidableItemsInScene.removeIf(obj -> obj.getOBJ_UUID() == moveableGameObject.getOBJ_UUID());
 
         for(Collidable obj : collidableItemsInScene){
@@ -31,14 +43,15 @@ public class PhysicsHandler {
 
             boolean isCurrentlyColliding = collisionRect.intersects(moveableObjectCollisionRect) && obj.isVisible();
 
-            System.out.println(Math.random());
-            System.out.println("RECT: " + collisionRect.toString());
-
-            if(moveableGameObject instanceof Player && isCurrentlyColliding){
-                ((Player)moveableGameObject).setColliding(true);
+            if(moveableGameObject instanceof Collidable && isCurrentlyColliding){
+                moveableGameObject.setColliding(true);
+                moveableGameObject.setOnGround(isOnGround(collisionRect, moveableObjectCollisionRect));
+                System.out.println("ON GROUND: " + moveableGameObject.isOnGround());
+                System.out.println(moveableGameObject.toString());
             }
 
             if(isCurrentlyColliding){
+                moveableGameObject.setOnGround(isOnGround(collisionRect, moveableObjectCollisionRect));
                 return true;
             }
 
@@ -50,9 +63,9 @@ public class PhysicsHandler {
 
         return false;
     }
-
-    public void adjustAccordingToCollision(){
-
+    public boolean isOnGround(Rectangle2D collisionRect, Rectangle2D moveableObjectRect){
+        Line2D line = GameRectangle2D.getSide(moveableObjectRect, Side.BOTTOM);
+        return line.intersects(collisionRect);
     }
 
     /*

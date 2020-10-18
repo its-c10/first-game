@@ -1,10 +1,8 @@
 package net.dohaw.firstgame.gameobject;
 
-import lombok.Getter;
 import net.dohaw.firstgame.Game;
-import net.dohaw.firstgame.GameObject;
 import net.dohaw.firstgame.ObjectID;
-import net.dohaw.firstgame.handlers.PhysicsHandler;
+import net.dohaw.firstgame.handlers.CollisionHandler;
 import net.dohaw.firstgame.scenes.Scene;
 import net.dohaw.firstgame.utils.Alignment;
 import net.dohaw.firstgame.utils.Collidable;
@@ -15,7 +13,6 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 public class MoveableGameObject extends Collidable {
-
 
     public MoveableGameObject(ObjectID objectId, Vector vec, Location location, int height, int width) {
 
@@ -38,25 +35,30 @@ public class MoveableGameObject extends Collidable {
     }
 
     public void initPhysics(Scene scene){
-        this.physicsHandler = new PhysicsHandler(scene);
+        this.collisionHandler = new CollisionHandler(scene);
     }
 
     @Override
     public void tick() {
-
 
         /*
             Had to make the clone function in order to fix the cancellation of velocity
          */
         this.collisionRect = new Rectangle2D.Double(location.getX() - collision_coord_additive, location.getY() - collision_coord_additive, width + (collision_coord_additive * 2), height + (collision_coord_additive * 2));
 
+        /*
+            It checks to see if the next position that gravity is going to put it in is in collision. If so, then it doesn't put it in that position
+         */
         Location toBeLocation = location.clone();
         toBeLocation.applyVector(vector);
         MoveableGameObject temp = new MoveableGameObject(toBeLocation);
         temp.setCollisionRect(new Rectangle2D.Double(toBeLocation.getX() - collision_coord_additive, toBeLocation.getY() - collision_coord_additive, width + (collision_coord_additive * 2), height + (collision_coord_additive * 2)));
+        boolean isInCollision = collisionHandler.isInCollision(temp);
 
-        if(!physicsHandler.isInCollision(temp)){
+        if(!isInCollision){
             location.applyVector(vector);
+        }else{
+
         }
 
         /*
@@ -64,6 +66,14 @@ public class MoveableGameObject extends Collidable {
          */
         if(location.getY() > Game.HEIGHT){
             align(Alignment.CENTER);
+        }
+
+        /*
+            Cases for players
+         */
+        if(this instanceof Player){
+            Player player = (Player) this;
+
         }
 
     }

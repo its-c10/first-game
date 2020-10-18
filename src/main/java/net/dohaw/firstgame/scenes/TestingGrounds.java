@@ -2,8 +2,9 @@ package net.dohaw.firstgame.scenes;
 
 import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.ObjectID;
-import net.dohaw.firstgame.gameobject.*;
-import net.dohaw.firstgame.gameobject.text.TextObject;
+import net.dohaw.firstgame.gameobject.BlankBackground;
+import net.dohaw.firstgame.gameobject.ImmovableGameObject;
+import net.dohaw.firstgame.gameobject.Player;
 import net.dohaw.firstgame.utils.Alignment;
 import net.dohaw.firstgame.utils.Location;
 import net.dohaw.firstgame.utils.Vector;
@@ -40,6 +41,7 @@ public class TestingGrounds extends Scene{
         player.initPhysics(this);
         player.align(Alignment.CENTER);
         player.setInSkeletonMode(true);
+        player.setCollision_coord_additive(1);
 
         game.addKeyListener(player);
         game.addMouseListener(player);
