@@ -23,4 +23,9 @@ public class Vector {
         this.y *= multiple;
     }
 
+    @Override
+    public String toString(){
+        return "Vector: [" + x + ", " + y + "]";
+    }
+
 }

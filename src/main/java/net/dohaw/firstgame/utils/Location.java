@@ -41,7 +41,7 @@ public class Location {
 
     @Override
     public String toString(){
-        return "Location [X: " + x + " Y: " + y + "]";
+        return "Location: [X: " + x + " Y: " + y + "]";
     }
 
 }
