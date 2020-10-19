@@ -48,11 +48,11 @@ public class GameObjectHandler extends GameObjectHolder {
 
             g.setColor(Color.GRAY);
             g.setFont(new Font("Roboto", Font.PLAIN, 15));
-            g.drawString("LOCATION: " + playerLocation.toString(), 30, 30);
+            g.drawString(playerLocation.toString(), 30, 30);
             g.drawString("Colliding: " + playerFromScene.isColliding(), 30, 45);
             g.drawString("On ground: " + playerFromScene.isOnGround(), 30, 60);
             g.drawString("Jumping: " + playerFromScene.isJumping(), 30, 75);
-            g.drawString("Vector: " + playerFromScene.getVector().toString(), 30, 90);
+            g.drawString(playerFromScene.getVector().toString(), 30, 90);
 
         }
 
