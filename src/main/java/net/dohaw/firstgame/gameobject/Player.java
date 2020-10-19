@@ -60,7 +60,8 @@ public class Player extends MoveableGameObject implements MouseListener, KeyList
                     When they jump
                  */
                 if(isOnGround){
-                    toBeLocation.setY(location.getY() - 10);
+                    vector.setY(-3);
+                    isOnGround = !isOnGround;
                 }
 
                 break;
@@ -88,6 +89,20 @@ public class Player extends MoveableGameObject implements MouseListener, KeyList
      */
     @Override
     public void keyReleased(KeyEvent e) {
+
+        int keyCode = e.getKeyCode();
+        switch(keyCode){
+            //A
+            case 65:
+            //D
+            case 68:
+                vector.setX(0);
+                break;
+            //S
+            case 83:
+                vector.setY(0);
+                break;
+        }
 
     }
 

@@ -41,8 +41,13 @@ public class MoveableGameObject extends Collidable {
     @Override
     public void tick() {
 
+        /*
+            Gravity is turned off when on the ground
+         */
         if(isOnGround){
             vector.setY(0);
+        }else{
+            vector.setY(1);
         }
 
         /*

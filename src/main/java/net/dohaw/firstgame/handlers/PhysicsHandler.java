@@ -41,6 +41,7 @@ public class PhysicsHandler {
         }
 
         actualObject.setColliding(false);
+        //actualObject.setOnGround(false);
 
         return false;
     }
