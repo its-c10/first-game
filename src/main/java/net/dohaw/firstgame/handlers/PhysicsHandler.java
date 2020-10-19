@@ -3,11 +3,14 @@ package net.dohaw.firstgame.handlers;
 import javafx.geometry.Side;
 import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.gameobject.MoveableGameObject;
+import net.dohaw.firstgame.gameobject.Player;
 import net.dohaw.firstgame.scenes.Scene;
 import net.dohaw.firstgame.utils.Collidable;
 import net.dohaw.firstgame.utils.GameRectangle2D;
+import net.dohaw.firstgame.utils.Jumpable;
 import sun.security.x509.CRLDistributionPointsExtension;
 
+import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -15,11 +18,13 @@ import java.util.List;
 
 public class PhysicsHandler {
 
+    private Game game;
     private GameObjectHandler handler;
     private final int GROUND_CHECK_BUFFER = 2;
 
     public PhysicsHandler(Scene scene){
         this.handler = scene.getHandler();
+        this.game = scene.getGame();
     }
 
     public boolean isInCollision(MoveableGameObject tempMovableObject, MoveableGameObject actualObject){
@@ -30,7 +35,25 @@ public class PhysicsHandler {
 
         Rectangle2D moveableObjectCollisionRect = tempMovableObject.getCollisionRect();
         boolean isOnGround = isOnGround(collidableItemsInScene, moveableObjectCollisionRect);
-        actualObject.setOnGround(isOnGround);
+
+        if(actualObject instanceof Jumpable){
+
+            Jumpable jumpable = (Jumpable) actualObject;
+            boolean isJumping = jumpable.isJumping();
+
+            /*
+                Only set on ground to true when they aren't jumping (this could be while they're falling down) and are truly on the ground.
+             */
+            if(isOnGround && !isJumping){
+                actualObject.setOnGround(true);
+                ((Jumpable)actualObject).setIsJumping(false);
+            }else{
+                actualObject.setOnGround(false);
+            }
+
+        }else{
+            actualObject.setOnGround(isOnGround);
+        }
 
         for(Collidable obj : collidableItemsInScene){
 
@@ -54,8 +77,9 @@ public class PhysicsHandler {
         // + 2 to look 2 pixels under the object
         double maxY = moveableObjectRect.getMaxY() + GROUND_CHECK_BUFFER;
 
-        Point2D point1 = new Point2D.Double(moveableObjectRect.getMinX(), maxY);
-        Point2D point2 = new Point2D.Double(moveableObjectRect.getMaxX(), maxY);
+        //the bottom left and bottom right corners are always in collision, therfore will always return true when checking to see if hitbox is on the ground when hugging to the left or right of a wall.
+        Point2D point1 = new Point2D.Double(moveableObjectRect.getMinX() + 4, maxY);
+        Point2D point2 = new Point2D.Double(moveableObjectRect.getMaxX() - 4, maxY);
 
         for(Collidable collidable : collidables){
             Rectangle2D rectCollidable = collidable.getCollisionRect();
