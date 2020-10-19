@@ -33,13 +33,11 @@ public class Game extends Canvas implements Runnable {
         objectHandler = new GameObjectHandler(this);
         new Window(this, WIDTH, HEIGHT, "My First Game Ever");
 
-        if(running){
-            this.currentScene = new PreStartingMenu(this);
-            currentScene.init();
+        this.currentScene = new PreStartingMenu(this);
+        currentScene.init();
 
-            this.fpsCounter = new FPSCounter(this);
-            objectHandler.addObject(fpsCounter);
-        }
+        this.fpsCounter = new FPSCounter(this);
+        objectHandler.addObject(fpsCounter);
 
 
     }
