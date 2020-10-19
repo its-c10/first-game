@@ -1,5 +1,6 @@
 package net.dohaw.firstgame.scenes;
 
+import net.dohaw.firstgame.Camera;
 import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.ObjectID;
 import net.dohaw.firstgame.gameobject.FPSCounter;
@@ -35,11 +36,11 @@ public class PreStartingMenu extends Scene implements MouseListener {
         objects.add(backgroundSprite);
 
         TextObject gameTxt = new TextObject(new Location(0, 100), new Font("Roboto", Font.PLAIN, 40), "Game", Color.BLACK);
-        gameTxt.alignText(game.g, Alignment.HORIZONTAL_CENTER);
+        gameTxt.alignText(game.getG(), Alignment.HORIZONTAL_CENTER);
         objects.add(gameTxt);
 
         TextObject clickToContTxt = new TextObject(new Location(0, (int) (Game.HEIGHT * .75)), new Font("Roboto", Font.BOLD, 20), "Press anywhere to continue...", Color.BLACK);
-        clickToContTxt.alignText(game.g, Alignment.HORIZONTAL_CENTER);
+        clickToContTxt.alignText(game.getG(), Alignment.HORIZONTAL_CENTER);
 
         objects.add(clickToContTxt);
         objects.add(new FPSCounter(game));
@@ -55,8 +56,15 @@ public class PreStartingMenu extends Scene implements MouseListener {
      */
     @Override
     public void mouseClicked(MouseEvent e) {
+
+        game.clearCanvas();
         goToNextScene(new TestingGrounds(game));
         game.removeMouseListener(this);
+
+        Camera camera = new Camera(0, 0, handler);
+        game.setSceneCamera(camera);
+        game.addTickable(camera);
+
     }
 
     /**

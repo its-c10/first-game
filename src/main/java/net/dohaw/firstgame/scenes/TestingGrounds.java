@@ -1,5 +1,6 @@
 package net.dohaw.firstgame.scenes;
 
+import net.dohaw.firstgame.Camera;
 import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.ObjectID;
 import net.dohaw.firstgame.gameobject.BlankBackground;
@@ -14,6 +15,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class TestingGrounds extends Scene implements MouseListener {
+
+    private Camera camera;
 
     public TestingGrounds(Game game) {
         super(game);

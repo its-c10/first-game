@@ -7,6 +7,7 @@ import net.dohaw.firstgame.gameobject.GameObjectHolder;
 import net.dohaw.firstgame.gameobject.Player;
 import net.dohaw.firstgame.utils.Collidable;
 import net.dohaw.firstgame.utils.Location;
+import net.dohaw.firstgame.utils.Tickable;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import java.util.List;
 /*
     Class with the visible game objects on the screen
  */
-public class GameObjectHandler extends GameObjectHolder {
+public class GameObjectHandler extends GameObjectHolder implements Tickable {
 
     private Game game;
 

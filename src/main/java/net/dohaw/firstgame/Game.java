@@ -4,12 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 import net.dohaw.firstgame.gameobject.FPSCounter;
 import net.dohaw.firstgame.handlers.GameObjectHandler;
-import net.dohaw.firstgame.handlers.PhysicsHandler;
 import net.dohaw.firstgame.scenes.PreStartingMenu;
 import net.dohaw.firstgame.scenes.Scene;
+import net.dohaw.firstgame.utils.Tickable;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Game extends Canvas implements Runnable {
 
@@ -17,7 +19,9 @@ public class Game extends Canvas implements Runnable {
 
     @Getter private FPSCounter fpsCounter;
     @Getter private int frames;
-    @Getter public Graphics2D g;
+    @Getter private Graphics2D g;
+
+    private List<Tickable> tickables = new ArrayList<>();
 
     /*
         The entire game will be ran on one thread. Usually not recommended.
@@ -27,10 +31,13 @@ public class Game extends Canvas implements Runnable {
     @Getter private GameObjectHandler objectHandler;
 
     @Getter @Setter private Scene currentScene;
+    @Setter private Camera sceneCamera = null;
 
     public Game(){
 
         objectHandler = new GameObjectHandler(this);
+        tickables.add(objectHandler);
+
         new Window(this, WIDTH, HEIGHT, "My First Game Ever");
 
         this.currentScene = new PreStartingMenu(this);
@@ -39,42 +46,11 @@ public class Game extends Canvas implements Runnable {
         this.fpsCounter = new FPSCounter(this);
         objectHandler.addObject(fpsCounter);
 
-
     }
 
     public static void main(String args[]){
         new Game();
     }
-
-    /*
-    private void doStuff(){
-
-        String[] arr = {"hello", "hell", "heaven", "goodbye"};
-        String currentPrefix;
-        String output = "";
-        int index = 1;
-        for(String word : arr){
-            String[] wordSplit = word.split("");
-            output += word.split("")[0];
-            for(String wordChecking : arr){
-                currentPrefix = getPrefix(wordSplit, index);
-                if(wordChecking.contains(currentPrefix)){
-
-                }
-            }
-        }
-
-    }
-
-    private String getPrefix(String[] arr, int currentIndex){
-        String prefix = "";
-        for(int x = 0; x < currentIndex; x++){
-            prefix += arr[x];
-        }
-        return prefix;
-    }
-
-    private boolean */
 
     public synchronized void start() {
         thread = new Thread(this);
@@ -146,6 +122,9 @@ public class Game extends Canvas implements Runnable {
 
     private void tick(){
         objectHandler.tick();
+        if(sceneCamera != null){
+            sceneCamera.tick();
+        }
     }
 
     private void render(){
@@ -159,11 +138,34 @@ public class Game extends Canvas implements Runnable {
 
         this.g = (Graphics2D) bs.getDrawGraphics();
 
+        if(sceneCamera != null){
+            g.translate(-sceneCamera.getX(), -sceneCamera.getY());
+        }
+
+        g.setColor(Color.GRAY);
+        g.fillRect(0, 0, WIDTH, HEIGHT);
+
         objectHandler.render(g);
+
+        if(sceneCamera != null){
+            g.translate(sceneCamera.getX(), sceneCamera.getY());
+        }
 
         g.dispose();
         bs.show();
 
+    }
+
+    public void addTickable(Tickable tickable){
+        tickables.add(tickable);
+    }
+
+    public void removeTickable(Tickable tickable){
+        tickables.remove(tickable);
+    }
+
+    public void clearCanvas(){
+        super.paint(g);
     }
 
 }
