@@ -3,7 +3,6 @@ package net.dohaw.firstgame.gameobject;
 import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.ObjectID;
 import net.dohaw.firstgame.handlers.PhysicsHandler;
-import net.dohaw.firstgame.runnable.BaseRunnable;
 import net.dohaw.firstgame.scenes.Scene;
 import net.dohaw.firstgame.utils.*;
 
@@ -20,7 +19,7 @@ public class MoveableGameObject extends Collidable {
         int newY = Math.max(1, vecCurrentY);
         vec.setY(newY);
 
-        this.collisionCoordAdditive = 10;
+        this.collisionCoordAdditive = 5;
 
     }
 
@@ -64,8 +63,6 @@ public class MoveableGameObject extends Collidable {
 
         }
 
-        this.collisionRect = new Rectangle2D.Double(location.getX() - collisionCoordAdditive, location.getY() - collisionCoordAdditive, width + (collisionCoordAdditive * 2), height + (collisionCoordAdditive * 2));
-
         /*
             It checks to see if the next position that gravity is going to put it in is in collision. If so, then it doesn't put it in that position
          */
@@ -77,7 +74,12 @@ public class MoveableGameObject extends Collidable {
 
         if(!isInCollision){
             location.applyVector(vector);
+        }else if(!isOnGround){
+            vector.setX(0);
+            location.applyVector(vector);
         }
+
+        this.collisionRect = new Rectangle2D.Double(location.getX() - collisionCoordAdditive, location.getY() - collisionCoordAdditive, width + (collisionCoordAdditive * 2), height + (collisionCoordAdditive * 2));
 
         /*
             Teleports you back to the center if you fall off
@@ -97,7 +99,8 @@ public class MoveableGameObject extends Collidable {
 
         if(inSkeletonMode){
             g.setColor(Color.WHITE);
-            g.drawRect(location.getX() - collisionCoordAdditive, location.getY() - collisionCoordAdditive, width + (collisionCoordAdditive * 2), height + (collisionCoordAdditive * 2));
+            Rectangle2D collisionRect = getCollisionRect();
+            g.drawRect((int)collisionRect.getX(), (int)collisionRect.getY(), (int)collisionRect.getWidth(), (int)collisionRect.getHeight());
         }
 
     }

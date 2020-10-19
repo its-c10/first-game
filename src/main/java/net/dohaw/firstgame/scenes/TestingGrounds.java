@@ -42,7 +42,6 @@ public class TestingGrounds extends Scene implements MouseListener {
         player.initPhysics(this);
         player.align(Alignment.CENTER);
         player.setInSkeletonMode(true);
-        player.setCollisionCoordAdditive(10);
 
         game.addKeyListener(player);
         game.addMouseListener(player);
