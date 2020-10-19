@@ -11,8 +11,9 @@ import net.dohaw.firstgame.utils.Vector;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class TestingGrounds extends Scene{
+public class TestingGrounds extends Scene implements MouseListener {
 
     public TestingGrounds(Game game) {
         super(game);
@@ -41,7 +42,7 @@ public class TestingGrounds extends Scene{
         player.initPhysics(this);
         player.align(Alignment.CENTER);
         player.setInSkeletonMode(true);
-        player.setCollision_coord_additive(1);
+        player.setCollisionCoordAdditive(1);
 
         game.addKeyListener(player);
         game.addMouseListener(player);
@@ -103,4 +104,5 @@ public class TestingGrounds extends Scene{
     public void mouseExited(MouseEvent e) {
 
     }
+
 }

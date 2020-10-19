@@ -47,11 +47,11 @@ public class Player extends MoveableGameObject implements MouseListener, KeyList
         switch(keyCode){
             //A
             case 65:
-                toBeLocation.setX(location.getX() - 3);
+                vector.setX(-3);
                 break;
             //D
             case 68:
-                toBeLocation.setX(location.getX() + 3);
+                vector.setX(3);
                 break;
             //Space
             case 32:
@@ -66,14 +66,14 @@ public class Player extends MoveableGameObject implements MouseListener, KeyList
                 break;
             //S
             case 83:
-                toBeLocation.setY(location.getY() + 3);
+                vector.setY(3);
                 break;
         }
 
         MoveableGameObject temp = new MoveableGameObject(toBeLocation);
-        temp.setCollisionRect(new Rectangle2D.Double(toBeLocation.getX() - collision_coord_additive, toBeLocation.getY() - collision_coord_additive, width + (collision_coord_additive * 2), height + (collision_coord_additive * 2)));
+        temp.setCollisionRect(new Rectangle2D.Double(toBeLocation.getX() - collisionCoordAdditive, toBeLocation.getY() - collisionCoordAdditive, width + (collisionCoordAdditive * 2), height + (collisionCoordAdditive * 2)));
 
-        if(!collisionHandler.isInCollision(temp)) {
+        if(!physicsHandler.isInCollision(temp, this)) {
             this.location = toBeLocation;
         }
 

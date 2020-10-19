@@ -3,10 +3,8 @@ package net.dohaw.firstgame.handlers;
 import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.GameObject;
 import net.dohaw.firstgame.ObjectID;
-import net.dohaw.firstgame.gameobject.MoveableGameObject;
 import net.dohaw.firstgame.gameobject.GameObjectHolder;
 import net.dohaw.firstgame.gameobject.Player;
-import net.dohaw.firstgame.gameobject.text.TextObject;
 import net.dohaw.firstgame.utils.Collidable;
 import net.dohaw.firstgame.utils.Location;
 
@@ -52,13 +50,14 @@ public class GameObjectHandler extends GameObjectHolder {
             g.setFont(new Font("Roboto", Font.PLAIN, 15));
             g.drawString("LOCATION: " + playerLocation.toString(), 30, 30);
             g.drawString("Colliding: " + playerFromScene.isColliding(), 30, 45);
+            g.drawString("On ground: " + playerFromScene.isOnGround(), 30, 60);
 
         }
 
     }
 
     public Player getPlayerFromScene(){
-        for(GameObject obj : objects){
+        for(GameObject obj : game.getCurrentScene().getObjects()){
             if(obj.getObjectId() == ObjectID.PLAYER){
                 return (Player) obj;
             }

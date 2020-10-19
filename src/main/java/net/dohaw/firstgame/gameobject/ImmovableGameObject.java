@@ -12,7 +12,7 @@ public class ImmovableGameObject extends Collidable {
 
     public ImmovableGameObject(Location location, ObjectID objectId, int width, int height) {
         super(objectId, null, location, width, height);
-        this.collision_coord_additive = 10;
+        this.collisionCoordAdditive = 10;
     }
 
     /*
@@ -20,7 +20,7 @@ public class ImmovableGameObject extends Collidable {
      */
     @Override
     public void tick() {
-        this.collisionRect = new Rectangle2D.Double(location.getX() - collision_coord_additive, location.getY() - collision_coord_additive, width + (collision_coord_additive * 2), height + (collision_coord_additive * 2));
+        this.collisionRect = new Rectangle2D.Double(location.getX() - collisionCoordAdditive, location.getY() - collisionCoordAdditive, width + (collisionCoordAdditive * 2), height + (collisionCoordAdditive * 2));
     }
 
     @Override
@@ -37,7 +37,7 @@ public class ImmovableGameObject extends Collidable {
 
         if(inSkeletonMode){
             g.setColor(Color.WHITE);
-            g.drawRect(location.getX() - collision_coord_additive, location.getY() - collision_coord_additive, width + (collision_coord_additive * 2), height + (collision_coord_additive * 2));
+            g.drawRect(location.getX() - collisionCoordAdditive, location.getY() - collisionCoordAdditive, width + (collisionCoordAdditive * 2), height + (collisionCoordAdditive * 2));
         }
 
     }

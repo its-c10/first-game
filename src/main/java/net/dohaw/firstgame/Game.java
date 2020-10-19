@@ -1,9 +1,12 @@
 package net.dohaw.firstgame;
 
 import lombok.Getter;
+import lombok.Setter;
 import net.dohaw.firstgame.gameobject.FPSCounter;
 import net.dohaw.firstgame.handlers.GameObjectHandler;
+import net.dohaw.firstgame.handlers.PhysicsHandler;
 import net.dohaw.firstgame.scenes.PreStartingMenu;
+import net.dohaw.firstgame.scenes.Scene;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -23,15 +26,21 @@ public class Game extends Canvas implements Runnable {
     private boolean running = false;
     @Getter private GameObjectHandler objectHandler;
 
+    @Getter @Setter private Scene currentScene;
+
     public Game(){
 
         objectHandler = new GameObjectHandler(this);
         new Window(this, WIDTH, HEIGHT, "My First Game Ever");
 
-        new PreStartingMenu(this).init();
+        if(running){
+            this.currentScene = new PreStartingMenu(this);
+            currentScene.init();
 
-        this.fpsCounter = new FPSCounter(this);
-        objectHandler.addObject(fpsCounter);
+            this.fpsCounter = new FPSCounter(this);
+            objectHandler.addObject(fpsCounter);
+        }
+
 
     }
 

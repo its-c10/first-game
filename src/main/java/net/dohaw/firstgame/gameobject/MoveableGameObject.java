@@ -2,7 +2,7 @@ package net.dohaw.firstgame.gameobject;
 
 import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.ObjectID;
-import net.dohaw.firstgame.handlers.CollisionHandler;
+import net.dohaw.firstgame.handlers.PhysicsHandler;
 import net.dohaw.firstgame.scenes.Scene;
 import net.dohaw.firstgame.utils.Alignment;
 import net.dohaw.firstgame.utils.Collidable;
@@ -22,7 +22,7 @@ public class MoveableGameObject extends Collidable {
         int newY = Math.max(1, vecCurrentY);
         vec.setY(newY);
 
-        this.collision_coord_additive = 10;
+        this.collisionCoordAdditive = 10;
 
     }
 
@@ -31,20 +31,24 @@ public class MoveableGameObject extends Collidable {
      */
     public MoveableGameObject(Location location){
         super(ObjectID.BACKGROUND, Vector.IMMOVABLE, location, 20 , 20);
-        this.collision_coord_additive = 10;
+        this.collisionCoordAdditive = 10;
     }
 
     public void initPhysics(Scene scene){
-        this.collisionHandler = new CollisionHandler(scene);
+        this.physicsHandler = new PhysicsHandler(scene);
     }
 
     @Override
     public void tick() {
 
+        if(isOnGround){
+            vector.setY(0);
+        }
+
         /*
             Had to make the clone function in order to fix the cancellation of velocity
          */
-        this.collisionRect = new Rectangle2D.Double(location.getX() - collision_coord_additive, location.getY() - collision_coord_additive, width + (collision_coord_additive * 2), height + (collision_coord_additive * 2));
+        this.collisionRect = new Rectangle2D.Double(location.getX() - collisionCoordAdditive, location.getY() - collisionCoordAdditive, width + (collisionCoordAdditive * 2), height + (collisionCoordAdditive * 2));
 
         /*
             It checks to see if the next position that gravity is going to put it in is in collision. If so, then it doesn't put it in that position
@@ -52,13 +56,11 @@ public class MoveableGameObject extends Collidable {
         Location toBeLocation = location.clone();
         toBeLocation.applyVector(vector);
         MoveableGameObject temp = new MoveableGameObject(toBeLocation);
-        temp.setCollisionRect(new Rectangle2D.Double(toBeLocation.getX() - collision_coord_additive, toBeLocation.getY() - collision_coord_additive, width + (collision_coord_additive * 2), height + (collision_coord_additive * 2)));
-        boolean isInCollision = collisionHandler.isInCollision(temp);
+        temp.setCollisionRect(new Rectangle2D.Double(toBeLocation.getX() - collisionCoordAdditive, toBeLocation.getY() - collisionCoordAdditive, width + (collisionCoordAdditive * 2), height + (collisionCoordAdditive * 2)));
+        boolean isInCollision = physicsHandler.isInCollision(temp, this);
 
         if(!isInCollision){
             location.applyVector(vector);
-        }else{
-
         }
 
         /*
@@ -71,10 +73,6 @@ public class MoveableGameObject extends Collidable {
         /*
             Cases for players
          */
-        if(this instanceof Player){
-            Player player = (Player) this;
-
-        }
 
     }
 
@@ -86,7 +84,7 @@ public class MoveableGameObject extends Collidable {
 
         if(inSkeletonMode){
             g.setColor(Color.WHITE);
-            g.drawRect(location.getX() - collision_coord_additive, location.getY() - collision_coord_additive, width + (collision_coord_additive * 2), height + (collision_coord_additive * 2));
+            g.drawRect(location.getX() - collisionCoordAdditive, location.getY() - collisionCoordAdditive, width + (collisionCoordAdditive * 2), height + (collisionCoordAdditive * 2));
         }
 
     }
