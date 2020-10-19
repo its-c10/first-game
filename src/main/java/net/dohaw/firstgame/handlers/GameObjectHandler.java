@@ -51,6 +51,7 @@ public class GameObjectHandler extends GameObjectHolder {
             g.drawString("LOCATION: " + playerLocation.toString(), 30, 30);
             g.drawString("Colliding: " + playerFromScene.isColliding(), 30, 45);
             g.drawString("On ground: " + playerFromScene.isOnGround(), 30, 60);
+            g.drawString("Jumping: " + playerFromScene.isJumping(), 30, 75);
 
         }
 

@@ -1,8 +1,7 @@
 package net.dohaw.firstgame.gameobject;
 
-import lombok.Getter;
-import lombok.Setter;
 import net.dohaw.firstgame.ObjectID;
+import net.dohaw.firstgame.utils.Jumpable;
 import net.dohaw.firstgame.utils.Location;
 import net.dohaw.firstgame.utils.Vector;
 
@@ -12,9 +11,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Rectangle2D;
 
-public class Player extends MoveableGameObject implements MouseListener, KeyListener {
+public class Player extends MoveableGameObject implements MouseListener, KeyListener, Jumpable {
 
-    @Getter @Setter boolean canJump = true;
+    private boolean isJumping = false;
 
     public Player(Vector vec, Location location, int height, int width) {
         super(ObjectID.PLAYER, vec, location, height, width);
@@ -30,6 +29,11 @@ public class Player extends MoveableGameObject implements MouseListener, KeyList
     @Override
     public void keyTyped(KeyEvent e) {
 
+    }
+
+    @Override
+    public int getJumpingAmount() {
+        return -3;
     }
 
     /**
@@ -60,8 +64,9 @@ public class Player extends MoveableGameObject implements MouseListener, KeyList
                     When they jump
                  */
                 if(isOnGround){
-                    vector.setY(-3);
-                    isOnGround = !isOnGround;
+                    vector.setY(getJumpingAmount());
+                    isOnGround = false;
+                    isJumping = true;
                 }
 
                 break;
@@ -155,6 +160,16 @@ public class Player extends MoveableGameObject implements MouseListener, KeyList
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+
+    @Override
+    public boolean isJumping() {
+        return isJumping;
+    }
+
+    @Override
+    public void setIsJumping(boolean isJumping) {
+        this.isJumping = isJumping;
     }
 
 }

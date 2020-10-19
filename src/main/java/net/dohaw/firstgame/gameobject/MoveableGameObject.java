@@ -3,11 +3,9 @@ package net.dohaw.firstgame.gameobject;
 import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.ObjectID;
 import net.dohaw.firstgame.handlers.PhysicsHandler;
+import net.dohaw.firstgame.runnable.BaseRunnable;
 import net.dohaw.firstgame.scenes.Scene;
-import net.dohaw.firstgame.utils.Alignment;
-import net.dohaw.firstgame.utils.Collidable;
-import net.dohaw.firstgame.utils.Location;
-import net.dohaw.firstgame.utils.Vector;
+import net.dohaw.firstgame.utils.*;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -47,12 +45,32 @@ public class MoveableGameObject extends Collidable {
         if(isOnGround){
             vector.setY(0);
         }else{
-            vector.setY(1);
+
+            /*
+                In action of jumping
+             */
+            if(this instanceof Jumpable){
+
+                Jumpable jumpable = (Jumpable) this;
+                if(vector.getY() == jumpable.getJumpingAmount() && jumpable.isJumping()){
+                    BaseRunnable task = new BaseRunnable() {
+                        @Override
+                        public void run() {
+                            vector.setY(1);
+                            jumpable.setIsJumping(false);
+                        }
+                    };
+                    task.scheduleLaterTask(1);
+                }else{
+                    vector.setY(1);
+                }
+
+            }else{
+                vector.setY(1);
+            }
+
         }
 
-        /*
-            Had to make the clone function in order to fix the cancellation of velocity
-         */
         this.collisionRect = new Rectangle2D.Double(location.getX() - collisionCoordAdditive, location.getY() - collisionCoordAdditive, width + (collisionCoordAdditive * 2), height + (collisionCoordAdditive * 2));
 
         /*
@@ -75,9 +93,6 @@ public class MoveableGameObject extends Collidable {
             align(Alignment.CENTER);
         }
 
-        /*
-            Cases for players
-         */
 
     }
 

@@ -3,9 +3,11 @@ package net.dohaw.firstgame.handlers;
 import javafx.geometry.Side;
 import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.gameobject.MoveableGameObject;
+import net.dohaw.firstgame.gameobject.Player;
 import net.dohaw.firstgame.scenes.Scene;
 import net.dohaw.firstgame.utils.Collidable;
 import net.dohaw.firstgame.utils.GameRectangle2D;
+import net.dohaw.firstgame.utils.Jumpable;
 import sun.security.x509.CRLDistributionPointsExtension;
 
 import java.awt.geom.Line2D;
@@ -30,7 +32,31 @@ public class PhysicsHandler {
 
         Rectangle2D moveableObjectCollisionRect = tempMovableObject.getCollisionRect();
         boolean isOnGround = isOnGround(collidableItemsInScene, moveableObjectCollisionRect);
-        actualObject.setOnGround(isOnGround);
+
+        /*
+            Can't be on the ground and jumping at the same time
+         */
+
+        if(actualObject instanceof Jumpable){
+
+            Jumpable jumpable = (Jumpable) actualObject;
+            boolean isJumping = jumpable.isJumping();
+
+            System.out.println("ON GROUND: " + isOnGround);
+            /*
+                Only set to sit on ground when they first land
+             */
+            if(isOnGround && !isJumping){
+                System.out.println("SETTING!");
+                actualObject.setOnGround(true);
+                ((Jumpable)actualObject).setIsJumping(false);
+            }else{
+                actualObject.setOnGround(false);
+            }
+
+        }else{
+            actualObject.setOnGround(isOnGround);
+        }
 
         for(Collidable obj : collidableItemsInScene){
 
