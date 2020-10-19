@@ -3,8 +3,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.dohaw</groupId>
-    <artifactId>First Game</artifactId>
-    <version>1</version>
+    <artifactId>FirstGame</artifactId>
+    <version>1.0.0</version>
 
     <build>
         <plugins>
