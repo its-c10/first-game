@@ -11,6 +11,9 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Rectangle2D;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 public class Player extends MoveableGameObject implements MouseListener, KeyListener, Jumpable {
 
@@ -18,6 +21,8 @@ public class Player extends MoveableGameObject implements MouseListener, KeyList
         Defined by the doing of going upwards via space bar (Not when coming down)
      */
     private boolean isJumping = false;
+
+    private final Set<Integer> pressedKeys = new HashSet<>();
 
     public Player(Vector vec, Location location, int height, int width) {
         super(ObjectID.PLAYER, vec, location, height, width);
@@ -52,33 +57,39 @@ public class Player extends MoveableGameObject implements MouseListener, KeyList
 
         Location toBeLocation = location.clone();
         int keyCode = e.getKeyCode();
-        switch(keyCode){
-            //A
-            case 65:
-                vector.setX(-3);
-                break;
-            //D
-            case 68:
-                vector.setX(3);
-                break;
-            //Space
-            case 32:
+        pressedKeys.add(keyCode);
+        for(Iterator<Integer> it = pressedKeys.iterator(); it.hasNext();){
+
+            switch(it.next()){
+                //A
+                case 65:
+                    vector.setX(-3);
+                    break;
+                //D
+                case 68:
+                    vector.setX(3);
+                    break;
+                //Space
+                case 32:
 
                 /*
                     When they jump
                  */
-                if(isOnGround){
-                    vector.setY(getJumpingAmount());
-                    isOnGround = false;
-                    isJumping = true;
-                }
+                    if(isOnGround){
+                        vector.setY(getJumpingAmount());
+                        isOnGround = false;
+                        isJumping = true;
+                    }
 
-                break;
-            //S
-            case 83:
-                vector.setY(3);
-                break;
+                    break;
+                //S
+                case 83:
+                    vector.setY(3);
+                    break;
+            }
+
         }
+
 
         MoveableGameObject temp = new MoveableGameObject(toBeLocation);
         temp.setCollisionRect(new Rectangle2D.Double(toBeLocation.getX() - collisionCoordAdditive, toBeLocation.getY() - collisionCoordAdditive, width + (collisionCoordAdditive * 2), height + (collisionCoordAdditive * 2)));
@@ -100,6 +111,7 @@ public class Player extends MoveableGameObject implements MouseListener, KeyList
     public void keyReleased(KeyEvent e) {
 
         int keyCode = e.getKeyCode();
+        pressedKeys.remove(keyCode);
         switch(keyCode){
             //A
             case 65:
