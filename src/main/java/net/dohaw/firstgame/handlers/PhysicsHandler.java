@@ -33,21 +33,15 @@ public class PhysicsHandler {
         Rectangle2D moveableObjectCollisionRect = tempMovableObject.getCollisionRect();
         boolean isOnGround = isOnGround(collidableItemsInScene, moveableObjectCollisionRect);
 
-        /*
-            Can't be on the ground and jumping at the same time
-         */
-
         if(actualObject instanceof Jumpable){
 
             Jumpable jumpable = (Jumpable) actualObject;
             boolean isJumping = jumpable.isJumping();
 
-            System.out.println("ON GROUND: " + isOnGround);
             /*
-                Only set to sit on ground when they first land
+                Only set on ground to true when they aren't jumping (this could be while they're falling down) and are truly on the ground.
              */
             if(isOnGround && !isJumping){
-                System.out.println("SETTING!");
                 actualObject.setOnGround(true);
                 ((Jumpable)actualObject).setIsJumping(false);
             }else{

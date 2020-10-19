@@ -53,14 +53,7 @@ public class MoveableGameObject extends Collidable {
 
                 Jumpable jumpable = (Jumpable) this;
                 if(vector.getY() == jumpable.getJumpingAmount() && jumpable.isJumping()){
-                    BaseRunnable task = new BaseRunnable() {
-                        @Override
-                        public void run() {
-                            vector.setY(1);
-                            jumpable.setIsJumping(false);
-                        }
-                    };
-                    task.scheduleLaterTask(1);
+                    jumpable.jump();
                 }else{
                     vector.setY(1);
                 }

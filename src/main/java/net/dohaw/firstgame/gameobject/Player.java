@@ -1,6 +1,7 @@
 package net.dohaw.firstgame.gameobject;
 
 import net.dohaw.firstgame.ObjectID;
+import net.dohaw.firstgame.runnable.BaseRunnable;
 import net.dohaw.firstgame.utils.Jumpable;
 import net.dohaw.firstgame.utils.Location;
 import net.dohaw.firstgame.utils.Vector;
@@ -13,6 +14,9 @@ import java.awt.geom.Rectangle2D;
 
 public class Player extends MoveableGameObject implements MouseListener, KeyListener, Jumpable {
 
+    /*
+        Defined by the doing of going upwards via space bar (Not when coming down)
+     */
     private boolean isJumping = false;
 
     public Player(Vector vec, Location location, int height, int width) {
@@ -170,6 +174,18 @@ public class Player extends MoveableGameObject implements MouseListener, KeyList
     @Override
     public void setIsJumping(boolean isJumping) {
         this.isJumping = isJumping;
+    }
+
+    @Override
+    public void jump() {
+        BaseRunnable task = new BaseRunnable() {
+            @Override
+            public void run() {
+                vector.setY(1);
+                isJumping = false;
+            }
+        };
+        task.scheduleLaterTask(1);
     }
 
 }

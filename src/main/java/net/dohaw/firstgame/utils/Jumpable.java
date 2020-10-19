@@ -4,4 +4,5 @@ public interface Jumpable {
     boolean isJumping();
     void setIsJumping(boolean isJumping);
     int getJumpingAmount();
+    void jump();
 }
