@@ -1,12 +1,17 @@
 package net.dohaw.firstgame.utils;
 
-import javafx.geometry.Side;
-
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 public class GameRectangle2D {
+
+    public enum Side{
+        LEFT,
+        TOP,
+        RIGHT,
+        BOTTOM
+    }
 
     public static Line2D getSide(Rectangle2D rect, Side side){
 
