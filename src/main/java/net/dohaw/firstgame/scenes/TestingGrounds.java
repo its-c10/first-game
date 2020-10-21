@@ -28,7 +28,7 @@ public class TestingGrounds extends Scene implements MouseListener {
         background.setColor(Color.BLACK);
         objects.add(background);
 
-        ImmovableGameObject ground = new ImmovableGameObject(game, new Location(0, 300), ObjectID.BACKGROUND, 300, 50);
+        ImmovableGameObject ground = new ImmovableGameObject(game, new Location(0, 400), ObjectID.BACKGROUND, 300, 50);
         ground.setInSkeletonMode(true);
         ground.align(Alignment.BOTTOM);
         ground.align(Alignment.HORIZONTAL_CENTER);

@@ -6,10 +6,12 @@ import java.awt.*;
 public class Window extends Canvas {
 
     private JFrame frame;
+    private Game game;
 
     public Window(Game game, int width, int height, String title){
 
         frame = new JFrame(title);
+        this.game = game;
 
         frame.setPreferredSize(new Dimension(width, height));
         frame.setMaximumSize(new Dimension(width, height));

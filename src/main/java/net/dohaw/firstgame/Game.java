@@ -6,6 +6,7 @@ import net.dohaw.firstgame.gameobject.FPSCounter;
 import net.dohaw.firstgame.handlers.GameObjectHandler;
 import net.dohaw.firstgame.scenes.PreStartingMenu;
 import net.dohaw.firstgame.scenes.Scene;
+import net.dohaw.firstgame.utils.Location;
 import net.dohaw.firstgame.utils.Tickable;
 
 import java.awt.*;
