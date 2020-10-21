@@ -1,5 +1,6 @@
 package net.dohaw.firstgame.gameobject;
 
+import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.ObjectID;
 import net.dohaw.firstgame.utils.Collidable;
 import net.dohaw.firstgame.utils.Colorable;
@@ -10,8 +11,8 @@ import java.awt.geom.Rectangle2D;
 
 public class ImmovableGameObject extends Collidable {
 
-    public ImmovableGameObject(Location location, ObjectID objectId, int width, int height) {
-        super(objectId, null, location, width, height);
+    public ImmovableGameObject(Game game, Location location, ObjectID objectId, int width, int height) {
+        super(game, objectId, null, location, width, height);
         this.collisionCoordAdditive = 10;
     }
 

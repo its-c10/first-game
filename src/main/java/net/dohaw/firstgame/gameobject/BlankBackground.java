@@ -12,20 +12,20 @@ import java.awt.*;
 
 public class BlankBackground extends BackgroundGameObject implements Colorable {
 
-    private Color color;
+    private Color color = Color.BLACK;
 
     /*
         If you want the background of something to be customizable for whatever reason (Probably will rarely use this)
      */
-    public BlankBackground(ObjectID objectId, Vector vec, Location location, int width, int height) {
-        super(objectId, vec, location, width, height);
+    public BlankBackground(Game game, ObjectID objectId, Vector vec, Location location, int width, int height) {
+        super(game, objectId, vec, location, width, height);
     }
 
     /*
         When you just want to make a quick background. No customization
      */
-    public BlankBackground(){
-        super(ObjectID.BACKGROUND, Vector.IMMOVABLE, Location.NONE, Game.WIDTH, Game.HEIGHT);
+    public BlankBackground(Game game){
+        super(game, ObjectID.BACKGROUND, Vector.IMMOVABLE, Location.NONE, Game.WIDTH, Game.HEIGHT);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class BlankBackground extends BackgroundGameObject implements Colorable {
 
     @Override
     public Color getColor() {
-        return Color.BLACK;
+        return color;
     }
 
 }

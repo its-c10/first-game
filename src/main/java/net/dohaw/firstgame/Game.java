@@ -19,7 +19,8 @@ public class Game extends Canvas implements Runnable {
 
     @Getter private FPSCounter fpsCounter;
     @Getter private int frames;
-    @Getter private Graphics2D g;
+    @Getter private Graphics g;
+    @Getter Window window;
 
     private List<Tickable> tickables = new ArrayList<>();
 
@@ -31,21 +32,10 @@ public class Game extends Canvas implements Runnable {
     @Getter private GameObjectHandler objectHandler;
 
     @Getter @Setter private Scene currentScene;
-    @Setter private Camera sceneCamera = null;
+    @Setter @Getter private Camera sceneCamera = null;
 
     public Game(){
-
-        objectHandler = new GameObjectHandler(this);
-        tickables.add(objectHandler);
-
-        new Window(this, WIDTH, HEIGHT, "My First Game Ever");
-
-        this.currentScene = new PreStartingMenu(this);
-        currentScene.init();
-
-        this.fpsCounter = new FPSCounter(this);
-        objectHandler.addObject(fpsCounter);
-
+        this.window = new Window(this, WIDTH, HEIGHT, "My First Game Ever");
     }
 
     public static void main(String args[]){
@@ -88,6 +78,15 @@ public class Game extends Canvas implements Runnable {
         long timer = System.currentTimeMillis();
         frames = 0;
 
+        objectHandler = new GameObjectHandler(this);
+        tickables.add(objectHandler);
+
+        this.currentScene = new PreStartingMenu(this);
+        currentScene.init();
+
+        this.fpsCounter = new FPSCounter(this);
+        objectHandler.addObject(fpsCounter);
+
         while(running){
 
             long now = System.nanoTime();
@@ -98,6 +97,7 @@ public class Game extends Canvas implements Runnable {
                 tick();
                 delta--;
             }
+
             if(running){
                 render();
             }
@@ -121,9 +121,8 @@ public class Game extends Canvas implements Runnable {
     }
 
     private void tick(){
-        objectHandler.tick();
-        if(sceneCamera != null){
-            sceneCamera.tick();
+        for(Tickable tickable : tickables){
+            tickable.tick();
         }
     }
 
@@ -136,20 +135,16 @@ public class Game extends Canvas implements Runnable {
             return;
         }
 
-        this.g = (Graphics2D) bs.getDrawGraphics();
+        this.g = bs.getDrawGraphics();
+
+        Graphics2D g2g = (Graphics2D) g;
+        clearCanvas();
 
         if(sceneCamera != null){
-            g.translate(-sceneCamera.getX(), -sceneCamera.getY());
+            g2g.translate(-sceneCamera.getX(), -sceneCamera.getY());
         }
-
-        g.setColor(Color.GRAY);
-        g.fillRect(0, 0, WIDTH, HEIGHT);
 
         objectHandler.render(g);
-
-        if(sceneCamera != null){
-            g.translate(sceneCamera.getX(), sceneCamera.getY());
-        }
 
         g.dispose();
         bs.show();

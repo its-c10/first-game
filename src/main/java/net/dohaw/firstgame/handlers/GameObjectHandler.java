@@ -3,8 +3,10 @@ package net.dohaw.firstgame.handlers;
 import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.GameObject;
 import net.dohaw.firstgame.ObjectID;
+import net.dohaw.firstgame.gameobject.FPSCounter;
 import net.dohaw.firstgame.gameobject.GameObjectHolder;
 import net.dohaw.firstgame.gameobject.Player;
+import net.dohaw.firstgame.utils.Alignment;
 import net.dohaw.firstgame.utils.Collidable;
 import net.dohaw.firstgame.utils.Location;
 import net.dohaw.firstgame.utils.Tickable;
@@ -32,13 +34,6 @@ public class GameObjectHandler extends GameObjectHolder implements Tickable {
 
     public void render(Graphics g){
 
-        for(int x = 0; x < objects.size(); x++){
-            GameObject obj = objects.get(x);
-            if(obj.isVisible()){
-                objects.get(x).render(g);
-            }
-        }
-
         /*
             Debug messages
          */
@@ -47,14 +42,24 @@ public class GameObjectHandler extends GameObjectHolder implements Tickable {
 
             Location playerLocation = playerFromScene.getLocation();
 
+            FPSCounter fpsCounter = game.getFpsCounter();
+            //fpsCounter.alignText(g50, 0);
+
             g.setColor(Color.GRAY);
             g.setFont(new Font("Roboto", Font.PLAIN, 15));
-            g.drawString(playerLocation.toString(), 30, 30);
-            g.drawString("Colliding: " + playerFromScene.isColliding(), 30, 45);
-            g.drawString("On ground: " + playerFromScene.isOnGround(), 30, 60);
-            g.drawString("Jumping: " + playerFromScene.isJumping(), 30, 75);
-            g.drawString(playerFromScene.getVector().toString(), 30, 90);
+            g.drawString(playerLocation.toString(), playerLocation.getX() - 200, playerLocation.getY() - 200);
+            g.drawString("Colliding: " + playerFromScene.isColliding(), playerLocation.getX() - 200, playerLocation.getY() - 175);
+            g.drawString("On ground: " + playerFromScene.isOnGround(), playerLocation.getX() - 200, playerLocation.getY() - 150);
+            g.drawString("Jumping: " + playerFromScene.isJumping(), playerLocation.getX() - 200, playerLocation.getY() - 135);
+            g.drawString(playerFromScene.getVector().toString(), playerLocation.getX() - 200, playerLocation.getY() - 120);
 
+        }
+
+        for(int x = 0; x < objects.size(); x++){
+            GameObject obj = objects.get(x);
+            if(obj.isVisible()){
+                objects.get(x).render(g);
+            }
         }
 
     }

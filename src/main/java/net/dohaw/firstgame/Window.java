@@ -1,8 +1,5 @@
 package net.dohaw.firstgame;
 
-import net.dohaw.firstgame.listeners.KeyInput;
-import net.dohaw.firstgame.listeners.MouseInput;
-
 import javax.swing.*;
 import java.awt.*;
 

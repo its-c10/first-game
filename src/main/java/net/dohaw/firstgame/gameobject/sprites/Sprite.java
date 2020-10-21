@@ -91,7 +91,7 @@ public class Sprite extends BackgroundGameObject {
     protected Game game;
 
     public Sprite(Game game, String filePath, ObjectID objectId, Vector vec, Location location, int width, int height){
-        super(objectId, vec, location, width, height);
+        super(game, objectId, vec, location, width, height);
         this.filePath = filePath;
         this.game = game;
         load();

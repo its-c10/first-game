@@ -15,7 +15,7 @@ public class StartingMenu extends Scene{
 
     @Override
     public void init() {
-        BlankBackground background = new BlankBackground();
+        BlankBackground background = new BlankBackground(game);
         background.setColor(Color.BLACK);
         objects.add(background);
         handler.addObjects(this);

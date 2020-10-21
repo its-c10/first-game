@@ -11,9 +11,9 @@ import java.awt.geom.Rectangle2D;
 
 public class MoveableGameObject extends Collidable {
 
-    public MoveableGameObject(ObjectID objectId, Vector vec, Location location, int height, int width) {
+    public MoveableGameObject(Game game, ObjectID objectId, Vector vec, Location location, int height, int width) {
 
-        super(objectId, vec, location, height, width);
+        super(game, objectId, vec, location, height, width);
 
         int vecCurrentY = vec.getY();
         int newY = Math.max(1, vecCurrentY);
@@ -26,8 +26,8 @@ public class MoveableGameObject extends Collidable {
     /*
         Temp
      */
-    public MoveableGameObject(Location location){
-        super(ObjectID.BACKGROUND, Vector.IMMOVABLE, location, 20 , 20);
+    public MoveableGameObject(Game game, Location location){
+        super(game, ObjectID.BACKGROUND, Vector.IMMOVABLE, location, 20 , 20);
         this.collisionCoordAdditive = 10;
     }
 
@@ -68,7 +68,7 @@ public class MoveableGameObject extends Collidable {
          */
         Location toBeLocation = location.clone();
         toBeLocation.applyVector(vector);
-        MoveableGameObject temp = new MoveableGameObject(toBeLocation);
+        MoveableGameObject temp = new MoveableGameObject(game, toBeLocation);
         temp.setCollisionRect(new Rectangle2D.Double(toBeLocation.getX() - collisionCoordAdditive, toBeLocation.getY() - collisionCoordAdditive, width + (collisionCoordAdditive * 2), height + (collisionCoordAdditive * 2)));
         boolean isInCollision = physicsHandler.isInCollision(temp, this);
 
@@ -84,10 +84,10 @@ public class MoveableGameObject extends Collidable {
         /*
             Teleports you back to the center if you fall off
          */
+        /*
         if(location.getY() > Game.HEIGHT){
             align(Alignment.CENTER);
-        }
-
+        }*/
 
     }
 

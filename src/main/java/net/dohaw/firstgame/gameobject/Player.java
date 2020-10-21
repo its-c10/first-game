@@ -1,5 +1,6 @@
 package net.dohaw.firstgame.gameobject;
 
+import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.ObjectID;
 import net.dohaw.firstgame.runnable.BaseRunnable;
 import net.dohaw.firstgame.utils.Jumpable;
@@ -21,8 +22,8 @@ public class Player extends MoveableGameObject implements MouseListener, KeyList
 
     private final Queue<Integer> pressedKeys = new LinkedList<>();
 
-    public Player(Vector vec, Location location, int height, int width) {
-        super(ObjectID.PLAYER, vec, location, height, width);
+    public Player(Game game, Vector vec, Location location, int height, int width) {
+        super(game, ObjectID.PLAYER, vec, location, height, width);
     }
 
     /**
@@ -57,8 +58,6 @@ public class Player extends MoveableGameObject implements MouseListener, KeyList
         if(!pressedKeys.contains(keyCode)){
             pressedKeys.add(keyCode);
         }
-
-        System.out.println(pressedKeys.toString());
 
         for(int code : pressedKeys){
 
