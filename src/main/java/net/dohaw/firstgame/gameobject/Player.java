@@ -62,6 +62,9 @@ public class Player extends MoveableGameObject implements MouseListener, KeyList
         for(int code : pressedKeys){
 
             switch(code){
+                case KeyEvent.VK_W:
+                    vector.setY(-10);
+                    break;
                 //A
                 case KeyEvent.VK_A:
                     vector.setX(-3);
@@ -114,6 +117,7 @@ public class Player extends MoveableGameObject implements MouseListener, KeyList
                     vector.setX(0);
                     break;
                 //S
+                case KeyEvent.VK_W:
                 case KeyEvent.VK_S:
                     vector.setY(0);
                     break;

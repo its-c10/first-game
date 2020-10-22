@@ -21,7 +21,7 @@ public class TextObject extends GameObject {
     /*
         Most customizable constructor
      */
-    public TextObject(Game game, ObjectID objectId, Vector vec, Location location,  Font font, String text, Color color) {
+    public TextObject(Game game, ObjectID objectId, Vector vec, Location location, Font font, String text, Color color) {
         super(game, objectId, vec, location, 0, 0);
         this.font = font;
         this.text = text;

@@ -5,7 +5,9 @@ import net.dohaw.firstgame.ObjectID;
 import net.dohaw.firstgame.gameobject.BlankBackground;
 import net.dohaw.firstgame.gameobject.ImmovableGameObject;
 import net.dohaw.firstgame.gameobject.Player;
+import net.dohaw.firstgame.generators.OverworldGenerator;
 import net.dohaw.firstgame.utils.Alignment;
+import net.dohaw.firstgame.utils.Generatable;
 import net.dohaw.firstgame.utils.Location;
 import net.dohaw.firstgame.utils.Vector;
 
@@ -13,36 +15,28 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class TestingGrounds extends Scene implements MouseListener {
+public class TestingGrounds extends Scene implements MouseListener, Generatable {
+
+    private OverworldGenerator generator;
 
     public TestingGrounds(Game game) {
         super(game);
+        this.generator = new OverworldGenerator(game);
     }
 
     @Override
     public void init() {
 
-        BlankBackground background = new BlankBackground(game);
-        background.setWidth(Game.WIDTH);
-        background.setHeight(Game.HEIGHT);
-        background.setColor(Color.BLACK);
-        objects.add(background);
+//        BlankBackground background = new BlankBackground(game);
+//        background.setWidth(100000);
+//        background.setHeight(100000);
+//        background.setColor(Color.BLACK);
+//        objects.add(background);
 
-        ImmovableGameObject ground = new ImmovableGameObject(game, new Location(0, 400), ObjectID.BACKGROUND, 300, 50);
-        ground.setInSkeletonMode(true);
-        ground.align(Alignment.BOTTOM);
-        ground.align(Alignment.HORIZONTAL_CENTER);
-        objects.add(ground);
+        generator.generateTerrain();
 
-        ImmovableGameObject wall = new ImmovableGameObject(game, new Location(170, 300), ObjectID.BACKGROUND, 50, 50);
-        wall.setInSkeletonMode(true);
-        //wall.setRelative(background);
-        //wall.alignRelative(Alignment.RELATIVE_RIGHT, 0, 0);
-        objects.add(wall);
-
-        Player player = new Player(game, new Vector(0, 0), new Location(0, 0), 30, 30);
+        Player player = new Player(game, new Vector(0, 0), new Location(0, -50), 30, 30);
         player.initPhysics(this);
-        player.align(Alignment.CENTER);
         player.setInSkeletonMode(true);
 
         game.addKeyListener(player);
@@ -103,6 +97,13 @@ public class TestingGrounds extends Scene implements MouseListener {
      */
     @Override
     public void mouseExited(MouseEvent e) {
+
+    }
+
+    @Override
+    public void generate() {
+
+        
 
     }
 

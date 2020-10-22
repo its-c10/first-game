@@ -2,7 +2,6 @@ package net.dohaw.firstgame.gameobject.sprites;
 
 import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.ObjectID;
-import net.dohaw.firstgame.utils.Alignment;
 import net.dohaw.firstgame.utils.Location;
 import net.dohaw.firstgame.utils.Vector;
 

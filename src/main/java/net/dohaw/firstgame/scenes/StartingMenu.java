@@ -1,11 +1,9 @@
 package net.dohaw.firstgame.scenes;
 
 import net.dohaw.firstgame.Game;
-import net.dohaw.firstgame.ObjectID;
 import net.dohaw.firstgame.gameobject.BlankBackground;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
 
 public class StartingMenu extends Scene{
 

@@ -1,7 +1,5 @@
 package net.dohaw.firstgame.gameobject;
 
-import lombok.Getter;
-import lombok.Setter;
 import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.ObjectID;
 import net.dohaw.firstgame.utils.Colorable;

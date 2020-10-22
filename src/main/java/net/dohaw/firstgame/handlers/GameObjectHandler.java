@@ -1,13 +1,11 @@
 package net.dohaw.firstgame.handlers;
 
-import net.dohaw.firstgame.Camera;
 import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.GameObject;
 import net.dohaw.firstgame.ObjectID;
 import net.dohaw.firstgame.gameobject.FPSCounter;
 import net.dohaw.firstgame.gameobject.GameObjectHolder;
 import net.dohaw.firstgame.gameobject.Player;
-import net.dohaw.firstgame.utils.Alignment;
 import net.dohaw.firstgame.utils.Collidable;
 import net.dohaw.firstgame.utils.Location;
 import net.dohaw.firstgame.utils.Tickable;
@@ -89,6 +87,10 @@ public class GameObjectHandler extends GameObjectHolder implements Tickable {
 
     public void addObjects(GameObjectHolder gameObjectHolder){
         gameObjectHolder.getObjects().forEach(obj -> objects.add(obj));
+    }
+
+    public void addObjects(List<GameObject> obj){
+        obj.forEach(ob -> objects.add(ob));
     }
 
     /*

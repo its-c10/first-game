@@ -1,6 +1,5 @@
 package net.dohaw.firstgame.scenes;
 
-import net.dohaw.firstgame.Camera;
 import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.ObjectID;
 import net.dohaw.firstgame.gameobject.FPSCounter;

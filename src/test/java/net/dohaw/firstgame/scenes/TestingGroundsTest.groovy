@@ -1,6 +1,6 @@
 package net.dohaw.firstgame.scenes
 
-import net.dohaw.firstgame.ObjectID
+
 import net.dohaw.firstgame.gameobject.ImmovableGameObject
 import net.dohaw.firstgame.utils.Alignment
 import net.dohaw.firstgame.utils.Location
