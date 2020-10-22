@@ -41,6 +41,7 @@ public class OverworldGenerator {
                 int groundX = lastGround.getLocation().getX() + GROUND_WIDTH;
                 lastGround = new ImmovableGameObject(game, new Location(groundX, groundY), ObjectID.GROUND, GROUND_WIDTH, GROUND_HEIGHT);
             }
+            lastGround.setRotation(30);
             groundParts.add(lastGround);
 
         }

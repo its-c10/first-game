@@ -5,11 +5,15 @@ import net.dohaw.firstgame.ObjectID;
 import net.dohaw.firstgame.utils.Collidable;
 import net.dohaw.firstgame.utils.Colorable;
 import net.dohaw.firstgame.utils.Location;
+import net.dohaw.firstgame.utils.Rotatable;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
-public class ImmovableGameObject extends Collidable {
+public class ImmovableGameObject extends Collidable implements Rotatable {
+
+    private double rotation = 0;
 
     public ImmovableGameObject(Game game, Location location, ObjectID objectId, int width, int height) {
         super(game, objectId, null, location, width, height);
@@ -33,14 +37,31 @@ public class ImmovableGameObject extends Collidable {
             color = ((Colorable)this).getColor();
         }
 
-        g.setColor(color);
-        g.fillRect(location.getX(), location.getY(), width, height);
+
 
         if(inSkeletonMode){
             g.setColor(Color.WHITE);
             g.drawRect(location.getX() - collisionCoordAdditive, location.getY() - collisionCoordAdditive, width + (collisionCoordAdditive * 2), height + (collisionCoordAdditive * 2));
         }
 
+        if(getRotation() != 0){
+            Graphics2D g2d = (Graphics2D) g;
+            AffineTransform old = g2d.getTransform();
+            g2d.rotate(Math.toRadians(getRotation()));
+            g.setColor(color);
+            g.fillRect(location.getX(), location.getY(), width, height);
+            g2d.setTransform(old);
+        }
+
     }
 
+    @Override
+    public double getRotation() {
+        return rotation;
+    }
+
+    @Override
+    public void setRotation(double rotation) {
+        this.rotation = rotation;
+    }
 }
