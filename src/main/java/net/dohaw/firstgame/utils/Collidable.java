@@ -2,6 +2,7 @@ package net.dohaw.firstgame.utils;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.GameObject;
 import net.dohaw.firstgame.ObjectID;
 import net.dohaw.firstgame.handlers.PhysicsHandler;
@@ -19,8 +20,8 @@ public abstract class Collidable extends GameObject {
     @Getter @Setter protected boolean inSkeletonMode;
     @Getter @Setter protected Rectangle2D collisionRect;
 
-    public Collidable(ObjectID objectId, Vector vec, Location location, int width, int height) {
-        super(objectId, vec, location, width, height);
+    public Collidable(Game game, ObjectID objectId, Vector vec, Location location, int width, int height) {
+        super(game, objectId, vec, location, width, height);
         this.collisionRect = new Rectangle2D.Double(location.getX() - collisionCoordAdditive, location.getY() - collisionCoordAdditive, width + (collisionCoordAdditive * 2), height + (collisionCoordAdditive * 2));
     }
 

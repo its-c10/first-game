@@ -1,5 +1,6 @@
 package net.dohaw.firstgame.gameobject;
 
+import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.GameObject;
 import net.dohaw.firstgame.ObjectID;
 import net.dohaw.firstgame.utils.Colorable;
@@ -10,8 +11,8 @@ import java.awt.*;
 
 public class BackgroundGameObject extends GameObject {
 
-    public BackgroundGameObject(ObjectID objectId, Vector vec, Location location, int width, int height) {
-        super(objectId, vec, location, width, height);
+    public BackgroundGameObject(Game game, ObjectID objectId, Vector vec, Location location, int width, int height) {
+        super(game, objectId, vec, location, width, height);
     }
 
     @Override

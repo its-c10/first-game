@@ -22,23 +22,25 @@ public class TestingGrounds extends Scene implements MouseListener {
     @Override
     public void init() {
 
-        BlankBackground background = new BlankBackground();
+        BlankBackground background = new BlankBackground(game);
+        background.setWidth(Game.WIDTH);
+        background.setHeight(Game.HEIGHT);
         background.setColor(Color.BLACK);
         objects.add(background);
 
-        ImmovableGameObject ground = new ImmovableGameObject(new Location(0, 100), ObjectID.BACKGROUND, 300, 100);
+        ImmovableGameObject ground = new ImmovableGameObject(game, new Location(0, 400), ObjectID.BACKGROUND, 300, 50);
         ground.setInSkeletonMode(true);
-        ground.alignRelative(Alignment.BOTTOM, 0, 0);
+        ground.align(Alignment.BOTTOM);
         ground.align(Alignment.HORIZONTAL_CENTER);
         objects.add(ground);
 
-        ImmovableGameObject wall = new ImmovableGameObject(new Location(170, 300), ObjectID.BACKGROUND, 50, 50);
+        ImmovableGameObject wall = new ImmovableGameObject(game, new Location(170, 300), ObjectID.BACKGROUND, 50, 50);
         wall.setInSkeletonMode(true);
         //wall.setRelative(background);
         //wall.alignRelative(Alignment.RELATIVE_RIGHT, 0, 0);
         objects.add(wall);
 
-        Player player = new Player(new Vector(0, 0), new Location(0, 0), 30, 30);
+        Player player = new Player(game, new Vector(0, 0), new Location(0, 0), 30, 30);
         player.initPhysics(this);
         player.align(Alignment.CENTER);
         player.setInSkeletonMode(true);

@@ -20,8 +20,10 @@ public abstract class GameObject {
     @Getter @Setter protected Alignment alignment;
     @Getter @Setter protected GameObject relative;
     @Getter @Setter protected boolean isVisible = true;
+    @Getter protected Game game;
 
-    public GameObject(ObjectID objectId, Vector vec, Location location, int width, int height){
+    public GameObject(Game game, ObjectID objectId, Vector vec, Location location, int width, int height){
+        this.game = game;
         this.objectId = objectId;
         this.vector = vec;
         this.location = location;
@@ -92,7 +94,7 @@ public abstract class GameObject {
             }else if(alignment == Alignment.RELATIVE_TOP){
                 location.setY(relativeY + yAdditive);
             }else if(alignment == Alignment.RELATIVE_BOTTOM){
-                location.setY( (relativeY - relativeHeight) - yAdditive);
+                //location.setY( (relativeY - relativeHeight) - yAdditive);
             }
 
         }

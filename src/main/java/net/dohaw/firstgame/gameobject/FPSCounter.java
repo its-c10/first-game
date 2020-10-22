@@ -16,7 +16,7 @@ public class FPSCounter extends TextObject {
     @Setter @Getter private boolean showing = false;
 
     public FPSCounter(Game game) {
-        super(ObjectID.BACKGROUND, new Vector(0, 0), new Location((int) (Game.WIDTH * .85), (int) (Game.HEIGHT * .1)),  new Font("Roboto", Font.BOLD, 10), "", Color.GRAY);
+        super(game, ObjectID.BACKGROUND, new Vector(0, 0), new Location((int) (Game.WIDTH * .85), (int) (Game.HEIGHT * .1)),  new Font("Roboto", Font.BOLD, 10), "", Color.GRAY);
         this.game = game;
         this.showing = true;
     }

@@ -4,12 +4,15 @@ import lombok.Getter;
 import lombok.Setter;
 import net.dohaw.firstgame.gameobject.FPSCounter;
 import net.dohaw.firstgame.handlers.GameObjectHandler;
-import net.dohaw.firstgame.handlers.PhysicsHandler;
 import net.dohaw.firstgame.scenes.PreStartingMenu;
 import net.dohaw.firstgame.scenes.Scene;
+import net.dohaw.firstgame.utils.Location;
+import net.dohaw.firstgame.utils.Tickable;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Game extends Canvas implements Runnable {
 
@@ -17,7 +20,10 @@ public class Game extends Canvas implements Runnable {
 
     @Getter private FPSCounter fpsCounter;
     @Getter private int frames;
-    @Getter public Graphics2D g;
+    @Getter private Graphics g;
+    @Getter Window window;
+
+    private List<Tickable> tickables = new ArrayList<>();
 
     /*
         The entire game will be ran on one thread. Usually not recommended.
@@ -27,54 +33,15 @@ public class Game extends Canvas implements Runnable {
     @Getter private GameObjectHandler objectHandler;
 
     @Getter @Setter private Scene currentScene;
+    @Setter @Getter private Camera sceneCamera = null;
 
     public Game(){
-
-        objectHandler = new GameObjectHandler(this);
-        new Window(this, WIDTH, HEIGHT, "My First Game Ever");
-
-        this.currentScene = new PreStartingMenu(this);
-        currentScene.init();
-
-        this.fpsCounter = new FPSCounter(this);
-        objectHandler.addObject(fpsCounter);
-
-
+        this.window = new Window(this, WIDTH, HEIGHT, "My First Game Ever");
     }
 
     public static void main(String args[]){
         new Game();
     }
-
-    /*
-    private void doStuff(){
-
-        String[] arr = {"hello", "hell", "heaven", "goodbye"};
-        String currentPrefix;
-        String output = "";
-        int index = 1;
-        for(String word : arr){
-            String[] wordSplit = word.split("");
-            output += word.split("")[0];
-            for(String wordChecking : arr){
-                currentPrefix = getPrefix(wordSplit, index);
-                if(wordChecking.contains(currentPrefix)){
-
-                }
-            }
-        }
-
-    }
-
-    private String getPrefix(String[] arr, int currentIndex){
-        String prefix = "";
-        for(int x = 0; x < currentIndex; x++){
-            prefix += arr[x];
-        }
-        return prefix;
-    }
-
-    private boolean */
 
     public synchronized void start() {
         thread = new Thread(this);
@@ -112,6 +79,15 @@ public class Game extends Canvas implements Runnable {
         long timer = System.currentTimeMillis();
         frames = 0;
 
+        objectHandler = new GameObjectHandler(this);
+        tickables.add(objectHandler);
+
+        this.currentScene = new PreStartingMenu(this);
+        currentScene.init();
+
+        this.fpsCounter = new FPSCounter(this);
+        objectHandler.addObject(fpsCounter);
+
         while(running){
 
             long now = System.nanoTime();
@@ -122,6 +98,7 @@ public class Game extends Canvas implements Runnable {
                 tick();
                 delta--;
             }
+
             if(running){
                 render();
             }
@@ -145,7 +122,9 @@ public class Game extends Canvas implements Runnable {
     }
 
     private void tick(){
-        objectHandler.tick();
+        for(Tickable tickable : tickables){
+            tickable.tick();
+        }
     }
 
     private void render(){
@@ -157,13 +136,32 @@ public class Game extends Canvas implements Runnable {
             return;
         }
 
-        this.g = (Graphics2D) bs.getDrawGraphics();
+        this.g = bs.getDrawGraphics();
+
+        Graphics2D g2g = (Graphics2D) g;
+        clearCanvas();
+
+        if(sceneCamera != null){
+            g2g.translate(-sceneCamera.getX(), -sceneCamera.getY());
+        }
 
         objectHandler.render(g);
 
         g.dispose();
         bs.show();
 
+    }
+
+    public void addTickable(Tickable tickable){
+        tickables.add(tickable);
+    }
+
+    public void removeTickable(Tickable tickable){
+        tickables.remove(tickable);
+    }
+
+    public void clearCanvas(){
+        super.paint(g);
     }
 
 }
