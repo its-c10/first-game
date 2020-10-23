@@ -6,7 +6,6 @@ import net.dohaw.firstgame.gameobject.FPSCounter;
 import net.dohaw.firstgame.handlers.GameObjectHandler;
 import net.dohaw.firstgame.scenes.PreStartingMenu;
 import net.dohaw.firstgame.scenes.Scene;
-import net.dohaw.firstgame.utils.Location;
 import net.dohaw.firstgame.utils.Tickable;
 
 import java.awt.*;
@@ -35,7 +34,7 @@ public class Game extends Canvas implements Runnable {
     @Getter @Setter private Scene currentScene;
     @Setter @Getter private Camera sceneCamera = null;
 
-    public Game(){
+    public Game() {
         this.window = new Window(this, WIDTH, HEIGHT, "My First Game Ever");
     }
 
@@ -50,10 +49,10 @@ public class Game extends Canvas implements Runnable {
     }
 
     public synchronized void stop() {
-        try{
+        try {
             thread.join();
             running = false;
-        }catch(Exception e){
+        } catch(Exception e){
             e.printStackTrace();
         }
     }
@@ -99,13 +98,13 @@ public class Game extends Canvas implements Runnable {
                 delta--;
             }
 
-            if(running){
+            if(running) {
                 render();
             }
 
             frames++;
 
-            if(System.currentTimeMillis() - timer > 1000){
+            if(System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
                 /*
                     Sometimes fpsCounter wouldn't be initialized yet (rarely). I assume this is because sometimes this code gets ran before the initialization of it.
@@ -121,13 +120,13 @@ public class Game extends Canvas implements Runnable {
 
     }
 
-    private void tick(){
+    private void tick() {
         for(Tickable tickable : tickables){
             tickable.tick();
         }
     }
 
-    private void render(){
+    private void render() {
 
         BufferStrategy bs = this.getBufferStrategy();
         if(bs == null){
