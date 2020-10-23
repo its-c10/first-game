@@ -1,6 +1,7 @@
 package net.dohaw.firstgame.handlers;
 
 import net.dohaw.firstgame.Game;
+import net.dohaw.firstgame.GameObject;
 import net.dohaw.firstgame.gameobject.MoveableGameObject;
 import net.dohaw.firstgame.scenes.Scene;
 import net.dohaw.firstgame.utils.Collidable;
@@ -83,6 +84,16 @@ public class PhysicsHandler {
         }
         return false;
 
+    }
+
+    /*
+        Applies
+     */
+    public void gravity(){
+        for(GameObject obj : handler.getObjects()){
+            if(obj instanceof MoveableGameObject){
+            }
+        }
     }
 
 }
