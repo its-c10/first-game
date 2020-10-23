@@ -8,7 +8,6 @@ import net.dohaw.firstgame.utils.Location;
 import net.dohaw.firstgame.utils.Rotatable;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
 public class ImmovableGameObject extends Collidable implements Rotatable {
@@ -37,20 +36,19 @@ public class ImmovableGameObject extends Collidable implements Rotatable {
             color = ((Colorable)this).getColor();
         }
 
-
-
         if(inSkeletonMode){
             g.setColor(Color.WHITE);
             g.drawRect(location.getX() - collisionCoordAdditive, location.getY() - collisionCoordAdditive, width + (collisionCoordAdditive * 2), height + (collisionCoordAdditive * 2));
         }
 
         if(getRotation() != 0){
+            /*
             Graphics2D g2d = (Graphics2D) g;
             AffineTransform old = g2d.getTransform();
             g2d.rotate(Math.toRadians(getRotation()));
             g.setColor(color);
             g.fillRect(location.getX(), location.getY(), width, height);
-            g2d.setTransform(old);
+            g2d.setTransform(old);*/
         }
 
     }
