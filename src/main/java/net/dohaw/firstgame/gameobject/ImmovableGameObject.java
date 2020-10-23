@@ -41,15 +41,8 @@ public class ImmovableGameObject extends Collidable implements Rotatable {
             g.drawRect(location.getX() - collisionCoordAdditive, location.getY() - collisionCoordAdditive, width + (collisionCoordAdditive * 2), height + (collisionCoordAdditive * 2));
         }
 
-        if(getRotation() != 0){
-            /*
-            Graphics2D g2d = (Graphics2D) g;
-            AffineTransform old = g2d.getTransform();
-            g2d.rotate(Math.toRadians(getRotation()));
-            g.setColor(color);
-            g.fillRect(location.getX(), location.getY(), width, height);
-            g2d.setTransform(old);*/
-        }
+        g.setColor(color);
+        g.fillRect(location.getX(), location.getY(), width, height);
 
     }
 

@@ -68,8 +68,6 @@ public class GameObjectHandler extends GameObjectHolder implements Tickable {
 
         }
 
-
-
     }
 
     public Player getPlayerFromScene(){

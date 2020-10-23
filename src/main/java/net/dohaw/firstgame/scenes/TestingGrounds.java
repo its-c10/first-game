@@ -5,7 +5,7 @@ import net.dohaw.firstgame.ObjectID;
 import net.dohaw.firstgame.gameobject.BlankBackground;
 import net.dohaw.firstgame.gameobject.ImmovableGameObject;
 import net.dohaw.firstgame.gameobject.Player;
-import net.dohaw.firstgame.generators.OverworldGenerator;
+import net.dohaw.firstgame.gameobject.sprites.MoveableSprite;
 import net.dohaw.firstgame.utils.Alignment;
 import net.dohaw.firstgame.utils.Generatable;
 import net.dohaw.firstgame.utils.Location;
@@ -17,25 +17,24 @@ import java.awt.event.MouseListener;
 
 public class TestingGrounds extends Scene implements MouseListener, Generatable {
 
-    private OverworldGenerator generator;
-
     public TestingGrounds(Game game) {
         super(game);
-        this.generator = new OverworldGenerator(game);
     }
 
     @Override
     public void init() {
 
-//        BlankBackground background = new BlankBackground(game);
-//        background.setWidth(100000);
-//        background.setHeight(100000);
-//        background.setColor(Color.BLACK);
-//        objects.add(background);
+        BlankBackground background = new BlankBackground(game);
+        background.setColor(Color.BLACK);
+        objects.add(background);
 
-        generator.generateTerrain();
+        ImmovableGameObject ground = new ImmovableGameObject(game, new Location(100, 300), ObjectID.BACKGROUND, 300, 50);
+        ground.setInSkeletonMode(true);
+        objects.add(ground);
 
-        Player player = new Player(game, new Vector(0, 0), new Location(0, -50), 30, 30);
+
+
+        Player player = new Player(game, new Vector(0, 0), new Location(100, 200), 30, 30);
         player.initPhysics(this);
         player.setInSkeletonMode(true);
 

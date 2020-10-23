@@ -3,7 +3,6 @@ package net.dohaw.firstgame.gameobject.sprites;
 import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.GameObject;
 import net.dohaw.firstgame.ObjectID;
-import net.dohaw.firstgame.gameobject.BackgroundGameObject;
 import net.dohaw.firstgame.utils.Alignment;
 import net.dohaw.firstgame.utils.Location;
 import net.dohaw.firstgame.utils.Vector;
@@ -14,7 +13,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Sprite extends BackgroundGameObject {
+public class MoveableSprite extends GameObject {
 
     /*
         Have to make this static in order to do this
@@ -77,11 +76,11 @@ public class Sprite extends BackgroundGameObject {
             return this;
         }
 
-        public Sprite create(){
+        public MoveableSprite create(){
             if(isAnimated){
-                return new AnimatedSprite(game, path, id, vector, location, width, height);
+                return new AnimatedMoveableSprite(game, path, id, vector, location, width, height);
             }
-            return new Sprite(game, path, id, vector, location, width, height);
+            return new MoveableSprite(game, path, id, vector, location, width, height);
         }
 
     }
@@ -90,7 +89,7 @@ public class Sprite extends BackgroundGameObject {
     protected BufferedImage sprite = null;
     protected Game game;
 
-    public Sprite(Game game, String filePath, ObjectID objectId, Vector vec, Location location, int width, int height){
+    public MoveableSprite(Game game, String filePath, ObjectID objectId, Vector vec, Location location, int width, int height){
         super(game, objectId, vec, location, width, height);
         this.filePath = filePath;
         this.game = game;
