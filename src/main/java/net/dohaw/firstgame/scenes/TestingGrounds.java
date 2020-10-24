@@ -5,7 +5,6 @@ import net.dohaw.firstgame.ObjectID;
 import net.dohaw.firstgame.gameobject.BlankBackground;
 import net.dohaw.firstgame.gameobject.ImmovableGameObject;
 import net.dohaw.firstgame.gameobject.sprites.Player;
-import net.dohaw.firstgame.utils.Generatable;
 import net.dohaw.firstgame.utils.Location;
 import net.dohaw.firstgame.utils.Vector;
 
@@ -13,7 +12,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class TestingGrounds extends Scene implements MouseListener, Generatable {
+public class TestingGrounds extends Scene implements MouseListener {
 
     public TestingGrounds(Game game) {
         super(game);
@@ -30,7 +29,7 @@ public class TestingGrounds extends Scene implements MouseListener, Generatable 
         ground.setInSkeletonMode(true);
         objects.add(ground);
 
-        Player player = new Player(game, "src/main/resources/Guy.png", new Vector(0, 0), new Location(100, 200), 20, 64);
+        Player player = new Player(game, "src/main/resources/Guy.png", new Vector(0, 0), new Location(100, 200), 40, 64);
         player.initPhysics(this);
         player.setInSkeletonMode(true);
 
@@ -92,13 +91,6 @@ public class TestingGrounds extends Scene implements MouseListener, Generatable 
      */
     @Override
     public void mouseExited(MouseEvent e) {
-
-    }
-
-    @Override
-    public void generate() {
-
-        
 
     }
 

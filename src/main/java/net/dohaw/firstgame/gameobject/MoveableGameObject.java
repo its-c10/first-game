@@ -10,6 +10,11 @@ import net.dohaw.firstgame.utils.Vector;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
+/**
+ * Objects in the game that are movable and are affected by gravity
+ *
+ * Does NOT support images/sprites
+ */
 public class MoveableGameObject extends Collidable {
 
     public MoveableGameObject(Game game, ObjectID objectId, Vector vec, Location location, int width, int height) {
@@ -31,8 +36,6 @@ public class MoveableGameObject extends Collidable {
         super(game, ObjectID.BACKGROUND, Vector.IMMOVABLE, location, 20 , 20);
         this.collisionCoordAdditive = 10;
     }
-
-
 
     @Override
     public void tick() {
@@ -82,9 +85,12 @@ public class MoveableGameObject extends Collidable {
                 location.applyVector(vector);
             }
 
-        }
+            /*
+                Need to set the collision rect again because the location is being changed due to location.applyVector
+             */
+            this.collisionRect = new Rectangle2D.Double(location.getX() - collisionCoordAdditive, location.getY() - collisionCoordAdditive, width + (collisionCoordAdditive * 2), height + (collisionCoordAdditive * 2));
 
-        this.collisionRect = new Rectangle2D.Double(location.getX() - collisionCoordAdditive, location.getY() - collisionCoordAdditive, width + (collisionCoordAdditive * 2), height + (collisionCoordAdditive * 2));
+        }
 
     }
 
