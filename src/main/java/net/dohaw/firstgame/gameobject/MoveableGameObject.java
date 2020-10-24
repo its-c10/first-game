@@ -2,24 +2,25 @@ package net.dohaw.firstgame.gameobject;
 
 import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.ObjectID;
-import net.dohaw.firstgame.handlers.PhysicsHandler;
-import net.dohaw.firstgame.scenes.Scene;
-import net.dohaw.firstgame.utils.*;
+import net.dohaw.firstgame.utils.Collidable;
+import net.dohaw.firstgame.utils.Jumpable;
+import net.dohaw.firstgame.utils.Location;
+import net.dohaw.firstgame.utils.Vector;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 public class MoveableGameObject extends Collidable {
 
-    public MoveableGameObject(Game game, ObjectID objectId, Vector vec, Location location, int height, int width) {
+    public MoveableGameObject(Game game, ObjectID objectId, Vector vec, Location location, int width, int height) {
 
-        super(game, objectId, vec, location, height, width);
+        super(game, objectId, vec, location, width, height);
 
         int vecCurrentY = vec.getY();
         int newY = Math.max(1, vecCurrentY);
         vec.setY(newY);
 
-        this.collisionCoordAdditive = 5;
+        this.collisionCoordAdditive = 1;
 
     }
 

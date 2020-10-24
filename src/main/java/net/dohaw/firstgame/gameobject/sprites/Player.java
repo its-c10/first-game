@@ -25,8 +25,8 @@ public class Player extends MoveableSprite implements MouseListener, KeyListener
     private boolean isJumping = false;
     private final Queue<Integer> pressedKeys = new LinkedList<>();
 
-    public Player(Game game, String fileName, Vector vec, Location location, int height, int width) {
-        super(game, fileName, ObjectID.PLAYER, vec, location, height, width);
+    public Player(Game game, String fileName, Vector vec, Location location, int width, int height) {
+        super(game, fileName, ObjectID.PLAYER, vec, location, width, height);
     }
 
     /**

@@ -30,7 +30,7 @@ public class TestingGrounds extends Scene implements MouseListener, Generatable 
         ground.setInSkeletonMode(true);
         objects.add(ground);
 
-        Player player = new Player(game, "src/main/resources/Guy.png", new Vector(0, 0), new Location(100, 200), 30, 30);
+        Player player = new Player(game, "src/main/resources/Guy.png", new Vector(0, 0), new Location(100, 200), 20, 64);
         player.initPhysics(this);
         player.setInSkeletonMode(true);
 

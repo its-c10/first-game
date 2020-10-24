@@ -8,6 +8,7 @@ import net.dohaw.firstgame.utils.Vector;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -27,7 +28,15 @@ public class MoveableSprite extends MoveableGameObject {
 
     @Override
     public void render(Graphics g) {
+
         g.drawImage(sprite, location.getX(), location.getY(), width, height, game);
+
+        if(inSkeletonMode){
+            g.setColor(Color.WHITE);
+            Rectangle2D collisionRect = getCollisionRect();
+            g.drawRect((int)collisionRect.getX(), (int)collisionRect.getY(), (int)collisionRect.getWidth(), (int)collisionRect.getHeight());
+        }
+
     }
 
     protected void load(){
