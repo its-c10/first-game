@@ -1,4 +1,4 @@
-package net.dohaw.firstgame.gameobject;
+package net.dohaw.firstgame.gameobject.sprites;
 
 import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.ObjectID;
@@ -14,6 +14,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.*;
 
+/**
+ * A base player class. Extends MoveableSprite because players are sprites
+ */
 public class Player extends MoveableSprite implements MouseListener, KeyListener, Jumpable {
 
     /*
@@ -22,8 +25,8 @@ public class Player extends MoveableSprite implements MouseListener, KeyListener
     private boolean isJumping = false;
     private final Queue<Integer> pressedKeys = new LinkedList<>();
 
-    public Player(Game game, String fileName, Vector vec, Location location, int height, int width) {
-        super(game, fileName, ObjectID.PLAYER, vec, location, height, width);
+    public Player(Game game, String fileName, Vector vec, Location location, int width, int height) {
+        super(game, fileName, ObjectID.PLAYER, vec, location, width, height);
     }
 
     /**

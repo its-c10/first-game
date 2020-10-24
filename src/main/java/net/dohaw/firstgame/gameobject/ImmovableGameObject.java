@@ -10,6 +10,11 @@ import net.dohaw.firstgame.utils.Rotatable;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
+/**
+ * Objects in the game that are NOT movable and are NOT affected by gravity
+ *
+ * Does NOT support images/sprites
+ */
 public class ImmovableGameObject extends Collidable implements Rotatable {
 
     private double rotation = 0;
@@ -34,11 +39,6 @@ public class ImmovableGameObject extends Collidable implements Rotatable {
 
         if(this instanceof Colorable){
             color = ((Colorable)this).getColor();
-        }
-
-        if(inSkeletonMode){
-            g.setColor(Color.WHITE);
-            g.drawRect(location.getX() - collisionCoordAdditive, location.getY() - collisionCoordAdditive, width + (collisionCoordAdditive * 2), height + (collisionCoordAdditive * 2));
         }
 
         g.setColor(color);

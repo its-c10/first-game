@@ -5,7 +5,7 @@ import net.dohaw.firstgame.GameObject;
 import net.dohaw.firstgame.ObjectID;
 import net.dohaw.firstgame.gameobject.FPSCounter;
 import net.dohaw.firstgame.gameobject.GameObjectHolder;
-import net.dohaw.firstgame.gameobject.Player;
+import net.dohaw.firstgame.gameobject.sprites.Player;
 import net.dohaw.firstgame.utils.Collidable;
 import net.dohaw.firstgame.utils.Location;
 import net.dohaw.firstgame.utils.Tickable;
@@ -36,7 +36,19 @@ public class GameObjectHandler extends GameObjectHolder implements Tickable {
         for(int x = 0; x < objects.size(); x++){
             GameObject obj = objects.get(x);
             if(obj.isVisible() && !(obj instanceof FPSCounter)){
+
                 objects.get(x).render(g);
+
+                /*
+                    Renders collidable rectangles
+                 */
+                if(obj instanceof Collidable){
+                    Collidable collidable = (Collidable) obj;
+                    if(collidable.isInSkeletonMode()){
+                        collidable.drawSkeleton(g);
+                    }
+                }
+
             }
         }
 
@@ -45,7 +57,6 @@ public class GameObjectHandler extends GameObjectHolder implements Tickable {
          */
         Player playerFromScene = getPlayerFromScene();
         if(playerFromScene != null){
-
 
             Location playerLocation = playerFromScene.getLocation();
 

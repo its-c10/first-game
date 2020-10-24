@@ -8,13 +8,14 @@ import net.dohaw.firstgame.ObjectID;
 import net.dohaw.firstgame.handlers.PhysicsHandler;
 import net.dohaw.firstgame.scenes.Scene;
 
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 public abstract class Collidable extends GameObject {
 
     protected PhysicsHandler physicsHandler;
 
-    @Getter @Setter boolean isColliding;
+    @Getter @Setter protected boolean isColliding;
     @Getter @Setter public boolean isOnGround;
     @Getter @Setter public int collisionCoordAdditive;
 
@@ -28,6 +29,12 @@ public abstract class Collidable extends GameObject {
 
     public void initPhysics(Scene scene){
         this.physicsHandler = new PhysicsHandler(scene);
+    }
+
+    public void drawSkeleton(Graphics g){
+        g.setColor(Color.WHITE);
+        Rectangle2D collisionRect = getCollisionRect();
+        g.drawRect((int)collisionRect.getX(), (int)collisionRect.getY(), (int)collisionRect.getWidth(), (int)collisionRect.getHeight());
     }
 
 }

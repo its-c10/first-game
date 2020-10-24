@@ -2,24 +2,30 @@ package net.dohaw.firstgame.gameobject;
 
 import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.ObjectID;
-import net.dohaw.firstgame.handlers.PhysicsHandler;
-import net.dohaw.firstgame.scenes.Scene;
-import net.dohaw.firstgame.utils.*;
+import net.dohaw.firstgame.utils.Collidable;
+import net.dohaw.firstgame.utils.Jumpable;
+import net.dohaw.firstgame.utils.Location;
+import net.dohaw.firstgame.utils.Vector;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
+/**
+ * Objects in the game that are movable and are affected by gravity
+ *
+ * Does NOT support images/sprites
+ */
 public class MoveableGameObject extends Collidable {
 
-    public MoveableGameObject(Game game, ObjectID objectId, Vector vec, Location location, int height, int width) {
+    public MoveableGameObject(Game game, ObjectID objectId, Vector vec, Location location, int width, int height) {
 
-        super(game, objectId, vec, location, height, width);
+        super(game, objectId, vec, location, width, height);
 
         int vecCurrentY = vec.getY();
         int newY = Math.max(1, vecCurrentY);
         vec.setY(newY);
 
-        this.collisionCoordAdditive = 5;
+        this.collisionCoordAdditive = 1;
 
     }
 
@@ -30,8 +36,6 @@ public class MoveableGameObject extends Collidable {
         super(game, ObjectID.BACKGROUND, Vector.IMMOVABLE, location, 20 , 20);
         this.collisionCoordAdditive = 10;
     }
-
-
 
     @Override
     public void tick() {
@@ -68,24 +72,25 @@ public class MoveableGameObject extends Collidable {
         toBeLocation.applyVector(vector);
         MoveableGameObject temp = new MoveableGameObject(game, toBeLocation);
         temp.setCollisionRect(new Rectangle2D.Double(toBeLocation.getX() - collisionCoordAdditive, toBeLocation.getY() - collisionCoordAdditive, width + (collisionCoordAdditive * 2), height + (collisionCoordAdditive * 2)));
-        boolean isInCollision = physicsHandler.isInCollision(temp, this);
 
-        if(!isInCollision){
-            location.applyVector(vector);
-        }else if(!isOnGround){
-            vector.setX(0);
-            location.applyVector(vector);
+        boolean isInCollision;
+        if(physicsHandler != null){
+
+            isInCollision = physicsHandler.isInCollision(temp, this);
+
+            if(!isInCollision){
+                location.applyVector(vector);
+            }else if(!isOnGround){
+                vector.setX(0);
+                location.applyVector(vector);
+            }
+
+            /*
+                Need to set the collision rect again because the location is being changed due to location.applyVector
+             */
+            this.collisionRect = new Rectangle2D.Double(location.getX() - collisionCoordAdditive, location.getY() - collisionCoordAdditive, width + (collisionCoordAdditive * 2), height + (collisionCoordAdditive * 2));
+
         }
-
-        this.collisionRect = new Rectangle2D.Double(location.getX() - collisionCoordAdditive, location.getY() - collisionCoordAdditive, width + (collisionCoordAdditive * 2), height + (collisionCoordAdditive * 2));
-
-        /*
-            Teleports you back to the center if you fall off
-         */
-        /*
-        if(location.getY() > Game.HEIGHT){
-            align(Alignment.CENTER);
-        }*/
 
     }
 
