@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.dohaw.firstgame.gameobject.FPSCounter;
 import net.dohaw.firstgame.handlers.GameObjectHandler;
+import net.dohaw.firstgame.handlers.PhysicsHandler;
 import net.dohaw.firstgame.scenes.PreStartingMenu;
 import net.dohaw.firstgame.scenes.Scene;
 import net.dohaw.firstgame.utils.Tickable;

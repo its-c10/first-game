@@ -6,6 +6,7 @@ import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.GameObject;
 import net.dohaw.firstgame.ObjectID;
 import net.dohaw.firstgame.handlers.PhysicsHandler;
+import net.dohaw.firstgame.scenes.Scene;
 
 import java.awt.geom.Rectangle2D;
 
@@ -23,6 +24,10 @@ public abstract class Collidable extends GameObject {
     public Collidable(Game game, ObjectID objectId, Vector vec, Location location, int width, int height) {
         super(game, objectId, vec, location, width, height);
         this.collisionRect = new Rectangle2D.Double(location.getX() - collisionCoordAdditive, location.getY() - collisionCoordAdditive, width + (collisionCoordAdditive * 2), height + (collisionCoordAdditive * 2));
+    }
+
+    public void initPhysics(Scene scene){
+        this.physicsHandler = new PhysicsHandler(scene);
     }
 
 }
