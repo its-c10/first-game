@@ -1,19 +1,22 @@
-package net.dohaw;
+package net.dohaw.screens;
 
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import net.dohaw.Eldridge;
+import net.dohaw.MainGame;
 
 public class MainMenuScreen implements Screen {
 
-    final Eldridge game;
+    private final Eldridge GAME;
 
     private OrthographicCamera camera;
 
     public MainMenuScreen(final Eldridge game){
 
-        this.game = game;
+        this.GAME = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 400);
 
@@ -39,16 +42,17 @@ public class MainMenuScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         camera.update();
-        game.batch.setProjectionMatrix(camera.combined);
+        GAME.batch.setProjectionMatrix(camera.combined);
 
-        game.batch.begin();
-        game.font.draw(game.batch, "Welcome to my first game with this framework!", 100, 150);
-        game.font.draw(game.batch, "Tap anywhere to begin!", 100, 100);
-        game.batch.end();
+        GAME.batch.begin();
+        GAME.font.draw(GAME.batch, "Welcome to my first game with this framework!", 100, 150);
+        GAME.font.draw(GAME.batch, "Tap anywhere to begin!", 100, 100);
+        GAME.batch.end();
 
         if(Gdx.input.isTouched()){
-            System.out.println("Here!");
-            game.setScreen(new GameScreen(game));
+            GameScreen gs = new GameScreen(GAME);
+            gs.init();
+            GAME.setScreen(gs);
             dispose();
         }
 

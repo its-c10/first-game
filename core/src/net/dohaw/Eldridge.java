@@ -3,19 +3,29 @@ package net.dohaw;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import net.dohaw.screens.MainMenuScreen;
+import net.dohaw.utils.TextureHolder;
 
 public class Eldridge extends Game {
 
     public SpriteBatch batch;
     public BitmapFont font;
+    public TextureHolder tHolder;
 
     public void create() {
+
         batch = new SpriteBatch();
-        //Use LibGDX's default Arial font.
         font = new BitmapFont();
+        tHolder = new TextureHolder();
+        tHolder.init();
+
         this.setScreen(new MainMenuScreen(this));
+
     }
 
+    /**
+     * Runs the game screen's render method
+     */
     public void render() {
         super.render(); //important!
     }
@@ -23,6 +33,7 @@ public class Eldridge extends Game {
     public void dispose() {
         batch.dispose();
         font.dispose();
+        tHolder.dispose();
     }
 
 }

@@ -1,22 +1,19 @@
 package net.dohaw;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import net.dohaw.screens.MainMenuScreen;
 
 public class MainGame extends ApplicationAdapter {
 
 	private Eldridge game;
-	private MainMenuScreen mainMenuScreen;
 
 	/*
 		Run when the game first starts
 	 */
 	@Override
 	public void create () {
-
 		this.game = new Eldridge();
 		game.create();
-		this.mainMenuScreen = new MainMenuScreen(game);
-
 	}
 
 	/*
@@ -30,6 +27,5 @@ public class MainGame extends ApplicationAdapter {
 	@Override
 	public void dispose () {
 		game.dispose();
-		mainMenuScreen.dispose();
 	}
 }

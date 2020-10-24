@@ -1,4 +1,4 @@
-package net.dohaw;
+package net.dohaw.screens;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
@@ -7,14 +7,18 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import net.dohaw.Eldridge;
+import net.dohaw.GameObject;
+import net.dohaw.GameObjectHolder;
+import net.dohaw.MainGame;
 
-public class GameScreen implements Screen {
+public class GameScreen extends GameObjectHolder implements Screen {
 
     private final Eldridge game;
-
     private SpriteBatch batch;
-    private TextureHolder tHolder;
     private OrthographicCamera camera;
+
+    private boolean isReady;
 
     // For centering image
     private Rectangle bucket;
@@ -28,15 +32,6 @@ public class GameScreen implements Screen {
         camera = new OrthographicCamera();
         // Always showing us at least 800 pixels wide and 480 height
         camera.setToOrtho(false, 800, 480);
-
-        tHolder = new TextureHolder();
-        tHolder.init();
-
-        bucket = new Rectangle();
-        bucket.x = camera.viewportWidth / 2 - 64 / 2;
-        bucket.y = 20;
-        bucket.width = 64;
-        bucket.height = 64;
 
     }
 
@@ -62,8 +57,15 @@ public class GameScreen implements Screen {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
 
+        /*
+            Draw stuff in between begin and end
+         */
         batch.begin();
-        batch.draw(tHolder.guy, bucket.x, bucket.y);
+        if(isReady){
+            for(GameObject obj : objects){
+                obj.start();
+            }
+        }
         batch.end();
 
     }
@@ -108,7 +110,12 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
         batch.dispose();
-        tHolder.dispose();
         game.dispose();
+    }
+
+    @Override
+    public void init() {
+
+        isReady = true;
     }
 }
