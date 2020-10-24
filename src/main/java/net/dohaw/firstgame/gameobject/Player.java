@@ -2,6 +2,7 @@ package net.dohaw.firstgame.gameobject;
 
 import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.ObjectID;
+import net.dohaw.firstgame.gameobject.sprites.MoveableSprite;
 import net.dohaw.firstgame.runnable.BaseRunnable;
 import net.dohaw.firstgame.utils.Jumpable;
 import net.dohaw.firstgame.utils.Location;
@@ -13,7 +14,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.*;
 
-public class Player extends MoveableGameObject implements MouseListener, KeyListener, Jumpable {
+public class Player extends MoveableSprite implements MouseListener, KeyListener, Jumpable {
 
     /*
         Defined by the doing of going upwards via space bar (Not when coming down)
@@ -22,8 +23,8 @@ public class Player extends MoveableGameObject implements MouseListener, KeyList
 
     private final Queue<Integer> pressedKeys = new LinkedList<>();
 
-    public Player(Game game, Vector vec, Location location, int height, int width) {
-        super(game, ObjectID.PLAYER, vec, location, height, width);
+    public Player(Game game, String fileName, Vector vec, Location location, int height, int width) {
+        super(game, fileName, ObjectID.PLAYER, vec, location, height, width);
     }
 
     /**

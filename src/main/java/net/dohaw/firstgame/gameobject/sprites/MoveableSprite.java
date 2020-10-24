@@ -3,6 +3,7 @@ package net.dohaw.firstgame.gameobject.sprites;
 import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.GameObject;
 import net.dohaw.firstgame.ObjectID;
+import net.dohaw.firstgame.gameobject.MoveableGameObject;
 import net.dohaw.firstgame.utils.Alignment;
 import net.dohaw.firstgame.utils.Location;
 import net.dohaw.firstgame.utils.Vector;
@@ -13,7 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class MoveableSprite extends GameObject {
+public class MoveableSprite extends MoveableGameObject {
 
     /*
         Have to make this static in order to do this
