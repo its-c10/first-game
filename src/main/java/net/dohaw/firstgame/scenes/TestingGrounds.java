@@ -4,9 +4,7 @@ import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.ObjectID;
 import net.dohaw.firstgame.gameobject.BlankBackground;
 import net.dohaw.firstgame.gameobject.ImmovableGameObject;
-import net.dohaw.firstgame.gameobject.Player;
-import net.dohaw.firstgame.gameobject.sprites.MoveableSprite;
-import net.dohaw.firstgame.utils.Alignment;
+import net.dohaw.firstgame.gameobject.sprites.Player;
 import net.dohaw.firstgame.utils.Generatable;
 import net.dohaw.firstgame.utils.Location;
 import net.dohaw.firstgame.utils.Vector;
@@ -32,9 +30,7 @@ public class TestingGrounds extends Scene implements MouseListener, Generatable 
         ground.setInSkeletonMode(true);
         objects.add(ground);
 
-
-
-        Player player = new Player(game, new Vector(0, 0), new Location(100, 200), 30, 30);
+        Player player = new Player(game, "src/main/resources/Guy.png", new Vector(0, 0), new Location(100, 200), 30, 30);
         player.initPhysics(this);
         player.setInSkeletonMode(true);
 

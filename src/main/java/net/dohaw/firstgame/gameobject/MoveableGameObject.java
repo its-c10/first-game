@@ -68,24 +68,22 @@ public class MoveableGameObject extends Collidable {
         toBeLocation.applyVector(vector);
         MoveableGameObject temp = new MoveableGameObject(game, toBeLocation);
         temp.setCollisionRect(new Rectangle2D.Double(toBeLocation.getX() - collisionCoordAdditive, toBeLocation.getY() - collisionCoordAdditive, width + (collisionCoordAdditive * 2), height + (collisionCoordAdditive * 2)));
-        boolean isInCollision = physicsHandler.isInCollision(temp, this);
 
-        if(!isInCollision){
-            location.applyVector(vector);
-        }else if(!isOnGround){
-            vector.setX(0);
-            location.applyVector(vector);
+        boolean isInCollision;
+        if(physicsHandler != null){
+
+            isInCollision = physicsHandler.isInCollision(temp, this);
+
+            if(!isInCollision){
+                location.applyVector(vector);
+            }else if(!isOnGround){
+                vector.setX(0);
+                location.applyVector(vector);
+            }
+
         }
 
         this.collisionRect = new Rectangle2D.Double(location.getX() - collisionCoordAdditive, location.getY() - collisionCoordAdditive, width + (collisionCoordAdditive * 2), height + (collisionCoordAdditive * 2));
-
-        /*
-            Teleports you back to the center if you fall off
-         */
-        /*
-        if(location.getY() > Game.HEIGHT){
-            align(Alignment.CENTER);
-        }*/
 
     }
 

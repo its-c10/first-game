@@ -2,7 +2,7 @@ package net.dohaw.firstgame;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.dohaw.firstgame.gameobject.Player;
+import net.dohaw.firstgame.gameobject.sprites.Player;
 import net.dohaw.firstgame.handlers.GameObjectHandler;
 import net.dohaw.firstgame.utils.Location;
 import net.dohaw.firstgame.utils.Tickable;

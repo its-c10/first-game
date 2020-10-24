@@ -3,6 +3,7 @@ package net.dohaw.firstgame.scenes;
 import net.dohaw.firstgame.Game;
 import net.dohaw.firstgame.ObjectID;
 import net.dohaw.firstgame.gameobject.FPSCounter;
+import net.dohaw.firstgame.gameobject.sprites.SpriteBuilder;
 import net.dohaw.firstgame.gameobject.text.TextObject;
 import net.dohaw.firstgame.gameobject.sprites.MoveableSprite;
 import net.dohaw.firstgame.utils.Alignment;
@@ -23,7 +24,7 @@ public class PreStartingMenu extends Scene implements MouseListener {
     @Override
     public void init() {
 
-        MoveableSprite backgroundMoveableSprite = new MoveableSprite.SpriteBuilder(game, "src/main/resources/premenu background.png")
+        MoveableSprite backgroundMoveableSprite = new SpriteBuilder(game, "src/main/resources/premenu background.png")
             .setHeight(Game.HEIGHT - 25)
             .setWidth(Game.WIDTH)
             .setIsAnimated(false)
@@ -31,7 +32,6 @@ public class PreStartingMenu extends Scene implements MouseListener {
             .setVector(new Vector(0, 0))
             .setObjectID(ObjectID.BACKGROUND)
             .create();
-
         objects.add(backgroundMoveableSprite);
 
         TextObject gameTxt = new TextObject(game, new Location(0, 100), new Font("Roboto", Font.PLAIN, 40), "Game", Color.BLACK);
