@@ -31,9 +31,7 @@ public class MoveableGameObject extends Collidable {
         this.collisionCoordAdditive = 10;
     }
 
-    public void initPhysics(Scene scene){
-        this.physicsHandler = new PhysicsHandler(scene);
-    }
+
 
     @Override
     public void tick() {
