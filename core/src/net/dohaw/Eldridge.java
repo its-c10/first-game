@@ -19,7 +19,9 @@ public class Eldridge extends Game {
         tHolder = new TextureHolder();
         tHolder.init();
 
-        this.setScreen(new MainMenuScreen(this));
+        MainMenuScreen mainMenuScreen = new MainMenuScreen(this);
+        mainMenuScreen.init();
+        this.setScreen(mainMenuScreen);
 
     }
 

@@ -1,4 +1,11 @@
 package net.dohaw.components;
 
-public class VelocityComponent {
+import net.dohaw.GameObject;
+
+public class VelocityComponent extends Component{
+
+    public VelocityComponent(GameObject go) {
+        super(go);
+    }
+
 }

@@ -11,10 +11,14 @@ import net.dohaw.Eldridge;
 import net.dohaw.GameObject;
 import net.dohaw.GameObjectHolder;
 import net.dohaw.MainGame;
+import net.dohaw.systems.PhysicsSystem;
 
 public class GameScreen extends GameObjectHolder implements Screen {
 
-    private final Eldridge game;
+    private PhysicsSystem physicsSystem;
+
+    private final Eldridge GAME;
+
     private SpriteBatch batch;
     private OrthographicCamera camera;
 
@@ -23,9 +27,9 @@ public class GameScreen extends GameObjectHolder implements Screen {
     // For centering image
     private Rectangle bucket;
 
-    public GameScreen(final Eldridge game){
+    public GameScreen(final Eldridge GAME){
 
-        this.game = game;
+        this.GAME = GAME;
 
         batch = new SpriteBatch();
         // Directs to your assets folder
@@ -54,6 +58,8 @@ public class GameScreen extends GameObjectHolder implements Screen {
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        physicsSystem.update();
+
         camera.update();
         batch.setProjectionMatrix(camera.combined);
 
@@ -63,7 +69,7 @@ public class GameScreen extends GameObjectHolder implements Screen {
         batch.begin();
         if(isReady){
             for(GameObject obj : objects){
-                obj.start();
+                obj.update(delta);
             }
         }
         batch.end();
@@ -110,12 +116,15 @@ public class GameScreen extends GameObjectHolder implements Screen {
     @Override
     public void dispose() {
         batch.dispose();
-        game.dispose();
+        GAME.dispose();
     }
 
     @Override
     public void init() {
 
+
+
         isReady = true;
     }
+
 }

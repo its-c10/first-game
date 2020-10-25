@@ -1,13 +1,16 @@
 package net.dohaw.systems;
 
-import net.dohaw.components.Component;
+import com.badlogic.gdx.Screen;
+import net.dohaw.GameObject;
+import net.dohaw.GameObjectHolder;
 
 public abstract class System {
 
     private boolean isActive;
+    protected GameObjectHolder screen;
 
-    public System(){
-
+    public System(GameObjectHolder screen){
+        this.screen = screen;
     }
 
     public abstract void init();

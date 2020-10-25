@@ -1,6 +1,5 @@
 package net.dohaw;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import lombok.Getter;
 import lombok.Setter;
 import net.dohaw.components.Component;
@@ -15,7 +14,6 @@ public abstract class GameObject implements Updatable {
     @Getter @Setter protected boolean isVisible;
     @Getter final protected UUID OBJ_UUID;
     @Getter private List<Component> components = new ArrayList<>();
-
 
     public GameObject(){
         this.OBJ_UUID = UUID.randomUUID();

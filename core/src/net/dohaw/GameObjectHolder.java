@@ -1,11 +1,13 @@
 package net.dohaw;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class GameObjectHolder {
 
-    protected List<GameObject> objects = new ArrayList<>();
+    @Getter protected List<GameObject> objects = new ArrayList<>();
 
     public GameObjectHolder(){}
 
@@ -20,7 +22,11 @@ public abstract class GameObjectHolder {
      */
     public void addObject(GameObject obj){
         objects.add(obj);
-        obj.start();
+        //obj.start();
+    }
+
+    public void removeObject(){
+
     }
 
 }
