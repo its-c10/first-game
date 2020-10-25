@@ -7,14 +7,22 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
+import lombok.Getter;
 import net.dohaw.Eldridge;
 import net.dohaw.GameObject;
 import net.dohaw.GameObjectHolder;
 import net.dohaw.MainGame;
-import net.dohaw.systems.PhysicsSystem;
+import net.dohaw.ecs.components.Position;
+import net.dohaw.ecs.components.Sprite;
+import net.dohaw.ecs.systems.PhysicsSystem;
 
 public class GameScreen extends GameObjectHolder implements Screen {
 
+    private final float GRAVITY_FORCE = -5;
+
+    @Getter private World world;
     private PhysicsSystem physicsSystem;
 
     private final Eldridge GAME;
@@ -30,6 +38,7 @@ public class GameScreen extends GameObjectHolder implements Screen {
     public GameScreen(final Eldridge GAME){
 
         this.GAME = GAME;
+        this.world = new World(new Vector2(0, GRAVITY_FORCE), true);
 
         batch = new SpriteBatch();
         // Directs to your assets folder
@@ -58,8 +67,6 @@ public class GameScreen extends GameObjectHolder implements Screen {
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        physicsSystem.update();
-
         camera.update();
         batch.setProjectionMatrix(camera.combined);
 
@@ -69,7 +76,11 @@ public class GameScreen extends GameObjectHolder implements Screen {
         batch.begin();
         if(isReady){
             for(GameObject obj : objects){
-                obj.update(delta);
+                if(obj.hasComponent(Sprite.class)){
+                    Sprite spriteComp = obj.getComponent(Sprite.class);
+                    Position posComp = obj.getComponent(Position.class);
+                    batch.draw(spriteComp.getTRegion(), posComp.xPos, posComp.yPos);
+                }
             }
         }
         batch.end();
@@ -122,7 +133,10 @@ public class GameScreen extends GameObjectHolder implements Screen {
     @Override
     public void init() {
 
-
+//        GameObject go = new GameObject(this);
+//        Sprite spriteComponent = go.getComponent(Sprite.class);
+//        spriteComponent.setTRegion(GAME.tHolder.guy);
+//        objects.add(go);
 
         isReady = true;
     }

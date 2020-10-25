@@ -2,21 +2,28 @@ package net.dohaw;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.dohaw.components.Component;
-import net.dohaw.utils.Updatable;
+import net.dohaw.ecs.components.Component;
+import net.dohaw.ecs.components.Position;
+import net.dohaw.ecs.components.Sprite;
+import net.dohaw.screens.GameScreen;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public abstract class GameObject implements Updatable {
+public class GameObject {
 
     @Getter @Setter protected boolean isVisible;
     @Getter final protected UUID OBJ_UUID;
     @Getter private List<Component> components = new ArrayList<>();
 
-    public GameObject(){
+    @Getter private final GameScreen GAME_SCREEN;
+
+    public GameObject(final GameScreen GAME_SCREEN){
         this.OBJ_UUID = UUID.randomUUID();
+        this.GAME_SCREEN = GAME_SCREEN;
+        addComponent(new Position(this));
+        addComponent(new Sprite(this));
     }
 
     public boolean equals(Object other){
@@ -52,7 +59,7 @@ public abstract class GameObject implements Updatable {
 
     public void addComponent(Component c){
         this.components.add(c);
-        c.gameObject = this;
+        c.setGameObject(this);
     }
 
     public <T extends Component> boolean hasComponent(Class<T> componentClass){
@@ -64,18 +71,5 @@ public abstract class GameObject implements Updatable {
         }
         return false;
     }
-
-    /*
-    public void update(float dt){
-        for(int i = 0; i < components.size(); i++){
-            components.get(i).update(dt);
-        }
-    }
-
-    public void start(){
-        for(int i = 0; i < components.size(); i++){
-            components.get(i).start();
-        }
-    }*/
 
 }

@@ -1,7 +1,5 @@
-package net.dohaw.systems;
+package net.dohaw.ecs.systems;
 
-import com.badlogic.gdx.Screen;
-import net.dohaw.GameObject;
 import net.dohaw.GameObjectHolder;
 
 public abstract class System {
@@ -14,5 +12,7 @@ public abstract class System {
     }
 
     public abstract void init();
+
+    public abstract void run(float dt);
 
 }

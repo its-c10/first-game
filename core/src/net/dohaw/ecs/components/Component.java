@@ -1,5 +1,7 @@
-package net.dohaw.components;
+package net.dohaw.ecs.components;
 
+import lombok.Getter;
+import lombok.Setter;
 import net.dohaw.GameObject;
 
 /**
@@ -7,7 +9,8 @@ import net.dohaw.GameObject;
  */
 public abstract class Component {
 
-    public GameObject gameObject;
+    @Getter @Setter
+    protected GameObject gameObject;
 
     public Component(GameObject go){
         this.gameObject = go;
