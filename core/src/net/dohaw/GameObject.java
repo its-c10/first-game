@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import lombok.Getter;
 import lombok.Setter;
 import net.dohaw.components.Component;
-import net.dohaw.utils.Location;
 import net.dohaw.utils.Updatable;
 
 import java.util.ArrayList;
@@ -13,30 +12,13 @@ import java.util.UUID;
 
 public abstract class GameObject implements Updatable {
 
-    @Getter @Setter protected Location location;
     @Getter @Setter protected boolean isVisible;
-    @Getter @Setter protected TextureRegion texture;
-    @Getter final protected Eldridge GAME;
     @Getter final protected UUID OBJ_UUID;
-
     @Getter private List<Component> components = new ArrayList<>();
 
-    /**
-     *
-     * @param GAME An instance of the game
-     * @param texture The objects texture. Every single object in the game needs to have a texture
-     * @param location The location of the object on the screen
-     */
-    public GameObject(final Eldridge GAME, TextureRegion texture, Location location){
-        this.GAME = GAME;
-        this.location = location;
-        this.OBJ_UUID = UUID.randomUUID();
-        this.texture = texture;
-    }
 
-    @Override
-    public String toString(){
-        return "[GAME OBJECT: " + location.toString() + "]";
+    public GameObject(){
+        this.OBJ_UUID = UUID.randomUUID();
     }
 
     public boolean equals(Object other){
@@ -75,6 +57,17 @@ public abstract class GameObject implements Updatable {
         c.gameObject = this;
     }
 
+    public <T extends Component> boolean hasComponent(Class<T> componentClass){
+        for(int i = 0; i < components.size(); i++){
+            Component c = components.get(i);
+            if(componentClass.isAssignableFrom(c.getClass())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /*
     public void update(float dt){
         for(int i = 0; i < components.size(); i++){
             components.get(i).update(dt);
@@ -85,6 +78,6 @@ public abstract class GameObject implements Updatable {
         for(int i = 0; i < components.size(); i++){
             components.get(i).start();
         }
-    }
+    }*/
 
 }

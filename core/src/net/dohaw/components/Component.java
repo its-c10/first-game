@@ -2,14 +2,15 @@ package net.dohaw.components;
 
 import net.dohaw.GameObject;
 
+/**
+ * Components are things that hold data about a game object.
+ */
 public abstract class Component {
 
     public GameObject gameObject;
 
-    public abstract void update(float dt);
-
-    public void start(){
-
+    public Component(GameObject go){
+        this.gameObject = go;
     }
 
 }
