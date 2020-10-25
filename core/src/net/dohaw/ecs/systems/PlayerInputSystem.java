@@ -1,28 +1,19 @@
 package net.dohaw.ecs.systems;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import net.dohaw.ecs.components.PositionC;
-import net.dohaw.ecs.components.SpriteC;
-import net.dohaw.ecs.components.Velocity;
+import net.dohaw.ecs.components.scripts.PlayerMovementScript;
 
-public class RenderSystem extends IteratingSystem {
-
-    private SpriteBatch batch;
+public class PlayerInputSystem extends IteratingSystem {
 
     /**
      * Instantiates a system that will iterate over the entities described by the Family.
      *
      * @param family The family of entities iterated over in this System
      */
-    public RenderSystem(Family family, SpriteBatch batch) {
+    public PlayerInputSystem(Family family) {
         super(family);
-        this.batch = batch;
     }
 
     /**
@@ -34,9 +25,8 @@ public class RenderSystem extends IteratingSystem {
      */
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        PositionC positionComponent = entity.getComponent(PositionC.class);
-        SpriteC spriteComponent = entity.getComponent(SpriteC.class);
-        batch.draw(spriteComponent.getTRegion(), positionComponent.xPos, positionComponent.yPos);
+        PlayerMovementScript playerMovementScript = entity.getComponent(PlayerMovementScript.class);
+        playerMovementScript.script(deltaTime);
     }
 
 }

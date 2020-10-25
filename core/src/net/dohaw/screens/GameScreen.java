@@ -17,9 +17,12 @@ import net.dohaw.Eldridge;
 import net.dohaw.GameObject;
 import net.dohaw.GameObjectHolder;
 import net.dohaw.MainGame;
+import net.dohaw.ecs.components.BodyC;
 import net.dohaw.ecs.components.PositionC;
 import net.dohaw.ecs.components.SpriteC;
+import net.dohaw.ecs.components.scripts.PlayerMovementScript;
 import net.dohaw.ecs.systems.PhysicsSystem;
+import net.dohaw.ecs.systems.PlayerInputSystem;
 import net.dohaw.ecs.systems.RenderSystem;
 
 public class GameScreen extends GameObjectHolder implements Screen {
@@ -27,8 +30,11 @@ public class GameScreen extends GameObjectHolder implements Screen {
     private final int GRAVITY_FORCE = -5;
 
     private World world;
+
+    private PlayerInputSystem playerInputSystem;
     private RenderSystem renderSystem;
     private PhysicsSystem physicsSystem;
+
     private Engine engine;
     private final Eldridge GAME;
 
@@ -144,16 +150,21 @@ public class GameScreen extends GameObjectHolder implements Screen {
         SpriteC spriteComponent = new SpriteC(go);
         spriteComponent.setTRegion(GAME.tHolder.guy);
         go.add(spriteComponent);
+
+        go.add(new BodyC(go));
+        go.add(new PlayerMovementScript(go));
         engine.addEntity(go);
 
         physicsSystem = new PhysicsSystem(Family.all(PositionC.class).get());
         physicsSystem.setProcessing(true);
-
         renderSystem = new RenderSystem(Family.all(PositionC.class, SpriteC.class).get(), batch);
         renderSystem.setProcessing(true);
+        playerInputSystem = new PlayerInputSystem(Family.all(PlayerMovementScript.class).get());
+        playerInputSystem.setProcessing(true);
 
-        engine.addSystem(renderSystem);
+        engine.addSystem(playerInputSystem);
         engine.addSystem(physicsSystem);
+        engine.addSystem(renderSystem);
 
         isReady = true;
     }
