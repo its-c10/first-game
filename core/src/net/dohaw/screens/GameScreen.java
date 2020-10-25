@@ -8,14 +8,17 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import lombok.Getter;
 import net.dohaw.Eldridge;
 import net.dohaw.GameObject;
 import net.dohaw.GameObjectHolder;
 import net.dohaw.MainGame;
+import net.dohaw.ecs.components.BodyC;
 import net.dohaw.ecs.components.Position;
 import net.dohaw.ecs.components.Sprite;
+import net.dohaw.ecs.components.scripts.PlayerMovementScript;
 import net.dohaw.ecs.systems.PhysicsSystem;
 
 public class GameScreen extends GameObjectHolder implements Screen {
@@ -39,6 +42,8 @@ public class GameScreen extends GameObjectHolder implements Screen {
 
         this.GAME = GAME;
         this.world = new World(new Vector2(0, GRAVITY_FORCE), true);
+
+        this.physicsSystem = new PhysicsSystem(world, this);
 
         batch = new SpriteBatch();
         // Directs to your assets folder
@@ -81,10 +86,14 @@ public class GameScreen extends GameObjectHolder implements Screen {
                     Position posComp = obj.getComponent(Position.class);
                     batch.draw(spriteComp.getTRegion(), posComp.xPos, posComp.yPos);
                 }
+                if(obj.hasComponent(PlayerMovementScript.class)){
+                    PlayerMovementScript script = obj.getComponent(PlayerMovementScript.class);
+                    script.script(delta);
+                }
             }
         }
         batch.end();
-
+        physicsSystem.run(delta);
     }
 
     /**
@@ -133,10 +142,15 @@ public class GameScreen extends GameObjectHolder implements Screen {
     @Override
     public void init() {
 
-//        GameObject go = new GameObject(this);
-//        Sprite spriteComponent = go.getComponent(Sprite.class);
-//        spriteComponent.setTRegion(GAME.tHolder.guy);
-//        objects.add(go);
+        GameObject go = new GameObject(this);
+        Sprite spriteComponent = go.getComponent(Sprite.class);
+        spriteComponent.setTRegion(GAME.tHolder.guy);
+        BodyC bodyComponent = new BodyC(go);
+        bodyComponent.setBodyDefinitionType(BodyDef.BodyType.DynamicBody);
+        go.addComponent(bodyComponent);
+        PlayerMovementScript script = new PlayerMovementScript(go);
+        go.addComponent(script);
+        objects.add(go);
 
         isReady = true;
     }

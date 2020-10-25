@@ -13,7 +13,7 @@ import java.util.Vector;
 /**
  * Dependent on the position component
  */
-public class Body extends Component{
+public class BodyC extends Component{
 
     /*
       100 is some arbitrary number. Mass affects gravity
@@ -26,7 +26,7 @@ public class Body extends Component{
     @Getter private com.badlogic.gdx.physics.box2d.Body body;
     private Position positionComponent = null;
 
-    public Body(GameObject go) {
+    public BodyC(GameObject go) {
         super(go);
         if(go.hasComponent(Position.class)){
             this.positionComponent = go.getComponent(Position.class);

@@ -1,27 +1,30 @@
 package net.dohaw.ecs.components.scripts;
 
+import com.badlogic.ashley.core.Component;
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import lombok.Getter;
 import lombok.Setter;
 import net.dohaw.GameObject;
-import net.dohaw.ecs.components.Body;
+import net.dohaw.ecs.components.BodyC;
 
 /**
  *  dependent on the collision component
  */
-public class PlayerMovementScript extends Script implements InputProcessor {
+public class PlayerMovementScript extends Component implements InputProcessor {
 
     @Getter @Setter private int movementSpeed = 3;
     @Getter @Setter private float jumpingForce = 3;
-    @Setter private Body bodyComponent = null;
+    @Setter private BodyC bodyComponent = null;
 
     public PlayerMovementScript(GameObject go) {
         super(go);
-        if(go.hasComponent(Body.class)){
-            this.bodyComponent = go.getComponent(Body.class);
+        if(go.hasComponent(BodyC.class)){
+            this.bodyComponent = go.getComponent(BodyC.class);
         }
     }
 
@@ -33,7 +36,13 @@ public class PlayerMovementScript extends Script implements InputProcessor {
     @Override
     public void script(float dt) {
         if(Gdx.input.isKeyJustPressed(Input.Keys.A)){
-            bodyComponent.getBody().setLinearVelocity(new Vector2(-movementSpeed, 0f));
+            Body body = bodyComponent.getBody();
+            Entity e = (Entity) body.getUserData();
+            e.
+            System.out.println("WORLD: " + gameObject.getGAME_SCREEN().getWorld().getBodyCount());
+            body.applyLinearImpulse(-0.8f, 0, 0, 0, true);
+            System.out.println("POSITION: " + body.getPosition().toString());
+            System.out.println("VEL: " + body.getLinearVelocity());
         }
     }
 

@@ -49,7 +49,7 @@ public class PhysicsSystem extends System {
     public void run(float dt) {
 
 
-        doPhysicsStep(dt);
+        //doPhysicsStep(dt);
     }
 
     private void doPhysicsStep(float deltaTime) {
