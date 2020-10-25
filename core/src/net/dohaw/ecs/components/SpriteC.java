@@ -5,11 +5,11 @@ import lombok.Getter;
 import lombok.Setter;
 import net.dohaw.GameObject;
 
-public class Sprite extends Component{
+public class SpriteC extends GameObjectComponent {
 
     @Getter @Setter private TextureRegion tRegion;
 
-    public Sprite(GameObject go) {
+    public SpriteC(GameObject go) {
         super(go);
     }
 

@@ -11,11 +11,12 @@ import lombok.Getter;
 import lombok.Setter;
 import net.dohaw.GameObject;
 import net.dohaw.ecs.components.BodyC;
+import net.dohaw.ecs.components.GameObjectComponent;
 
 /**
  *  dependent on the collision component
  */
-public class PlayerMovementScript extends Component implements InputProcessor {
+public class PlayerMovementScript extends Script implements InputProcessor {
 
     @Getter @Setter private int movementSpeed = 3;
     @Getter @Setter private float jumpingForce = 3;
@@ -23,8 +24,9 @@ public class PlayerMovementScript extends Component implements InputProcessor {
 
     public PlayerMovementScript(GameObject go) {
         super(go);
-        if(go.hasComponent(BodyC.class)){
-            this.bodyComponent = go.getComponent(BodyC.class);
+        BodyC potentialBodyComponent = go.getComponent(BodyC.class);
+        if(potentialBodyComponent != null){
+            this.bodyComponent = potentialBodyComponent;
         }
     }
 
@@ -37,9 +39,6 @@ public class PlayerMovementScript extends Component implements InputProcessor {
     public void script(float dt) {
         if(Gdx.input.isKeyJustPressed(Input.Keys.A)){
             Body body = bodyComponent.getBody();
-            Entity e = (Entity) body.getUserData();
-            e.
-            System.out.println("WORLD: " + gameObject.getGAME_SCREEN().getWorld().getBodyCount());
             body.applyLinearImpulse(-0.8f, 0, 0, 0, true);
             System.out.println("POSITION: " + body.getPosition().toString());
             System.out.println("VEL: " + body.getLinearVelocity());

@@ -1,5 +1,8 @@
 package net.dohaw.screens;
 
+import com.badlogic.ashley.core.Engine;
+import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -7,27 +10,26 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
-import lombok.Getter;
 import net.dohaw.Eldridge;
 import net.dohaw.GameObject;
 import net.dohaw.GameObjectHolder;
 import net.dohaw.MainGame;
-import net.dohaw.ecs.components.BodyC;
-import net.dohaw.ecs.components.Position;
-import net.dohaw.ecs.components.Sprite;
-import net.dohaw.ecs.components.scripts.PlayerMovementScript;
+import net.dohaw.ecs.components.PositionC;
+import net.dohaw.ecs.components.SpriteC;
 import net.dohaw.ecs.systems.PhysicsSystem;
+import net.dohaw.ecs.systems.RenderSystem;
 
 public class GameScreen extends GameObjectHolder implements Screen {
 
-    private final float GRAVITY_FORCE = -5;
+    private final int GRAVITY_FORCE = -5;
 
-    @Getter private World world;
+    private World world;
+    private RenderSystem renderSystem;
     private PhysicsSystem physicsSystem;
-
+    private Engine engine;
     private final Eldridge GAME;
 
     private SpriteBatch batch;
@@ -40,10 +42,9 @@ public class GameScreen extends GameObjectHolder implements Screen {
 
     public GameScreen(final Eldridge GAME){
 
-        this.GAME = GAME;
-        this.world = new World(new Vector2(0, GRAVITY_FORCE), true);
+        this.engine = new Engine();
 
-        this.physicsSystem = new PhysicsSystem(world, this);
+        this.GAME = GAME;
 
         batch = new SpriteBatch();
         // Directs to your assets folder
@@ -75,25 +76,18 @@ public class GameScreen extends GameObjectHolder implements Screen {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
 
+
+
         /*
             Draw stuff in between begin and end
          */
         batch.begin();
+
         if(isReady){
-            for(GameObject obj : objects){
-                if(obj.hasComponent(Sprite.class)){
-                    Sprite spriteComp = obj.getComponent(Sprite.class);
-                    Position posComp = obj.getComponent(Position.class);
-                    batch.draw(spriteComp.getTRegion(), posComp.xPos, posComp.yPos);
-                }
-                if(obj.hasComponent(PlayerMovementScript.class)){
-                    PlayerMovementScript script = obj.getComponent(PlayerMovementScript.class);
-                    script.script(delta);
-                }
-            }
+            engine.update(delta);
         }
+
         batch.end();
-        physicsSystem.run(delta);
     }
 
     /**
@@ -142,15 +136,24 @@ public class GameScreen extends GameObjectHolder implements Screen {
     @Override
     public void init() {
 
-        GameObject go = new GameObject(this);
-        Sprite spriteComponent = go.getComponent(Sprite.class);
+        this.world = new World(new Vector2(0, GRAVITY_FORCE), true);
+
+        GameObject go = new GameObject();
+        go.add(new PositionC(go, world));
+
+        SpriteC spriteComponent = new SpriteC(go);
         spriteComponent.setTRegion(GAME.tHolder.guy);
-        BodyC bodyComponent = new BodyC(go);
-        bodyComponent.setBodyDefinitionType(BodyDef.BodyType.DynamicBody);
-        go.addComponent(bodyComponent);
-        PlayerMovementScript script = new PlayerMovementScript(go);
-        go.addComponent(script);
-        objects.add(go);
+        go.add(spriteComponent);
+        engine.addEntity(go);
+
+        physicsSystem = new PhysicsSystem(Family.all(PositionC.class).get());
+        physicsSystem.setProcessing(true);
+
+        renderSystem = new RenderSystem(Family.all(PositionC.class, SpriteC.class).get(), batch);
+        renderSystem.setProcessing(true);
+
+        engine.addSystem(renderSystem);
+        engine.addSystem(physicsSystem);
 
         isReady = true;
     }

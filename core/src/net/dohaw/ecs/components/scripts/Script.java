@@ -3,12 +3,12 @@ package net.dohaw.ecs.components.scripts;
 import lombok.Getter;
 import lombok.Setter;
 import net.dohaw.GameObject;
-import net.dohaw.ecs.components.Component;
+import net.dohaw.ecs.components.GameObjectComponent;
 
 /**
  * May carry out very specific behaviors for a game object
  */
-public abstract class Script extends Component {
+public abstract class Script extends GameObjectComponent {
 
     @Getter @Setter private float deltaTime;
     @Getter @Setter private boolean isActive = false;

@@ -4,33 +4,25 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.physics.box2d.World;
-import net.dohaw.GameObject;
-import net.dohaw.GameObjectHolder;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import net.dohaw.ecs.components.PositionC;
+import net.dohaw.ecs.components.SpriteC;
 import net.dohaw.ecs.components.Velocity;
 
-import java.util.ArrayList;
-import java.util.List;
+public class RenderSystem extends IteratingSystem {
 
-/**
- *  A system that deals with movement, collision, gravity, and what-not
- */
-public class PhysicsSystem extends IteratingSystem {
-
-    private float accumulator = 0;
-
-    private final float TIME_STEP = 1/60f;
-    private final int VELOCITY_ITERATIONS = 6;
-    private final int POSITION_ITERATIONS = 2;
+    private SpriteBatch batch;
 
     /**
      * Instantiates a system that will iterate over the entities described by the Family.
      *
      * @param family The family of entities iterated over in this System
      */
-    public PhysicsSystem(Family family) {
+    public RenderSystem(Family family, SpriteBatch batch) {
         super(family);
+        this.batch = batch;
     }
 
     /**
@@ -42,6 +34,10 @@ public class PhysicsSystem extends IteratingSystem {
      */
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
+        PositionC positionComponent = entity.getComponent(PositionC.class);
+        SpriteC spriteComponent = entity.getComponent(SpriteC.class);
+        batch.draw(spriteComponent.getTRegion(), positionComponent.xPos, positionComponent.yPos);
+        System.out.println("ENTITY: " + entity.toString());
     }
 
 }
