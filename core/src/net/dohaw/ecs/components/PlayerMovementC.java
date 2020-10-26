@@ -9,7 +9,7 @@ import java.util.List;
 
 public class PlayerMovementC extends GameObjectComponent {
 
-    public HashSet<Integer> keysPressed = new HashSet<>();
+    @Getter private HashSet<Integer> keysPressed = new HashSet<>();
 
     public PlayerMovementC(GameObject gameObject) {
         super(gameObject);

@@ -10,6 +10,8 @@ import net.dohaw.GameObject;
 import net.dohaw.ecs.components.MovementC;
 import net.dohaw.ecs.components.PlayerMovementC;
 
+import java.util.HashSet;
+
 public class PlayerMovementSystem extends IteratingSystem {
 
     /**
@@ -35,6 +37,7 @@ public class PlayerMovementSystem extends IteratingSystem {
         PlayerMovementC playerMovementComponent = player.getComponent(PlayerMovementC.class);
         MovementC movementComponent = player.getComponent(MovementC.class);
         Vector2 velocity = movementComponent.getVelocity();
+        HashSet<Integer> keysPressed =  playerMovementComponent.getKeysPressed();
 
         if(Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.D)){
 
@@ -43,23 +46,23 @@ public class PlayerMovementSystem extends IteratingSystem {
 
             if(Gdx.input.isKeyPressed(Input.Keys.A) && velocity.x > -maxVelocity){
                 velocity.x = -movementSpeed;
-                playerMovementComponent.keysPressed.add(Input.Keys.A);
+                keysPressed.add(Input.Keys.A);
             }
 
             if(Gdx.input.isKeyPressed(Input.Keys.D) && velocity.x < maxVelocity){
                 velocity.x = movementSpeed;
-                playerMovementComponent.keysPressed.add(Input.Keys.D);
+                keysPressed.add(Input.Keys.D);
             }
 
         }else{
 
-            if(playerMovementComponent.keysPressed.contains(Input.Keys.A)){
-                playerMovementComponent.keysPressed.remove(Input.Keys.A);
+            if(keysPressed.contains(Input.Keys.A)){
+                keysPressed.remove(Input.Keys.A);
                 velocity.x = 0;
             }
 
-            if(playerMovementComponent.keysPressed.contains(Input.Keys.D)){
-                playerMovementComponent.keysPressed.remove(Input.Keys.D);
+            if(keysPressed.contains(Input.Keys.D)){
+                keysPressed.remove(Input.Keys.D);
                 velocity.x = 0;
             }
 
