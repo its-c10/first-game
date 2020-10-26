@@ -12,14 +12,9 @@ import net.dohaw.MainGame;
 public class MainMenuScreen extends GameObjectHolder implements Screen {
 
     private final Eldridge GAME;
-    private OrthographicCamera camera;
 
     public MainMenuScreen(final Eldridge game){
-
         this.GAME = game;
-        //camera = new OrthographicCamera();
-        //camera.setToOrtho(false, 20, 20);
-
     }
 
     /**

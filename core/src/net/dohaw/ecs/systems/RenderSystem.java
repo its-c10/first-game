@@ -1,18 +1,21 @@
 package net.dohaw.ecs.systems;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import net.dohaw.ecs.components.PositionC;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Shape2D;
+import com.badlogic.gdx.math.Vector2;
+import net.dohaw.ecs.components.CollisionC;
+import net.dohaw.ecs.components.TransformC;
 import net.dohaw.ecs.components.SpriteC;
-import net.dohaw.ecs.components.Velocity;
 
 public class RenderSystem extends IteratingSystem {
 
+    private ShapeRenderer shapeRenderer;
     private SpriteBatch batch;
 
     /**
@@ -20,9 +23,10 @@ public class RenderSystem extends IteratingSystem {
      *
      * @param family The family of entities iterated over in this System
      */
-    public RenderSystem(Family family, SpriteBatch batch) {
+    public RenderSystem(Family family, SpriteBatch batch, ShapeRenderer shapeRenderer) {
         super(family);
         this.batch = batch;
+        this.shapeRenderer = shapeRenderer;
     }
 
     /**
@@ -34,9 +38,24 @@ public class RenderSystem extends IteratingSystem {
      */
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        PositionC positionComponent = entity.getComponent(PositionC.class);
+
+        TransformC transformComponent = entity.getComponent(TransformC.class);
         SpriteC spriteComponent = entity.getComponent(SpriteC.class);
-        batch.draw(spriteComponent.getTRegion(), positionComponent.xPos, positionComponent.yPos);
+        Vector2 position = transformComponent.getPosition();
+        batch.draw(spriteComponent.getTRegion(), position.x, position.y);
+
+        CollisionC collisionComponent = entity.getComponent(CollisionC.class);
+        if(collisionComponent != null){
+            Shape2D collisionShape = collisionComponent.getShape();
+            if(collisionShape instanceof Polygon){
+                shapeRenderer.polygon(((Polygon) collisionShape).getVertices());
+            }else if(collisionShape instanceof Rectangle){
+                Rectangle rect = (Rectangle) collisionShape;
+                shapeRenderer.rect(rect.x, rect.y, rect.width, rect.height);
+            }
+
+        }
+
     }
 
 }
