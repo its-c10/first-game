@@ -7,7 +7,7 @@ import net.dohaw.GameObject;
 
 public class MovementC extends GameObjectComponent {
 
-    @Getter @Setter private Vector2 velocity;
+    @Getter @Setter private Vector2 velocity = new Vector2(0, 0);
     @Getter @Setter private float maxVelocity = 10;
     @Getter @Setter private float movementSpeed = 2;
     @Getter @Setter private float mass = 100;

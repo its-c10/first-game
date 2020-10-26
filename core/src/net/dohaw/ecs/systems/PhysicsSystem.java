@@ -3,7 +3,9 @@ package net.dohaw.ecs.systems;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.math.Vector2;
 import net.dohaw.ecs.components.MovementC;
+import net.dohaw.ecs.components.TransformC;
 
 /**
  *  A system that deals with movement, collision, gravity, and what-not
@@ -35,8 +37,14 @@ public class PhysicsSystem extends IteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
 
-        MovementC bodyComponent = entity.getComponent(MovementC.class);
+        MovementC movementComponent = entity.getComponent(MovementC.class);
+        TransformC transformComponent = entity.getComponent(TransformC.class);
 
+        Vector2 velocity = movementComponent.getVelocity();
+        Vector2 position = transformComponent.getPosition();
+
+        position.x += velocity.x;
+        position.y += velocity.y;
 
     }
 
