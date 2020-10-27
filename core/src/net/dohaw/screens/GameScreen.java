@@ -7,6 +7,8 @@ import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -32,6 +34,7 @@ public class GameScreen extends GameObjectHolder implements Screen{
     private Engine engine;
     private final Eldridge GAME;
 
+    private ShapeRenderer shapeRenderer;
     private SpriteBatch batch;
     private OrthographicCamera camera;
 
@@ -43,9 +46,11 @@ public class GameScreen extends GameObjectHolder implements Screen{
 
         this.GAME = GAME;
 
-        batch = new SpriteBatch();
+        this.batch = GAME.batch;
+        this.shapeRenderer = GAME.shapeRenderer;
+        shapeRenderer.setAutoShapeType(true);
         // Directs to your assets folder
-        camera = new OrthographicCamera();
+        this.camera = new OrthographicCamera();
         // Always showing us at least 800 pixels wide and 480 height
         camera.setToOrtho(false, 800, 480);
 
@@ -72,10 +77,12 @@ public class GameScreen extends GameObjectHolder implements Screen{
 
         camera.update();
         batch.setProjectionMatrix(camera.combined);
+        shapeRenderer.setProjectionMatrix(camera.combined);
 
         /*
             Draw stuff in between begin and end
          */
+        shapeRenderer.begin();
         batch.begin();
 
         if(isReady){
@@ -83,6 +90,7 @@ public class GameScreen extends GameObjectHolder implements Screen{
         }
 
         batch.end();
+        shapeRenderer.end();
     }
 
     /**
@@ -131,16 +139,7 @@ public class GameScreen extends GameObjectHolder implements Screen{
     @Override
     public void init() {
 
-        GameObject playerObj = new GameObject();
-        playerObj.add(new MovementC(playerObj));
-        playerObj.add(new PlayerMovementC(playerObj));
-        playerObj.add(new TransformC(playerObj));
-
-        SpriteC spriteComponent = new SpriteC(playerObj);
-        spriteComponent.setTRegion(GAME.tHolder.guy);
-        playerObj.add(spriteComponent);
-
-        playerObj.add(new CollisionC(playerObj));
+        GameObject playerObj = initPlayer();
         engine.addEntity(playerObj);
 
         playerMovementSystem = new PlayerMovementSystem(Family.all(PlayerMovementC.class, MovementC.class).get());
@@ -155,6 +154,28 @@ public class GameScreen extends GameObjectHolder implements Screen{
         engine.addSystem(renderSystem);
 
         isReady = true;
+    }
+
+    private GameObject initPlayer(){
+
+        GameObject playerObj = new GameObject();
+        playerObj.add(new MovementC(playerObj));
+        playerObj.add(new PlayerMovementC(playerObj));
+
+        TransformC transformComponent = new TransformC(playerObj);
+        playerObj.add(transformComponent);
+
+        SpriteC spriteComponent = new SpriteC(playerObj);
+        spriteComponent.setTRegion(GAME.tHolder.guy);
+        playerObj.add(spriteComponent);
+
+        CollisionC collisionComponent = new CollisionC(playerObj);
+        Vector2 pos = transformComponent.position;
+        Rectangle rect = new Rectangle(pos.x, pos.y, spriteComponent.getTRegion().getRegionWidth(), spriteComponent.getTRegion().getRegionHeight());
+        collisionComponent.setShape(rect);
+        playerObj.add(collisionComponent);
+
+        return playerObj;
     }
 
 }

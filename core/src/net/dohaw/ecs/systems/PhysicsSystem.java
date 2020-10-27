@@ -3,7 +3,10 @@ package net.dohaw.ecs.systems;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import net.dohaw.ecs.components.CollisionC;
 import net.dohaw.ecs.components.MovementC;
 import net.dohaw.ecs.components.TransformC;
 
@@ -36,6 +39,10 @@ public class PhysicsSystem extends IteratingSystem {
      */
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
+        dealWithMovement(entity);
+    }
+
+    private void dealWithMovement(Entity entity){
 
         MovementC movementComponent = entity.getComponent(MovementC.class);
         TransformC transformComponent = entity.getComponent(TransformC.class);
@@ -45,6 +52,15 @@ public class PhysicsSystem extends IteratingSystem {
 
         position.x += velocity.x;
         position.y += velocity.y;
+
+        if(entity.getComponent(CollisionC.class) != null){
+            CollisionC collisionComponenet = entity.getComponent(CollisionC.class);
+            if(collisionComponenet.getShape() instanceof Polygon){
+                ((Polygon) collisionComponenet.getShape()).setPosition(position.x, position.y);
+            }else{
+                ((Rectangle) collisionComponenet.getShape()).setPosition(position.x, position.y);
+            }
+        }
 
     }
 

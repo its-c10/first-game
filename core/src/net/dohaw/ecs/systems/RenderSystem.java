@@ -45,6 +45,7 @@ public class RenderSystem extends IteratingSystem {
         batch.draw(spriteComponent.getTRegion(), position.x, position.y);
 
         CollisionC collisionComponent = entity.getComponent(CollisionC.class);
+
         if(collisionComponent != null){
             Shape2D collisionShape = collisionComponent.getShape();
             if(collisionShape instanceof Polygon){
@@ -53,7 +54,6 @@ public class RenderSystem extends IteratingSystem {
                 Rectangle rect = (Rectangle) collisionShape;
                 shapeRenderer.rect(rect.x, rect.y, rect.width, rect.height);
             }
-
         }
 
     }
