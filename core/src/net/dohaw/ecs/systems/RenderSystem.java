@@ -18,8 +18,6 @@ import net.dohaw.ecs.components.TransformC;
 import net.dohaw.ecs.components.SpriteC;
 import net.dohaw.utils.Direction;
 
-import java.util.List;
-
 public class RenderSystem extends IteratingSystem {
 
     private ShapeRenderer shapeRenderer;
@@ -88,6 +86,7 @@ public class RenderSystem extends IteratingSystem {
                 }
 
             }else{
+                dirSpriteComponent.indexReset();
                 sprite = spriteComponent.getIdleSprite();
             }
 

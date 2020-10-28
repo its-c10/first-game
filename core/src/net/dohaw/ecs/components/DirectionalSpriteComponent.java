@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 import net.dohaw.GameObject;
 
-import java.util.List;
-
 /**
  * Means that their sprite animations change when going left to right
  */
