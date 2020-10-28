@@ -7,7 +7,7 @@ import net.dohaw.GameObject;
 
 public class SpriteC extends GameObjectComponent {
 
-    @Getter @Setter private TextureRegion tRegion;
+    @Getter @Setter private TextureRegion idleSprite;
 
     public SpriteC(GameObject go) {
         super(go);

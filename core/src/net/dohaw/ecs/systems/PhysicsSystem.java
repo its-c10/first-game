@@ -3,9 +3,8 @@ package net.dohaw.ecs.systems;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.ashley.utils.ImmutableArray;
+import com.badlogic.gdx.math.*;
 import net.dohaw.ecs.components.CollisionC;
 import net.dohaw.ecs.components.MovementC;
 import net.dohaw.ecs.components.TransformC;
@@ -14,12 +13,6 @@ import net.dohaw.ecs.components.TransformC;
  *  A system that deals with movement, collision, gravity, and what-not
  */
 public class PhysicsSystem extends IteratingSystem {
-
-    private float accumulator = 0;
-
-    private final float TIME_STEP = 1/60f;
-    private final int VELOCITY_ITERATIONS = 6;
-    private final int POSITION_ITERATIONS = 2;
 
     /**
      * Instantiates a system that will iterate over the entities described by the Family.
@@ -39,10 +32,10 @@ public class PhysicsSystem extends IteratingSystem {
      */
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        dealWithMovement(entity);
+        dealWithMovement(entity, deltaTime);
     }
 
-    private void dealWithMovement(Entity entity){
+    private void dealWithMovement(Entity entity, float deltaTime){
 
         MovementC movementComponent = entity.getComponent(MovementC.class);
         TransformC transformComponent = entity.getComponent(TransformC.class);
@@ -50,17 +43,49 @@ public class PhysicsSystem extends IteratingSystem {
         Vector2 velocity = movementComponent.getVelocity();
         Vector2 position = transformComponent.getPosition();
 
-        position.x += velocity.x;
-        position.y += velocity.y;
-
         if(entity.getComponent(CollisionC.class) != null){
-            CollisionC collisionComponenet = entity.getComponent(CollisionC.class);
-            if(collisionComponenet.getShape() instanceof Polygon){
-                ((Polygon) collisionComponenet.getShape()).setPosition(position.x, position.y);
-            }else{
-                ((Rectangle) collisionComponenet.getShape()).setPosition(position.x, position.y);
+
+            if(!isNextMoveInCollision(entity)){
+
+                position.x += (velocity.x * deltaTime);
+                position.y += (velocity.y * deltaTime);
+
+                CollisionC collisionComponenet = entity.getComponent(CollisionC.class);
+                if(collisionComponenet.getShape() instanceof Polygon){
+                    ((Polygon) collisionComponenet.getShape()).setPosition(position.x, position.y);
+                }else{
+                    ((Rectangle) collisionComponenet.getShape()).setPosition(position.x, position.y);
+                }
+
+            }
+
+        }else{
+            position.x += velocity.x;
+            position.y += velocity.y;
+        }
+
+    }
+
+
+    private boolean isNextMoveInCollision(Entity entityInCheck){
+
+        CollisionC collisionComponent = entityInCheck.getComponent(CollisionC.class);
+        Rectangle entityInCheckRect = (Rectangle) collisionComponent.getShape();
+        ImmutableArray<Entity> entities = getEntities();
+
+        for(Entity e : entities){
+            if(!e.equals(entityInCheck)){
+                if(e.getComponent(CollisionC.class) != null){
+                    CollisionC collisionComponentEntity = e.getComponent(CollisionC.class);
+                    Rectangle rectCollisionEntity = (Rectangle) collisionComponentEntity.getShape();
+                    if(Intersector.overlaps(rectCollisionEntity, entityInCheckRect)){
+                        return true;
+                    }
+                }
             }
         }
+
+        return false;
 
     }
 

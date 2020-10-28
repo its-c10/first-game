@@ -4,14 +4,21 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import net.dohaw.ecs.components.CollisionC;
+import net.dohaw.ecs.components.DirectionalSpriteComponent;
 import net.dohaw.ecs.components.TransformC;
 import net.dohaw.ecs.components.SpriteC;
+import net.dohaw.utils.Direction;
+
+import java.util.List;
 
 public class RenderSystem extends IteratingSystem {
 
@@ -42,7 +49,53 @@ public class RenderSystem extends IteratingSystem {
         TransformC transformComponent = entity.getComponent(TransformC.class);
         SpriteC spriteComponent = entity.getComponent(SpriteC.class);
         Vector2 position = transformComponent.getPosition();
-        batch.draw(spriteComponent.getTRegion(), position.x, position.y);
+
+        TextureRegion sprite;
+        /*
+            If this isn't null, then their sprite is animatable
+         */
+        DirectionalSpriteComponent dirSpriteComponent = entity.getComponent(DirectionalSpriteComponent.class);
+        if(dirSpriteComponent != null){
+
+            Direction directionFacing = transformComponent.getDirectionFacing();
+            Array<TextureAtlas.AtlasRegion> directionalSpriteAnimations;
+
+            if(directionFacing != null){
+
+                if(directionFacing == Direction.LEFT){
+                    directionalSpriteAnimations = dirSpriteComponent.getLeftSprites();
+                }else{
+                    directionalSpriteAnimations = dirSpriteComponent.getRightSprites();
+                }
+
+                if(dirSpriteComponent.isTimeToSwitchSprite()){
+
+                    dirSpriteComponent.bufferCountReset();
+
+                    int currentSpriteIndex = dirSpriteComponent.getIndexSprite();
+                    if(currentSpriteIndex != (directionalSpriteAnimations.size - 1)){
+                        dirSpriteComponent.incrementIndex();
+                    }else{
+                        dirSpriteComponent.indexReset();
+                    }
+
+                    currentSpriteIndex = dirSpriteComponent.getIndexSprite();
+                    sprite = directionalSpriteAnimations.get(currentSpriteIndex);
+
+                }else{
+                    dirSpriteComponent.incrementFrameBufferCount();
+                    sprite = directionalSpriteAnimations.get(dirSpriteComponent.getIndexSprite());
+                }
+
+            }else{
+                sprite = spriteComponent.getIdleSprite();
+            }
+
+        }else{
+            sprite = spriteComponent.getIdleSprite();
+        }
+
+        batch.draw(sprite, position.x, position.y);
 
         CollisionC collisionComponent = entity.getComponent(CollisionC.class);
 

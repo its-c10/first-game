@@ -9,6 +9,8 @@ import com.badlogic.gdx.math.Vector2;
 import net.dohaw.GameObject;
 import net.dohaw.ecs.components.MovementC;
 import net.dohaw.ecs.components.PlayerMovementC;
+import net.dohaw.ecs.components.TransformC;
+import net.dohaw.utils.Direction;
 
 import java.util.HashSet;
 
@@ -39,19 +41,24 @@ public class PlayerMovementSystem extends IteratingSystem {
         Vector2 velocity = movementComponent.getVelocity();
         HashSet<Integer> keysPressed =  playerMovementComponent.getKeysPressed();
 
+        TransformC transformComponent = entity.getComponent(TransformC.class);
+
         if(Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.D)){
 
             float maxVelocity = movementComponent.getMaxVelocity();
             float movementSpeed = movementComponent.getMovementSpeed();
 
+
             if(Gdx.input.isKeyPressed(Input.Keys.A) && velocity.x > -maxVelocity){
-                velocity.x = -movementSpeed;
+                velocity.x += -movementSpeed;
                 keysPressed.add(Input.Keys.A);
+                transformComponent.setDirectionFacing(Direction.LEFT);
             }
 
             if(Gdx.input.isKeyPressed(Input.Keys.D) && velocity.x < maxVelocity){
-                velocity.x = movementSpeed;
+                velocity.x += movementSpeed;
                 keysPressed.add(Input.Keys.D);
+                transformComponent.setDirectionFacing(Direction.RIGHT);
             }
 
         }else{
@@ -59,11 +66,13 @@ public class PlayerMovementSystem extends IteratingSystem {
             if(keysPressed.contains(Input.Keys.A)){
                 keysPressed.remove(Input.Keys.A);
                 velocity.x = 0;
+                transformComponent.setDirectionFacing(null);
             }
 
             if(keysPressed.contains(Input.Keys.D)){
                 keysPressed.remove(Input.Keys.D);
                 velocity.x = 0;
+                transformComponent.setDirectionFacing(null);
             }
 
         }

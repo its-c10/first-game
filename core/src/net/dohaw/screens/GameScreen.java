@@ -52,7 +52,7 @@ public class GameScreen extends GameObjectHolder implements Screen{
         // Directs to your assets folder
         this.camera = new OrthographicCamera();
         // Always showing us at least 800 pixels wide and 480 height
-        camera.setToOrtho(false, 800, 480);
+        camera.setToOrtho(false, 300, 300);
 
     }
 
@@ -166,12 +166,17 @@ public class GameScreen extends GameObjectHolder implements Screen{
         playerObj.add(transformComponent);
 
         SpriteC spriteComponent = new SpriteC(playerObj);
-        spriteComponent.setTRegion(GAME.tHolder.guy);
+        spriteComponent.setIdleSprite(GAME.tHolder.idleGuy);
         playerObj.add(spriteComponent);
+
+        DirectionalSpriteComponent dirSpriteComponent = new DirectionalSpriteComponent(playerObj);
+        dirSpriteComponent.setLeftSprites(GAME.tHolder.leftGuyAnimations);
+        dirSpriteComponent.setRightSprites(GAME.tHolder.rightGuyAnimations);
+        playerObj.add(dirSpriteComponent);
 
         CollisionC collisionComponent = new CollisionC(playerObj);
         Vector2 pos = transformComponent.position;
-        Rectangle rect = new Rectangle(pos.x, pos.y, spriteComponent.getTRegion().getRegionWidth(), spriteComponent.getTRegion().getRegionHeight());
+        Rectangle rect = new Rectangle(pos.x, pos.y, spriteComponent.getIdleSprite().getRegionWidth(), spriteComponent.getIdleSprite().getRegionHeight());
         collisionComponent.setShape(rect);
         playerObj.add(collisionComponent);
 
