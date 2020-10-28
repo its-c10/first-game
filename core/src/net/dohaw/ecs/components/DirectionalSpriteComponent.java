@@ -16,7 +16,7 @@ public class DirectionalSpriteComponent extends GameObjectComponent{
     @Getter @Setter private Array<TextureAtlas.AtlasRegion> leftSprites;
     @Getter @Setter private Array<TextureAtlas.AtlasRegion> rightSprites;
 
-    @Getter private final int FRAME_BUFFER = 20;
+    @Getter @Setter private int frameBuffer = 10;
     @Getter private int frameBufferCount = 0;
 
     @Getter @Setter private int indexSprite = 0;
@@ -42,7 +42,7 @@ public class DirectionalSpriteComponent extends GameObjectComponent{
     }
 
     public boolean isTimeToSwitchSprite(){
-        return frameBufferCount == FRAME_BUFFER;
+        return frameBufferCount == frameBuffer;
     }
 
 }

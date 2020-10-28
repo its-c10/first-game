@@ -99,15 +99,20 @@ public class RenderSystem extends IteratingSystem {
 
         CollisionC collisionComponent = entity.getComponent(CollisionC.class);
 
-        if(collisionComponent != null){
-            Shape2D collisionShape = collisionComponent.getShape();
-            if(collisionShape instanceof Polygon){
-                shapeRenderer.polygon(((Polygon) collisionShape).getVertices());
-            }else if(collisionShape instanceof Rectangle){
-                Rectangle rect = (Rectangle) collisionShape;
-                shapeRenderer.rect(rect.x, rect.y, rect.width, rect.height);
+        if(collisionComponent.isCollisionShapeVisible()){
+
+            if(collisionComponent != null){
+                Shape2D collisionShape = collisionComponent.getShape();
+                if(collisionShape instanceof Polygon){
+                    shapeRenderer.polygon(((Polygon) collisionShape).getVertices());
+                }else if(collisionShape instanceof Rectangle){
+                    Rectangle rect = (Rectangle) collisionShape;
+                    shapeRenderer.rect(rect.x, rect.y, rect.width, rect.height);
+                }
             }
+
         }
+
 
     }
 

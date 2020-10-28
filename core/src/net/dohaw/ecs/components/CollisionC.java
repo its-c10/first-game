@@ -7,7 +7,7 @@ import net.dohaw.GameObject;
 
 public class CollisionC extends GameObjectComponent{
 
-    @Getter @Setter private boolean isVisible;
+    @Getter @Setter private boolean isCollisionShapeVisible = false;
     @Getter @Setter private Shape2D shape;
     @Getter @Setter private ShapeType shapeType;
     @Getter @Setter private float shapeRadius = 2;
