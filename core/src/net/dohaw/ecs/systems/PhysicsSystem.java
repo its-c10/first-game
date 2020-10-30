@@ -8,7 +8,10 @@ import com.badlogic.gdx.math.*;
 import net.dohaw.GameObject;
 import net.dohaw.ecs.components.CollisionC;
 import net.dohaw.ecs.components.MovementC;
+import net.dohaw.ecs.components.PlayerMovementC;
 import net.dohaw.ecs.components.TransformC;
+import net.dohaw.utils.Direction;
+import org.w3c.dom.css.Rect;
 
 /**
  *  A system that deals with movement, collision, gravity, and what-not
@@ -39,34 +42,40 @@ public class PhysicsSystem extends IteratingSystem {
     private void dealWithMovement(Entity entity, float deltaTime){
 
         MovementC movementComponent = entity.getComponent(MovementC.class);
-        TransformC transformComponent = entity.getComponent(TransformC.class);
 
-        Vector2 velocity = movementComponent.getVelocity();
-        Vector2 position = transformComponent.getPosition();
+        if(movementComponent != null){
 
-        CollisionC collisionComponenet = entity.getComponent(CollisionC.class);
-        if(collisionComponenet != null){
+            TransformC transformComponent = entity.getComponent(TransformC.class);
+            Vector2 velocity = movementComponent.getVelocity();
+            Vector2 position = transformComponent.getPosition();
 
-            if(!isNextMoveInCollision(entity)){
+            CollisionC collisionComponent = entity.getComponent(CollisionC.class);
+            if(collisionComponent != null){
 
-                position.x += (velocity.x * deltaTime);
-                position.y += (velocity.y * deltaTime);
+                Rectangle entityRect = (Rectangle) collisionComponent.getShape();
+                GameObject tempGameObject = createTempEntity(position, velocity, deltaTime, entityRect);
 
-                if(collisionComponenet.getShape() instanceof Polygon){
-                    ((Polygon) collisionComponenet.getShape()).setPosition(position.x, position.y);
-                }else{
-                    ((Rectangle) collisionComponenet.getShape()).setPosition(position.x, position.y);
+                if(!isNextMoveInCollision(tempGameObject)){
+
+                    position.x += (velocity.x * deltaTime);
+                    position.y += (velocity.y * deltaTime);
+
+                    if(collisionComponent.getShape() instanceof Polygon){
+                        ((Polygon) collisionComponent.getShape()).setPosition(position.x, position.y);
+                    }else{
+                        ((Rectangle) collisionComponent.getShape()).setPosition(position.x, position.y);
+                    }
+
                 }
 
+            }else{
+                position.x += velocity.x;
+                position.y += velocity.y;
             }
 
-        }else{
-            position.x += velocity.x;
-            position.y += velocity.y;
         }
 
     }
-
 
     private boolean isNextMoveInCollision(Entity entityInCheck){
 
@@ -75,7 +84,8 @@ public class PhysicsSystem extends IteratingSystem {
         ImmutableArray<Entity> entities = getEntities();
 
         for(Entity e : entities){
-            if(!e.equals(entityInCheck)){
+            /* Not a player */
+            if(e.getComponent(PlayerMovementC.class) == null){
                 if(e.getComponent(CollisionC.class) != null){
                     CollisionC collisionComponentEntity = e.getComponent(CollisionC.class);
                     Rectangle rectCollisionEntity = (Rectangle) collisionComponentEntity.getShape();
@@ -86,6 +96,29 @@ public class PhysicsSystem extends IteratingSystem {
 
         return false;
 
+    }
+
+    /**
+     * Makes a temporary entity that performs the entities step before it actually does it to check to see if it's in collision
+    *  If the move isn't in collision, then it proceeds to move the actual entity
+     * @param entityPos Entity position that it's copying
+     * @param entityVelocity Entity velocity that it's copying
+     * @param deltaTime dt
+     * @param entityRect Entity collision rectangle that its copying
+     * @return temporary entity
+     */
+    private GameObject createTempEntity(Vector2 entityPos, Vector2 entityVelocity, float deltaTime, Rectangle entityRect){
+
+        GameObject tempGameObject = new GameObject("TEST");
+        CollisionC tempCollisionComponent = new CollisionC(tempGameObject);
+
+        float tempRectX = entityPos.x + (entityVelocity.x * deltaTime);
+        float tempRectY = entityPos.y + (entityVelocity.y * deltaTime);
+
+        Rectangle tempCollisionRect = new Rectangle(tempRectX, tempRectY, entityRect.width, entityRect.height);
+        tempCollisionComponent.setShape(tempCollisionRect);
+        tempGameObject.add(tempCollisionComponent);
+        return tempGameObject;
     }
 
 }

@@ -150,8 +150,6 @@ public class GameScreen extends GameObjectHolder implements Screen{
         transformComponent.position.y = 0;
         test.add(transformComponent);
 
-
-
         ShapeC shapeComponent = new ShapeC(test);
         Rectangle rect = new Rectangle(50, 0, 50, 50);
         shapeComponent.setShape(rect);
@@ -165,7 +163,7 @@ public class GameScreen extends GameObjectHolder implements Screen{
 
         playerMovementSystem = new PlayerMovementSystem(Family.all(PlayerMovementC.class, MovementC.class).get());
         playerMovementSystem.setProcessing(true);
-        physicsSystem = new PhysicsSystem(Family.all(TransformC.class, MovementC.class).get());
+        physicsSystem = new PhysicsSystem(Family.all(TransformC.class).get());
         physicsSystem.setProcessing(true);
 
         Family family = Family.one(SpriteC.class, DirectionalSpriteComponent.class, ShapeC.class).one(TransformC.class).get();
