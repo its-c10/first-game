@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.*;
+import net.dohaw.GameObject;
 import net.dohaw.ecs.components.CollisionC;
 import net.dohaw.ecs.components.MovementC;
 import net.dohaw.ecs.components.TransformC;
@@ -43,14 +44,14 @@ public class PhysicsSystem extends IteratingSystem {
         Vector2 velocity = movementComponent.getVelocity();
         Vector2 position = transformComponent.getPosition();
 
-        if(entity.getComponent(CollisionC.class) != null){
+        CollisionC collisionComponenet = entity.getComponent(CollisionC.class);
+        if(collisionComponenet != null){
 
             if(!isNextMoveInCollision(entity)){
 
                 position.x += (velocity.x * deltaTime);
                 position.y += (velocity.y * deltaTime);
 
-                CollisionC collisionComponenet = entity.getComponent(CollisionC.class);
                 if(collisionComponenet.getShape() instanceof Polygon){
                     ((Polygon) collisionComponenet.getShape()).setPosition(position.x, position.y);
                 }else{
@@ -78,9 +79,7 @@ public class PhysicsSystem extends IteratingSystem {
                 if(e.getComponent(CollisionC.class) != null){
                     CollisionC collisionComponentEntity = e.getComponent(CollisionC.class);
                     Rectangle rectCollisionEntity = (Rectangle) collisionComponentEntity.getShape();
-                    if(Intersector.overlaps(rectCollisionEntity, entityInCheckRect)){
-                        return true;
-                    }
+                    return Intersector.overlaps(rectCollisionEntity, entityInCheckRect);
                 }
             }
         }

@@ -11,7 +11,10 @@ public class GameObject extends Entity {
     @Getter @Setter protected boolean isVisible;
     @Getter final protected UUID OBJ_UUID;
 
-    public GameObject(){
+    @Getter private final String NAME;
+
+    public GameObject(String name){
+        this.NAME = name;
         this.OBJ_UUID = UUID.randomUUID();
     }
 

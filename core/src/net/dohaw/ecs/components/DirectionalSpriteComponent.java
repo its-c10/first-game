@@ -1,6 +1,7 @@
 package net.dohaw.ecs.components;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import net.dohaw.GameObject;
  */
 public class DirectionalSpriteComponent extends GameObjectComponent{
 
+    @Getter @Setter private TextureRegion idleSprite;
     @Getter @Setter private Array<TextureAtlas.AtlasRegion> leftSprites;
     @Getter @Setter private Array<TextureAtlas.AtlasRegion> rightSprites;
 

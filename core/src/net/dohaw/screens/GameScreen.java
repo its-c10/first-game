@@ -7,6 +7,7 @@ import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
@@ -142,11 +143,33 @@ public class GameScreen extends GameObjectHolder implements Screen{
         GameObject playerObj = initPlayer();
         engine.addEntity(playerObj);
 
+        GameObject test = new GameObject("TEST");
+
+        TransformC transformComponent = new TransformC(test);
+        transformComponent.position.x = 50;
+        transformComponent.position.y = 0;
+        test.add(transformComponent);
+
+
+
+        ShapeC shapeComponent = new ShapeC(test);
+        Rectangle rect = new Rectangle(50, 0, 50, 50);
+        shapeComponent.setShape(rect);
+        test.add(shapeComponent);
+
+        CollisionC collisionComponent = new CollisionC(test);
+        collisionComponent.setShape(rect);
+        test.add(collisionComponent);
+
+        engine.addEntity(test);
+
         playerMovementSystem = new PlayerMovementSystem(Family.all(PlayerMovementC.class, MovementC.class).get());
         playerMovementSystem.setProcessing(true);
         physicsSystem = new PhysicsSystem(Family.all(TransformC.class, MovementC.class).get());
         physicsSystem.setProcessing(true);
-        renderSystem = new RenderSystem(Family.all(TransformC.class, SpriteC.class).get(), batch, GAME.shapeRenderer);
+
+        Family family = Family.one(SpriteC.class, DirectionalSpriteComponent.class, ShapeC.class).one(TransformC.class).get();
+        renderSystem = new RenderSystem(family, batch, GAME.shapeRenderer);
         renderSystem.setProcessing(true);
 
         engine.addSystem(playerMovementSystem);
@@ -158,25 +181,25 @@ public class GameScreen extends GameObjectHolder implements Screen{
 
     private GameObject initPlayer(){
 
-        GameObject playerObj = new GameObject();
+        GameObject playerObj = new GameObject("PLAYER");
         playerObj.add(new MovementC(playerObj));
         playerObj.add(new PlayerMovementC(playerObj));
 
         TransformC transformComponent = new TransformC(playerObj);
         playerObj.add(transformComponent);
 
-        SpriteC spriteComponent = new SpriteC(playerObj);
-        spriteComponent.setIdleSprite(GAME.tHolder.idleGuy);
-        playerObj.add(spriteComponent);
-
         DirectionalSpriteComponent dirSpriteComponent = new DirectionalSpriteComponent(playerObj);
+        TextureRegion idleSprite = GAME.tHolder.idleGuy;
+
+        dirSpriteComponent.setIdleSprite(GAME.tHolder.idleGuy);
         dirSpriteComponent.setLeftSprites(GAME.tHolder.leftGuyAnimations);
         dirSpriteComponent.setRightSprites(GAME.tHolder.rightGuyAnimations);
         playerObj.add(dirSpriteComponent);
 
         CollisionC collisionComponent = new CollisionC(playerObj);
+        collisionComponent.setCollisionShapeVisible(true);
         Vector2 pos = transformComponent.position;
-        Rectangle rect = new Rectangle(pos.x, pos.y, spriteComponent.getIdleSprite().getRegionWidth(), spriteComponent.getIdleSprite().getRegionHeight());
+        Rectangle rect = new Rectangle(pos.x, pos.y, idleSprite.getRegionWidth(), idleSprite.getRegionHeight());
         collisionComponent.setShape(rect);
         playerObj.add(collisionComponent);
 

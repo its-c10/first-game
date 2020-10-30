@@ -12,10 +12,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import net.dohaw.ecs.components.CollisionC;
-import net.dohaw.ecs.components.DirectionalSpriteComponent;
-import net.dohaw.ecs.components.TransformC;
-import net.dohaw.ecs.components.SpriteC;
+import net.dohaw.GameObject;
+import net.dohaw.ecs.components.*;
 import net.dohaw.utils.Direction;
 
 public class RenderSystem extends IteratingSystem {
@@ -48,7 +46,7 @@ public class RenderSystem extends IteratingSystem {
         SpriteC spriteComponent = entity.getComponent(SpriteC.class);
         Vector2 position = transformComponent.getPosition();
 
-        TextureRegion sprite;
+        TextureRegion sprite = null;
         /*
             If this isn't null, then their sprite is animatable
          */
@@ -87,31 +85,49 @@ public class RenderSystem extends IteratingSystem {
 
             }else{
                 dirSpriteComponent.indexReset();
-                sprite = spriteComponent.getIdleSprite();
+                sprite = dirSpriteComponent.getIdleSprite();
             }
 
-        }else{
-            sprite = spriteComponent.getIdleSprite();
+        }else if(spriteComponent != null){
+            dirSpriteComponent.indexReset();
+            sprite = dirSpriteComponent.getIdleSprite();
         }
 
-        batch.draw(sprite, position.x, position.y);
+        if(sprite != null){
+            batch.draw(sprite, position.x, position.y);
+        }
 
         CollisionC collisionComponent = entity.getComponent(CollisionC.class);
-
-        if(collisionComponent.isCollisionShapeVisible()){
-
-            if(collisionComponent != null){
-                Shape2D collisionShape = collisionComponent.getShape();
-                if(collisionShape instanceof Polygon){
-                    shapeRenderer.polygon(((Polygon) collisionShape).getVertices());
-                }else if(collisionShape instanceof Rectangle){
-                    Rectangle rect = (Rectangle) collisionShape;
-                    shapeRenderer.rect(rect.x, rect.y, rect.width, rect.height);
+        if(collisionComponent != null){
+            if(collisionComponent.isCollisionShapeVisible()){
+                if(collisionComponent != null){
+                    Shape2D collisionShape = collisionComponent.getShape();
+                    if(collisionShape instanceof Polygon){
+                        shapeRenderer.polygon(((Polygon) collisionShape).getVertices());
+                    }else if(collisionShape instanceof Rectangle){
+                        Rectangle rect = (Rectangle) collisionShape;
+                        shapeRenderer.rect(rect.x, rect.y, rect.width, rect.height);
+                    }
                 }
+            }
+        }
+
+        ShapeC shapeComponent = entity.getComponent(ShapeC.class);
+        if(shapeComponent != null){
+
+            Shape2D potentialShape = shapeComponent.getShape();
+            if(potentialShape != null){
+
+                if(potentialShape instanceof Rectangle){
+                    Rectangle rect = (Rectangle) potentialShape;
+                    shapeRenderer.rect(rect.x, rect.y,  rect.width, rect.height);
+                }
+
+            }else{
+                System.out.println("ERROR: A SHAPE COMPONENT DOES NOT HAVE A SHAPE!");
             }
 
         }
-
 
     }
 
