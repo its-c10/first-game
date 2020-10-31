@@ -48,18 +48,29 @@ public class PlayerMovementSystem extends IteratingSystem {
             float maxVelocity = movementComponent.getMaxVelocity();
             float movementSpeed = movementComponent.getMovementSpeed();
 
-
             if(Gdx.input.isKeyPressed(Input.Keys.A) && velocity.x > -maxVelocity){
                 velocity.x += -movementSpeed;
                 keysPressed.add(Input.Keys.A);
                 transformComponent.setDirectionFacing(Direction.LEFT);
             }
 
-            if(Gdx.input.isKeyPressed(Input.Keys.D) && velocity.x < maxVelocity){
+            if(Gdx.input.isKeyPressed(Input.Keys.D) && velocity.x < maxVelocity) {
                 velocity.x += movementSpeed;
                 keysPressed.add(Input.Keys.D);
                 transformComponent.setDirectionFacing(Direction.RIGHT);
             }
+
+            /*
+            boolean hasJumpingCapability = movementComponent.isHasJumpingCapability();
+            if(hasJumpingCapability) {
+                if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+                    boolean isOnGround = movementComponent.isOnGround();
+                    boolean isJumping = movementComponent.isJumping();
+                    if(isOnGround && !isJumping){
+
+                    }
+                }
+            }*/
 
         }else{
 

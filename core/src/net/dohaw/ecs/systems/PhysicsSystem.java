@@ -11,6 +11,7 @@ import net.dohaw.ecs.components.MovementC;
 import net.dohaw.ecs.components.PlayerMovementC;
 import net.dohaw.ecs.components.TransformC;
 import net.dohaw.utils.Direction;
+import net.dohaw.utils.PhysicsHelper;
 import org.w3c.dom.css.Rect;
 
 /**
@@ -37,6 +38,7 @@ public class PhysicsSystem extends IteratingSystem {
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
         dealWithMovement(entity, deltaTime);
+        applyGravity(entity, deltaTime);
     }
 
     private void dealWithMovement(Entity entity, float deltaTime){
@@ -55,7 +57,7 @@ public class PhysicsSystem extends IteratingSystem {
                 Rectangle entityRect = (Rectangle) collisionComponent.getShape();
                 GameObject tempGameObject = createTempEntity(position, velocity, deltaTime, entityRect);
 
-                if(!isNextMoveInCollision(tempGameObject)){
+                if(!PhysicsHelper.isNextMoveInCollision(getEntities(), tempGameObject)){
 
                     position.x += (velocity.x * deltaTime);
                     position.y += (velocity.y * deltaTime);
@@ -69,32 +71,32 @@ public class PhysicsSystem extends IteratingSystem {
                 }
 
             }else{
-                position.x += velocity.x;
-                position.y += velocity.y;
+                position.x += (velocity.x * deltaTime);
+                position.y += (velocity.y * deltaTime);
             }
 
         }
 
     }
 
-    private boolean isNextMoveInCollision(Entity entityInCheck){
+    private void applyGravity(Entity systemEntity, float deltaTime) {
 
-        CollisionC collisionComponent = entityInCheck.getComponent(CollisionC.class);
-        Rectangle entityInCheckRect = (Rectangle) collisionComponent.getShape();
-        ImmutableArray<Entity> entities = getEntities();
+        MovementC movementComponent = systemEntity.getComponent(MovementC.class);
+        if(movementComponent != null) {
 
-        for(Entity e : entities){
-            /* Not a player */
-            if(e.getComponent(PlayerMovementC.class) == null){
-                if(e.getComponent(CollisionC.class) != null){
-                    CollisionC collisionComponentEntity = e.getComponent(CollisionC.class);
-                    Rectangle rectCollisionEntity = (Rectangle) collisionComponentEntity.getShape();
-                    return Intersector.overlaps(rectCollisionEntity, entityInCheckRect);
-                }
+            TransformC transformC = systemEntity.getComponent(TransformC.class);
+            Vector2 velocity = movementComponent.getVelocity();
+            Vector2 position = transformC.getPosition();
+
+            float toBeVelocityY = velocity.y - 10;
+            if(toBeVelocityY > movementComponent.getMaxGravity()){
+                velocity.y -= 10;
+            }else{
+                velocity.y = -movementComponent.getMaxGravity();
             }
-        }
+            position.y -= (velocity.y * deltaTime);
 
-        return false;
+        }
 
     }
 
@@ -119,6 +121,7 @@ public class PhysicsSystem extends IteratingSystem {
         tempCollisionComponent.setShape(tempCollisionRect);
         tempGameObject.add(tempCollisionComponent);
         return tempGameObject;
+
     }
 
 }
