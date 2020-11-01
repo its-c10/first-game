@@ -5,10 +5,17 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import javafx.scene.effect.ColorInput;
+import net.dohaw.GameObject;
 import net.dohaw.ecs.components.CollisionC;
+import net.dohaw.ecs.components.GroundC;
 import net.dohaw.ecs.components.PlayerMovementC;
 
+import java.util.UUID;
+
 public class PhysicsHelper {
+
+    private static final int GROUND_CHECK_BUFFER = 2;
 
     public static boolean isNextMoveInCollision(ImmutableArray<Entity> entities, Entity entityInCheck){
 
@@ -30,18 +37,27 @@ public class PhysicsHelper {
 
     }
 
-    public static double distanceBetweenPositions(Vector2 position1, Vector2 position2){
+    public static boolean isOnGround(ImmutableArray<Entity> entities, Entity entityInCheck, UUID realEntityInCheckUUID){
 
-        float position1X = position1.x;
-        float position1Y = position1.y;
+        CollisionC collisionComponent = entityInCheck.getComponent(CollisionC.class);
+        Rectangle collisionRect = (Rectangle) collisionComponent.getShape();
 
-        float position2X = position2.x;
-        float position2Y = position2.y;
+        float y = collisionRect.y - collisionRect.height;
+        Vector2 bottomLeftPoint = new Vector2(collisionRect.x + 4, y);
+        Vector2 bottomRightPoint = new Vector2((collisionRect.x + collisionRect.width) - 4, y);
 
-        float xDiff = position2X - position1X;
-        float yDiff = position2Y - position1Y;
-        return Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
+        for(Entity e : entities){
+            GameObject go = (GameObject) e;
+            if(!go.getOBJ_UUID().equals(realEntityInCheckUUID)){
+                if(go.getComponent(GroundC.class) != null){
+                    CollisionC entityCollisionComponent = e.getComponent(CollisionC.class);
+                    Rectangle entityCollisionRect = (Rectangle) entityCollisionComponent.getShape();
+                    return entityCollisionRect.contains(bottomLeftPoint) || entityCollisionRect.contains(bottomRightPoint);
+                }
+            }
+        }
 
+        return false;
     }
 
 }

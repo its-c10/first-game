@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.math.*;
 import net.dohaw.GameObject;
 import net.dohaw.ecs.components.CollisionC;
@@ -18,6 +19,8 @@ import org.w3c.dom.css.Rect;
  *  A system that deals with movement, collision, gravity, and what-not
  */
 public class PhysicsSystem extends IteratingSystem {
+
+    private final float GRAVITY_FORCE = 15;
 
     /**
      * Instantiates a system that will iterate over the entities described by the Family.
@@ -37,37 +40,40 @@ public class PhysicsSystem extends IteratingSystem {
      */
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
+        applyGravity(entity);
         dealWithMovement(entity, deltaTime);
-        applyGravity(entity, deltaTime);
     }
 
     private void dealWithMovement(Entity entity, float deltaTime){
 
-        MovementC movementComponent = entity.getComponent(MovementC.class);
+        GameObject entityGO = (GameObject) entity;
+        MovementC movementComponent = entityGO.getComponent(MovementC.class);
 
         if(movementComponent != null){
 
-            TransformC transformComponent = entity.getComponent(TransformC.class);
+            TransformC transformComponent = entityGO.getComponent(TransformC.class);
             Vector2 velocity = movementComponent.getVelocity();
             Vector2 position = transformComponent.getPosition();
 
-            CollisionC collisionComponent = entity.getComponent(CollisionC.class);
+            CollisionC collisionComponent = entityGO.getComponent(CollisionC.class);
             if(collisionComponent != null){
 
                 Rectangle entityRect = (Rectangle) collisionComponent.getShape();
                 GameObject tempGameObject = createTempEntity(position, velocity, deltaTime, entityRect);
 
-                if(!PhysicsHelper.isNextMoveInCollision(getEntities(), tempGameObject)){
-
-                    position.x += (velocity.x * deltaTime);
+                boolean isOnGround = PhysicsHelper.isOnGround(getEntities(), tempGameObject, entityGO.getOBJ_UUID());
+                if(!isOnGround){
                     position.y += (velocity.y * deltaTime);
+                }
 
-                    if(collisionComponent.getShape() instanceof Polygon){
-                        ((Polygon) collisionComponent.getShape()).setPosition(position.x, position.y);
-                    }else{
-                        ((Rectangle) collisionComponent.getShape()).setPosition(position.x, position.y);
-                    }
+                if(!PhysicsHelper.isNextMoveInCollision(getEntities(), tempGameObject)){
+                    position.x += (velocity.x * deltaTime);
+                }
 
+                if(collisionComponent.getShape() instanceof Polygon){
+                    ((Polygon) collisionComponent.getShape()).setPosition(position.x, position.y);
+                }else{
+                    ((Rectangle) collisionComponent.getShape()).setPosition(position.x, position.y);
                 }
 
             }else{
@@ -79,22 +85,18 @@ public class PhysicsSystem extends IteratingSystem {
 
     }
 
-    private void applyGravity(Entity systemEntity, float deltaTime) {
+    private void applyGravity(Entity systemEntity) {
 
         MovementC movementComponent = systemEntity.getComponent(MovementC.class);
         if(movementComponent != null) {
 
-            TransformC transformC = systemEntity.getComponent(TransformC.class);
             Vector2 velocity = movementComponent.getVelocity();
-            Vector2 position = transformC.getPosition();
 
-            float toBeVelocityY = velocity.y - 10;
-            if(toBeVelocityY > movementComponent.getMaxGravity()){
-                velocity.y -= 10;
+            if(velocity.y > movementComponent.getMaxGravity()){
+                velocity.y -= GRAVITY_FORCE;
             }else{
                 velocity.y = -movementComponent.getMaxGravity();
             }
-            position.y -= (velocity.y * deltaTime);
 
         }
 

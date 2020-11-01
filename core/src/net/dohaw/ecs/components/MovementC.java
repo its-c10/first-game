@@ -9,7 +9,7 @@ public class MovementC extends GameObjectComponent {
 
     @Getter @Setter private Vector2 velocity = new Vector2(0, 0);
     @Getter @Setter private float maxVelocity = 50;
-    @Getter @Setter private float maxGravity = -20;
+    @Getter @Setter private float maxGravity = 30;
     @Getter @Setter private float movementSpeed = 10;
     @Getter @Setter private float mass = 100;
 

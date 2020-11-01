@@ -23,6 +23,7 @@ import net.dohaw.ecs.systems.PlayerMovementSystem;
 import net.dohaw.ecs.systems.RenderSystem;
 
 import java.util.UUID;
+import java.util.Vector;
 
 public class GameScreen extends GameObjectHolder implements Screen{
 
@@ -143,15 +144,16 @@ public class GameScreen extends GameObjectHolder implements Screen{
         GameObject playerObj = initPlayer();
         engine.addEntity(playerObj);
 
-        GameObject test = new GameObject("TEST");
+        GameObject test = new GameObject("GROUND");
 
+        test.add(new GroundC(test));
         TransformC transformComponent = new TransformC(test);
         transformComponent.position.x = 50;
-        transformComponent.position.y = 0;
+        transformComponent.position.y = -20;
         test.add(transformComponent);
 
         ShapeC shapeComponent = new ShapeC(test);
-        Rectangle rect = new Rectangle(50, 0, 50, 50);
+        Rectangle rect = new Rectangle(transformComponent.position.x, transformComponent.position.y, 50, 50);
         shapeComponent.setShape(rect);
         test.add(shapeComponent);
 
@@ -184,6 +186,7 @@ public class GameScreen extends GameObjectHolder implements Screen{
         playerObj.add(new PlayerMovementC(playerObj));
 
         TransformC transformComponent = new TransformC(playerObj);
+        transformComponent.setPosition(new Vector2(50, 40));
         playerObj.add(transformComponent);
 
         DirectionalSpriteComponent dirSpriteComponent = new DirectionalSpriteComponent(playerObj);
