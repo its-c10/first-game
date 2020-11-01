@@ -149,7 +149,7 @@ public class GameScreen extends GameObjectHolder implements Screen{
         test.add(new GroundC(test));
         TransformC transformComponent = new TransformC(test);
         transformComponent.position.x = 50;
-        transformComponent.position.y = -20;
+        transformComponent.position.y = -40;
         test.add(transformComponent);
 
         ShapeC shapeComponent = new ShapeC(test);
@@ -158,6 +158,7 @@ public class GameScreen extends GameObjectHolder implements Screen{
         test.add(shapeComponent);
 
         CollisionC collisionComponent = new CollisionC(test);
+        //collisionComponent.setCollisionShapeVisible(true);
         collisionComponent.setShape(rect);
         test.add(collisionComponent);
 
@@ -186,7 +187,7 @@ public class GameScreen extends GameObjectHolder implements Screen{
         playerObj.add(new PlayerMovementC(playerObj));
 
         TransformC transformComponent = new TransformC(playerObj);
-        transformComponent.setPosition(new Vector2(50, 40));
+        transformComponent.setPosition(new Vector2(50, 200));
         playerObj.add(transformComponent);
 
         DirectionalSpriteComponent dirSpriteComponent = new DirectionalSpriteComponent(playerObj);

@@ -42,9 +42,9 @@ public class PhysicsHelper {
         CollisionC collisionComponent = entityInCheck.getComponent(CollisionC.class);
         Rectangle collisionRect = (Rectangle) collisionComponent.getShape();
 
-        float y = collisionRect.y - collisionRect.height;
-        Vector2 bottomLeftPoint = new Vector2(collisionRect.x + 4, y);
-        Vector2 bottomRightPoint = new Vector2((collisionRect.x + collisionRect.width) - 4, y);
+        float y = collisionRect.y - GROUND_CHECK_BUFFER;
+        Vector2 bottomLeftPoint = new Vector2(collisionRect.x + 2, y);
+        Vector2 bottomRightPoint = new Vector2((collisionRect.x + collisionRect.width) - 2, y);
 
         for(Entity e : entities){
             GameObject go = (GameObject) e;
@@ -52,7 +52,7 @@ public class PhysicsHelper {
                 if(go.getComponent(GroundC.class) != null){
                     CollisionC entityCollisionComponent = e.getComponent(CollisionC.class);
                     Rectangle entityCollisionRect = (Rectangle) entityCollisionComponent.getShape();
-                    return entityCollisionRect.contains(bottomLeftPoint) || entityCollisionRect.contains(bottomRightPoint);
+                    return entityCollisionRect.contains(bottomLeftPoint.x, bottomLeftPoint.y) || entityCollisionRect.contains(bottomRightPoint.x, bottomRightPoint.y);
                 }
             }
         }
